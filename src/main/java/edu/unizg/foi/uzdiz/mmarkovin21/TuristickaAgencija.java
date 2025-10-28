@@ -5,7 +5,7 @@ import edu.unizg.foi.uzdiz.mmarkovin21.citaci.CitacRezervacija;
 import edu.unizg.foi.uzdiz.mmarkovin21.komande.Komanda;
 import edu.unizg.foi.uzdiz.mmarkovin21.komande.KomandaFactory;
 import edu.unizg.foi.uzdiz.mmarkovin21.modeli.Rezervacija;
-import edu.unizg.foi.uzdiz.mmarkovin21.modeli.TuristickiAranzman;
+import edu.unizg.foi.uzdiz.mmarkovin21.modeli.Aranzman;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,7 +13,7 @@ import java.util.Scanner;
 
 public class TuristickaAgencija {
     private static TuristickaAgencija instanca;
-    private List<TuristickiAranzman> aranzmani = new ArrayList<>();
+    private List<Aranzman> aranzmani = new ArrayList<>();
     private List<Rezervacija> rezervacije = new ArrayList<>();
 
     private TuristickaAgencija() {}
@@ -56,6 +56,6 @@ public class TuristickaAgencija {
         scanner.close();
     }
 
-    public List<TuristickiAranzman> getAranzmani() { return aranzmani; }
+    public List<Aranzman> getAranzmani() { return aranzmani; }
     public List<Rezervacija> getRezervacije() { return rezervacije; }
 }
