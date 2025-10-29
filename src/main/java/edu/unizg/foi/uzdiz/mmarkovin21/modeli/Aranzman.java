@@ -2,111 +2,157 @@ package edu.unizg.foi.uzdiz.mmarkovin21.modeli;
 
 import edu.unizg.foi.uzdiz.mmarkovin21.graditelji.AranzmanGraditelj;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.Collections;
 import java.util.List;
 
 public class Aranzman {
     // nužni
-    private final int oznaka;
-    private final String naziv;
-    private final String program;
-    private final LocalDateTime pocetniDatum;
-    private final LocalDateTime zavrsniDatum;
-    private final int minBrojPutnika;
-    private final int maxBrojPutnika;
-    private final Long cijenaPoOsobi;
+    private int oznaka;
+    private String naziv;
+    private String program;
+    private LocalDate pocetniDatum;
+    private LocalDate zavrsniDatum;
+    private int minBrojPutnika;
+    private int maxBrojPutnika;
+    private Long cijenaPoOsobi;
 
     // opcionalni
-    private final LocalDateTime vrijemeKretanja;
-    private final LocalDateTime vrijemePovratka;
-    private final int brojNocenja;
-    private final Long doplataZaJednokrevetnuSobu;
-    private final List<String> prijevoz;
-    private final int brojDorucaka;
-    private final int brojRucakova;
-    private final int brojVecera;
+    private LocalTime vrijemeKretanja;
+    private LocalTime vrijemePovratka;
+    private int brojNocenja;
+    private Long doplataZaJednokrevetnuSobu;
+    private List<String> prijevoz;
+    private int brojDorucaka;
+    private int brojRucakova;
+    private int brojVecera;
 
-    public Aranzman(AranzmanGraditelj graditelj) {
-        this.oznaka = graditelj.getOznaka();
-        this.naziv = graditelj.getNaziv();
-        this.program = graditelj.getProgram();
-        this.pocetniDatum = graditelj.getPocetniDatum();
-        this.zavrsniDatum = graditelj.getZavrsniDatum();
-        this.minBrojPutnika = graditelj.getMinBrojPutnika();
-        this.maxBrojPutnika = graditelj.getMaxBrojPutnika();
-        this.cijenaPoOsobi = graditelj.getCijenaPoOsobi();
-        this.vrijemeKretanja = graditelj.getVrijemeKretanja();
-        this.vrijemePovratka = graditelj.getVrijemePovratka();
-        this.brojNocenja = graditelj.getBrojNocenja();
-        this.doplataZaJednokrevetnuSobu = graditelj.getDoplataZaJednokrevetnuSobu();
-        this.prijevoz = graditelj.getPrijevoz();
-        this.brojDorucaka = graditelj.getBrojDorucaka();
-        this.brojRucakova = graditelj.getBrojRucakova();
-        this.brojVecera = graditelj.getBrojVecera();
+    public Aranzman() {
+    }
+    public Aranzman(
+            int oznaka,
+            String naziv,
+            String program,
+            LocalDate pocetniDatum,
+            LocalDate zavrsniDatum,
+            int minBrojPutnika,
+            int maxBrojPutnika,
+            Long cijenaPoOsobi
+    ) {
+        this.oznaka = oznaka;
+        this.naziv = naziv;
+        this.program = program;
+        this.pocetniDatum = pocetniDatum;
+        this.zavrsniDatum = zavrsniDatum;
+        this.minBrojPutnika = minBrojPutnika;
+        this.maxBrojPutnika = maxBrojPutnika;
+        this.cijenaPoOsobi = cijenaPoOsobi;
     }
 
-    public int getOznaka() {
+    public int dohvatiOznaka() {
         return oznaka;
     }
 
-    public String getNaziv() {
+    public String dohvatiNaziv() {
         return naziv;
     }
 
-    public String getProgram() {
+    public String dohvatiProgram() {
         return program;
     }
 
-    public LocalDateTime getPocetniDatum() {
+    public LocalDate dohvatiPocetniDatum() {
         return pocetniDatum;
     }
 
-    public LocalDateTime getZavrsniDatum() {
+    public LocalDate dohvatiZavrsniDatum() {
         return zavrsniDatum;
     }
 
-    public Long getCijenaPoOsobi() {
+    public Long dohvatiCijenaPoOsobi() {
         return cijenaPoOsobi;
     }
-
-    public LocalDateTime getVrijemeKretanja() {
+    
+    // neobavezni getteri i setteri
+    public LocalTime dohvatiVrijemeKretanja() {
         return vrijemeKretanja;
     }
+    
+    public void postaviVrijemeKretanja(LocalTime vrijemeKretanja) {
+        this.vrijemeKretanja = vrijemeKretanja;
+    }
 
-    public LocalDateTime getVrijemePovratka() {
+    public LocalTime dohvatiVrijemePovratka() {
         return vrijemePovratka;
     }
+    
+    public void postaviVrijemePovratka(LocalTime vrijemePovratka) {
+        this.vrijemePovratka = vrijemePovratka;
+    }
 
-    public int getMinBrojPutnika() {
+    public int dohvatiMinBrojPutnika() {
         return minBrojPutnika;
     }
+    
+    public void postaviMinBrojPutnika(int minBrojPutnika) {
+        this.minBrojPutnika = minBrojPutnika;
+    }
 
-    public int getMaxBrojPutnika() {
+    public int dohvatiMaxBrojPutnika() {
         return maxBrojPutnika;
     }
+    
+    public void postaviMaxBrojPutnika(int maxBrojPutnika) {
+        this.maxBrojPutnika = maxBrojPutnika;
+    }
 
-    public int getBrojNocenja() {
+    public int dohvatiBrojNocenja() {
         return brojNocenja;
     }
+    
+    public void postaviBrojNocenja(int brojNocenja) {
+        this.brojNocenja = brojNocenja;
+    }
 
-    public Long getDoplataZaJednokrevetnuSobu() {
+    public Long dohvatiDoplataZaJednokrevetnuSobu() {
         return doplataZaJednokrevetnuSobu;
     }
+    
+    public void postaviDoplataZaJednokrevetnuSobu(Long doplataZaJednokrevetnuSobu) {
+        this.doplataZaJednokrevetnuSobu = doplataZaJednokrevetnuSobu;
+    }
 
-    public List<String> getPrijevoz() {
+    public List<String> dohvatiPrijevoz() {
         return prijevoz != null ? prijevoz : Collections.emptyList();
     }
+    
+    public void postaviPrijevoz(List<String> prijevoz) {
+        this.prijevoz = prijevoz;
+    }
 
-    public int getBrojDorucaka() {
+    public int dohvatiBrojDorucaka() {
         return brojDorucaka;
     }
-
-    public int getBrojRucakova() {
-        return brojRucakova;
+    
+    public void postaviBrojDorucaka(int brojDorucaka) {
+        this.brojDorucaka = brojDorucaka;
     }
 
-    public int getBrojVecera() {
+    public int dohvatiBrojRuckova() {
+        return brojRucakova;
+    }
+    
+    public void postaviBrojRucakova(int brojRucakova) {
+        this.brojRucakova = brojRucakova;
+    }
+
+    public int dohvatiBrojVecera() {
         return brojVecera;
+    }
+    
+    public void postaviBrojVecera(int brojVecera) {
+        this.brojVecera = brojVecera;
     }
 }

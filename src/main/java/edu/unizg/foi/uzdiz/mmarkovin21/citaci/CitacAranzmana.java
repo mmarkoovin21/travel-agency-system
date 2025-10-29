@@ -1,49 +1,56 @@
 package edu.unizg.foi.uzdiz.mmarkovin21.citaci;
 
+import edu.unizg.foi.uzdiz.mmarkovin21.graditelji.AranzmanDirektor;
+import edu.unizg.foi.uzdiz.mmarkovin21.graditelji.AranzmanGraditelj;
 import edu.unizg.foi.uzdiz.mmarkovin21.modeli.Aranzman;
+import edu.unizg.foi.uzdiz.mmarkovin21.modeli.ValidiraniPodaci;
+import edu.unizg.foi.uzdiz.mmarkovin21.validatori.ValidatorAranzmana;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 public class CitacAranzmana {
-//    private final ValidatorAranzmana validatorAranzmana = new ValidatorAranzmana();
-    private final DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("dd.mm.yyyy.");
-    private final DateTimeFormatter dateTimeFormat = DateTimeFormatter.ofPattern("dd.mm.yyyy. hh:mm:ss");
+    private List<Aranzman> aranzmani = new ArrayList<>();
+    private ValidatorAranzmana validator = new ValidatorAranzmana();
+    private AranzmanDirektor direktor = new AranzmanDirektor(new AranzmanGraditelj());
 
     public List<Aranzman> ucitaj(String nazivDatoteke) {
-        List<Aranzman> aranzmani = new ArrayList<>();
+
         try (BufferedReader citac = new BufferedReader(new FileReader(nazivDatoteke))) {
             String linija;
             boolean prviRedak = true;
             int brojRetka = 0;
 
-            // provjera prvog retka (zaglavlje)
             while ((linija = citac.readLine()) != null) {
                 brojRetka++;
                 if (prviRedak) {
                     prviRedak = false;
                     continue;
                 }
-                // provjera komentara i praznih linija
                 if (linija.trim().isEmpty() || linija.startsWith("#")) {
                     continue;
                 }
-                String[] atributi = parsirajRedak(linija);
-                Arrays.stream(atributi)
-                        .forEach(atribut -> System.out.println("  - " + atribut));
-                List<String> prijevozLista = parsirajPrijevoz(atributi[12]);
-                System.out.println("Prijevoz lista: " + prijevozLista);
+
+                try {
+                    String[] atributi = parsirajRedak(linija);
+                    ValidiraniPodaci podaci = this.validator.validiraj(atributi);
+
+                    if (podaci != null) {
+                        Aranzman aranzman = direktor.konstruiraj(podaci);
+                        aranzmani.add(aranzman);
+                    }
+                } catch (Exception e) {
+                    System.err.println("Greška pri obradi retka " + brojRetka + ": " + e.getMessage());
+                }
             }
         } catch (Exception e) {
             System.err.println("Greška pri čitanju datoteke: " + e.getMessage());
-            e.printStackTrace();
         }
+
         return aranzmani;
     }
 

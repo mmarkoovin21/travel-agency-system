@@ -41,11 +41,11 @@ public class TuristickaAgencija {
             String unos = scanner.nextLine().trim();
 
             String[] dijelovi = unos.split("\\s+");
-            String nazivKomande = dijelovi[0];
+            String nazivKomande = dijelovi[0].toUpperCase();
 
             KomandaFactory factory = KomandaFactory.dohvatiFactory(nazivKomande);
             if (factory != null) {
-                Komanda komanda = factory.kreirajKomandu(this);
+                Komanda komanda = factory.kreirajKomandu();
                 komanda.izvrsi(dijelovi);
 
                 if (nazivKomande.equals("Q")) break;
@@ -56,6 +56,7 @@ public class TuristickaAgencija {
         scanner.close();
     }
 
-    public List<Aranzman> getAranzmani() { return aranzmani; }
-    public List<Rezervacija> getRezervacije() { return rezervacije; }
+
+    public List<Aranzman> dohvatiAranzmane() { return aranzmani; }
+    public List<Rezervacija> dohvatiRezervacije() { return rezervacije; }
 }
