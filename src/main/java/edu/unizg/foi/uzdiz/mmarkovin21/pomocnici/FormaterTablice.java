@@ -13,6 +13,12 @@ public class FormaterTablice {
     }
 
     public void dodajRed(String... vrijednosti) {
+        if (vrijednosti.length != sirineKolona.length) {
+            throw new IllegalArgumentException(
+                    "Broj vrijednosti (" + vrijednosti.length +
+                            ") ne odgovara broju kolona (" + sirineKolona.length + ")"
+            );
+        }
         redovi.add(vrijednosti);
     }
 
