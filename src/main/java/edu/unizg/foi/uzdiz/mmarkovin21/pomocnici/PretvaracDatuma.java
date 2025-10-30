@@ -19,8 +19,16 @@ public class PretvaracDatuma {
             DateTimeFormatter.ofPattern("H:mm")
     };
 
+    private static final DateTimeFormatter[] DATUM_VRIJEME_FORMATI = new DateTimeFormatter[] {
+            DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm:ss"),
+            DateTimeFormatter.ofPattern("d.M.yyyy HH:mm:ss"),
+            DateTimeFormatter.ofPattern("dd.MM.yyyy. HH:mm:ss"),
+            DateTimeFormatter.ofPattern("d.M.yyyy. HH:mm:ss")
+    };
+
     private static final DateTimeFormatter HRVATSKI_DATUM_FORMAT = DateTimeFormatter.ofPattern("dd.MM.yyyy.");
     private static final DateTimeFormatter HRVATSKI_VRIJEME_FORMAT = DateTimeFormatter.ofPattern("HH:mm:ss");
+    private static final DateTimeFormatter HRVATSKI_DATUM_VRIJEME_FORMAT = DateTimeFormatter.ofPattern("dd.MM.yyyy. HH:mm:ss");
 
     public static LocalDate parsirajDatum(String datumString) {
         if (datumString == null || datumString.trim().isEmpty()) {
@@ -50,6 +58,21 @@ public class PretvaracDatuma {
         return null;
     }
 
+    public static LocalDateTime parsirajDatumVrijeme(String datumVrijemeString) {
+        if (datumVrijemeString == null || datumVrijemeString.trim().isEmpty()) {
+            return null;
+        }
+        String s = datumVrijemeString.trim();
+
+        for (DateTimeFormatter fmt : DATUM_VRIJEME_FORMATI) {
+            try {
+                return LocalDateTime.parse(s, fmt);
+            } catch (DateTimeParseException ignored) {
+            }
+        }
+        return null;
+    }
+
     public static String formatirajDatum(LocalDate datum) {
         if (datum == null) {
             return null;
@@ -62,5 +85,12 @@ public class PretvaracDatuma {
             return null;
         }
         return vrijeme.format(HRVATSKI_VRIJEME_FORMAT);
+    }
+
+    public static String formatirajDatumVrijeme(LocalDateTime datumVrijeme) {
+        if (datumVrijeme == null) {
+            return null;
+        }
+        return datumVrijeme.format(HRVATSKI_DATUM_VRIJEME_FORMAT);
     }
 }

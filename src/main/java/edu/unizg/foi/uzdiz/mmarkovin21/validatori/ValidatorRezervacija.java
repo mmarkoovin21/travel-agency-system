@@ -20,7 +20,7 @@ public class ValidatorRezervacija extends Validator {
                     prezime,
                     oznaka,
                     datumIVrijemePrijema,
-                    "standard"
+                    ""
             );
         } catch (IllegalArgumentException e) {
             System.err.println("Greška: " + e.getMessage());

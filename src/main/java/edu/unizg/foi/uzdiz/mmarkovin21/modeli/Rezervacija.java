@@ -7,7 +7,7 @@ public class Rezervacija {
     private String prezime;
     private int oznakaAranzmana;
     private LocalDateTime datumVrijemePrijema;
-    private String vrsta;
+    private String stanje;
 
     public Rezervacija(String ime, String prezime, int oznakaAranzmana,
                        LocalDateTime datumVrijemePrijema, String vrsta) {
@@ -15,7 +15,7 @@ public class Rezervacija {
         this.prezime = prezime;
         this.oznakaAranzmana = oznakaAranzmana;
         this.datumVrijemePrijema = datumVrijemePrijema;
-        this.vrsta = vrsta;
+        this.stanje = vrsta;
     }
 
     public String dohvatiIme() {
@@ -34,13 +34,12 @@ public class Rezervacija {
         return oznakaAranzmana;
     }
 
-    public String dohvatiVrsta() {
-        return vrsta;
+    public String dohvatiStanje() {
+        return stanje;
     }
 
-    public void promijeniVrstu(String novaVrsta) {
-        this.vrsta = novaVrsta;
+    public void promijeniStanje(String novoStanje) {
+        this.stanje = novoStanje;
     }
-
 
 }
