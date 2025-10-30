@@ -3,7 +3,7 @@ package edu.unizg.foi.uzdiz.mmarkovin21;
 import edu.unizg.foi.uzdiz.mmarkovin21.citaci.CitacAranzmana;
 import edu.unizg.foi.uzdiz.mmarkovin21.citaci.CitacRezervacija;
 import edu.unizg.foi.uzdiz.mmarkovin21.komande.Komanda;
-import edu.unizg.foi.uzdiz.mmarkovin21.komande.KomandaFactory;
+import edu.unizg.foi.uzdiz.mmarkovin21.komande.KomandaTvornica;
 import edu.unizg.foi.uzdiz.mmarkovin21.modeli.Rezervacija;
 import edu.unizg.foi.uzdiz.mmarkovin21.modeli.Aranzman;
 
@@ -43,7 +43,7 @@ public class TuristickaAgencija {
             String[] dijelovi = unos.split("\\s+");
             String nazivKomande = dijelovi[0].toUpperCase();
 
-            KomandaFactory factory = KomandaFactory.dohvatiFactory(nazivKomande);
+            KomandaTvornica factory = KomandaTvornica.dohvatiFactory(nazivKomande);
             if (factory != null) {
                 Komanda komanda = factory.kreirajKomandu();
                 komanda.izvrsi(dijelovi);
@@ -55,7 +55,6 @@ public class TuristickaAgencija {
         }
         scanner.close();
     }
-
 
     public List<Aranzman> dohvatiAranzmane() { return aranzmani; }
     public List<Rezervacija> dohvatiRezervacije() { return rezervacije; }

@@ -17,7 +17,7 @@ public class KomandaITAP implements Komanda {
         if (parametri.length == 2) {
             oznaka = parametri[1];
         } else {
-            System.err.println("Greška: Neispravan broj parametara. Očekivano: ITAP <oznaka>");
+            System.out.println("Greška: Neispravan broj parametara. Očekivano: ITAP <oznaka>");
             return;
         }
         FormaterTablice tablica = new FormaterTablice(new int[]{5, 20, 40, 12, 12, 8, 8, 8, 8, 8, 8, 8, 10, 8, 8, 8});

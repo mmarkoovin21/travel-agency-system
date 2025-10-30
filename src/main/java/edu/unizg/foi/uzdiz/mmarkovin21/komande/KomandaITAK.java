@@ -23,9 +23,16 @@ public class KomandaITAK implements Komanda {
             datumDo = PretvaracDatuma.parsirajDatum(parametri[2]);
 
             if (datumOd == null || datumDo == null) {
-                System.err.println("Greška: Neispravan format datuma. Koristite format: d.M.yyyy. ili dd.MM.yyyy.");
+                System.out.println("Greška: Neispravan format datuma. Koristite format: d.M.yyyy. ili dd.MM.yyyy.");
                 return;
             }
+            else if (datumOd.isAfter(datumDo)) {
+                System.out.println("Greška: Početni datum ne može biti nakon završnog datuma.");
+                return;
+            }
+        } else if (parametri.length > 1) {
+            System.out.println("Greška: Komanda ITAK zahtijeva oba datuma (od i do) ili nijedan.");
+            return;
         }
 
         FormaterTablice tablica = new FormaterTablice(new int[]{5, 30, 12, 12, 10, 10, 8, 8, 8});
