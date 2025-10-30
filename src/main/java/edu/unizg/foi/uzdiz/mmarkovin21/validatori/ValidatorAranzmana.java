@@ -10,7 +10,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class ValidatorAranzmana {
+public class ValidatorAranzmana extends Validator {
     public ValidiraniPodaci validiraj(String[] atributi) {
         try {
             int oznaka = validirajInt(atributi[0], "Oznaka", true);
@@ -40,77 +40,10 @@ public class ValidatorAranzmana {
                     brojDorucaka, brojRucakova, brojVecera
             );
         } catch (Exception e) {
-            System.err.println("Greška pri validaciji retka : " + e.getMessage());
+            System.err.println("Greška pri validaciji: " + e.getMessage());
             return null;
         }
     }
-
-    private String validirajString(String vrijednost, String imePolja, boolean obavezan) {
-        if (vrijednost == null || vrijednost.trim().isEmpty()) {
-            if (obavezan) {
-                throw new IllegalArgumentException(imePolja + " je obavezan!");
-            }
-            return null;
-        }
-        return vrijednost.trim();
-    }
-
-    private int validirajInt(String vrijednost, String imePolja, boolean obavezan) {
-        if (vrijednost == null || vrijednost.trim().isEmpty()) {
-            if (obavezan) {
-                throw new IllegalArgumentException(imePolja + " je obavezan!");
-            }
-            return 0;
-        }
-        try {
-            return Integer.parseInt(vrijednost.trim());
-        } catch (NumberFormatException e) {
-            throw new IllegalArgumentException("Nevažeća vrijednost za " + imePolja + ": " + vrijednost);
-        }
-    }
-
-    private Long validirajLong(String vrijednost, String imePolja, boolean obavezan) {
-        if (vrijednost == null || vrijednost.trim().isEmpty()) {
-            if (obavezan) {
-                throw new IllegalArgumentException(imePolja + " je obavezan!");
-            }
-            return null;
-        }
-        try {
-            return Long.parseLong(vrijednost.trim());
-        } catch (NumberFormatException e) {
-            throw new IllegalArgumentException("Nevažeća vrijednost za " + imePolja + ": " + vrijednost);
-        }
-    }
-
-    private LocalDate validirajDatum(String vrijednost, String imePolja, boolean obavezan) {
-        if (vrijednost == null || vrijednost.trim().isEmpty()) {
-            if (obavezan) {
-                throw new IllegalArgumentException(imePolja + " je obavezan!");
-            }
-            return null;
-        }
-        LocalDate datum = PretvaracDatuma.parsirajDatum(vrijednost);
-        if (datum == null && obavezan) {
-            throw new IllegalArgumentException("Nevažeći format datuma za " + imePolja + "!: " + vrijednost);
-        }
-        return datum;
-    }
-
-    private LocalTime validirajVrijeme(String vrijednost, String imePolja, boolean obavezan) {
-        if (vrijednost == null || vrijednost.trim().isEmpty()) {
-            if (obavezan) {
-                throw new IllegalArgumentException(imePolja + " je obavezan!");
-            }
-            return null;
-        }
-        LocalTime vrijeme = PretvaracDatuma.parsirajVrijeme(vrijednost);
-        if (vrijeme == null && obavezan) {
-            throw new IllegalArgumentException("Nevažeći format vremena za " + imePolja + ": " + vrijednost);
-        }
-        return vrijeme;
-    }
-
     private List<String> parsirajPrijevoz(String prijevozString) {
         if (prijevozString == null || prijevozString.trim().isEmpty()) {
             return new ArrayList<>();
@@ -120,4 +53,5 @@ public class ValidatorAranzmana {
                 .filter(s -> !s.isEmpty())
                 .collect(Collectors.toList());
     }
+
 }
