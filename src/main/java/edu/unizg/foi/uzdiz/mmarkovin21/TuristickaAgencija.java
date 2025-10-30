@@ -30,7 +30,7 @@ public class TuristickaAgencija {
         CitacRezervacija citacR = new CitacRezervacija();
 
         this.aranzmani = citacA.ucitaj(datotekaAranzmani);
-//        this.rezervacije = citacR.ucitaj(datotekaRezervacije);
+        this.rezervacije = citacR.ucitajRezervacije(datotekaRezervacije);
     }
 
     public void pokreniInteraktivniNacin() {

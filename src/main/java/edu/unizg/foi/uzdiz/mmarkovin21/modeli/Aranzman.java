@@ -71,6 +71,22 @@ public class Aranzman {
         return zavrsniDatum;
     }
 
+    public int dohvatiMinBrojPutnika() {
+        return minBrojPutnika;
+    }
+
+    public void postaviMinBrojPutnika(int minBrojPutnika) {
+        this.minBrojPutnika = minBrojPutnika;
+    }
+
+    public int dohvatiMaxBrojPutnika() {
+        return maxBrojPutnika;
+    }
+
+    public void postaviMaxBrojPutnika(int maxBrojPutnika) {
+        this.maxBrojPutnika = maxBrojPutnika;
+    }
+
     public Long dohvatiCijenaPoOsobi() {
         return cijenaPoOsobi;
     }
@@ -90,22 +106,6 @@ public class Aranzman {
     
     public void postaviVrijemePovratka(LocalTime vrijemePovratka) {
         this.vrijemePovratka = vrijemePovratka;
-    }
-
-    public int dohvatiMinBrojPutnika() {
-        return minBrojPutnika;
-    }
-    
-    public void postaviMinBrojPutnika(int minBrojPutnika) {
-        this.minBrojPutnika = minBrojPutnika;
-    }
-
-    public int dohvatiMaxBrojPutnika() {
-        return maxBrojPutnika;
-    }
-    
-    public void postaviMaxBrojPutnika(int maxBrojPutnika) {
-        this.maxBrojPutnika = maxBrojPutnika;
     }
 
     public int dohvatiBrojNocenja() {
