@@ -43,9 +43,8 @@ public class TuristickaAgencija {
             String[] dijelovi = unos.split("\\s+");
             String nazivKomande = dijelovi[0].toUpperCase();
 
-            KomandaTvornica factory = KomandaTvornica.dohvatiFactory(nazivKomande);
-            if (factory != null) {
-                Komanda komanda = factory.kreirajKomandu();
+            Komanda komanda = KomandaTvornica.kreirajKomandu(nazivKomande);
+            if (komanda != null) {
                 komanda.izvrsi(dijelovi);
 
                 if (nazivKomande.equals("Q")) break;
