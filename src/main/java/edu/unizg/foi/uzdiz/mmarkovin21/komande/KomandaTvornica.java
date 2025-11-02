@@ -9,6 +9,7 @@ public abstract class KomandaTvornica {
             case "ITAP" -> new ITAPTvornica();
             case "IRTA" -> new IRTATvornica();
             case "IRO" -> new IROTvornica();
+            case "ORTA" -> new ORTATvornica();
             case "Q" -> new QTvornica();
             default -> null;
         };

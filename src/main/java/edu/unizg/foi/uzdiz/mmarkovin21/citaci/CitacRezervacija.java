@@ -16,7 +16,7 @@ public class CitacRezervacija {
     private final int OCEKIVANI_BROJ_ATRIBUTA = 4;
 
     public CitacRezervacija() {
-        this.upraviteljStanja = new UpraviteljStanjaRezervacija(TuristickaAgencija.dohvatiInstancu());
+        this.upraviteljStanja = new UpraviteljStanjaRezervacija();
         this.validator = new ValidatorRezervacija();
     }
 
@@ -60,7 +60,7 @@ public class CitacRezervacija {
 
                     String pocetnoStanje = upraviteljStanja.odrediPocetnoStanje(
                             validnaRezervacija.dohvatiOznakaAranzmana(),
-                            rezervacije
+                            rezervacije, validnaRezervacija.dohvatiIme(), validnaRezervacija.dohvatiIme()
                     );
                     validnaRezervacija.promijeniStanje(pocetnoStanje);
                     rezervacije.add(validnaRezervacija);
