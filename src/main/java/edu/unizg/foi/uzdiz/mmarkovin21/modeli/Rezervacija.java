@@ -8,6 +8,7 @@ public class Rezervacija {
     private int oznakaAranzmana;
     private LocalDateTime datumVrijemePrijema;
     private String stanje;
+    private LocalDateTime datumVrijemeOtkazivanja;
 
     public Rezervacija(String ime, String prezime, int oznakaAranzmana,
                        LocalDateTime datumVrijemePrijema, String vrsta) {
@@ -40,6 +41,14 @@ public class Rezervacija {
 
     public void promijeniStanje(String novoStanje) {
         this.stanje = novoStanje;
+    }
+
+    public LocalDateTime dohvatiDatumVrijemeOtkazivanja() {
+        return datumVrijemeOtkazivanja;
+    }
+
+    public void postaviDatumVrijemeOtkazivanja(LocalDateTime datumVrijemeOtkazivanja) {
+        this.datumVrijemeOtkazivanja = datumVrijemeOtkazivanja;
     }
 
 }

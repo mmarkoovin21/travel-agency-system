@@ -4,6 +4,7 @@ import edu.unizg.foi.uzdiz.mmarkovin21.TuristickaAgencija;
 import edu.unizg.foi.uzdiz.mmarkovin21.modeli.Aranzman;
 import edu.unizg.foi.uzdiz.mmarkovin21.modeli.Rezervacija;
 
+import java.time.LocalDateTime;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
@@ -67,6 +68,7 @@ public class UpraviteljStanjaRezervacija {
         ).findFirst().orElse(null);
         if (otkazana != null) {
             otkazana.promijeniStanje("otkazana");
+            otkazana.postaviDatumVrijemeOtkazivanja(LocalDateTime.now());
             azurirajStanja(oznakaAranzmana, agencija.dohvatiRezervacije());
             return true;
         } else {
