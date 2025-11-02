@@ -41,6 +41,7 @@ public class KomandaITAK implements Komanda {
 
         LocalDate finalDatumOd = datumOd;
         LocalDate finalDatumDo = datumDo;
+        int brojPronadenih = 0;
 
         for (var aranzman : agencija.dohvatiAranzmane()) {
             if (finalDatumOd != null && finalDatumDo != null) {
@@ -61,8 +62,13 @@ public class KomandaITAK implements Komanda {
                     String.valueOf(aranzman.dohvatiMinBrojPutnika()),
                     String.valueOf(aranzman.dohvatiMaxBrojPutnika())
             );
+            brojPronadenih++;
         }
 
-        System.out.println(tablica.formatiraj());
+        if (brojPronadenih == 0) {
+            System.out.println("Nema pronađenih aranžmana za ovo razdoblje.");
+        } else {
+            System.out.println(tablica.formatiraj());
+        }
     }
 }

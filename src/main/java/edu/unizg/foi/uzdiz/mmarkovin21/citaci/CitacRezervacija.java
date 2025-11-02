@@ -13,6 +13,7 @@ import java.util.List;
 public class CitacRezervacija {
     private final ValidatorRezervacija validator;
     private final UpraviteljStanjaRezervacija upraviteljStanja;
+    private final int OCEKIVANI_BROJ_ATRIBUTA = 4;
 
     public CitacRezervacija() {
         this.upraviteljStanja = new UpraviteljStanjaRezervacija(TuristickaAgencija.dohvatiInstancu());
@@ -37,12 +38,23 @@ public class CitacRezervacija {
                 }
 
                 String[] atributi = linija.split(",");
+                if (atributi.length != OCEKIVANI_BROJ_ATRIBUTA) {
+                    System.err.println("Greška pri obradi retka " + brojRetka +
+                            " u datoteci" + nazivDatoteke + ": Očekivano " + OCEKIVANI_BROJ_ATRIBUTA +
+                            " atributa, pronađeno " + atributi.length);
+                    continue;
+                }
 
                 try {
                     Rezervacija validnaRezervacija = validator.validiraj(atributi);
 
                     if (validnaRezervacija == null) {
                         System.err.println("Neispravan format rezervacije na retku " + brojRetka);
+                        continue;
+                    }
+                    if (!provjeriPostojanjeAranzmana(validnaRezervacija.dohvatiOznakaAranzmana())) {
+                        System.err.println("Aranžman " + validnaRezervacija.dohvatiOznakaAranzmana() +
+                                " ne postoji (redak " + brojRetka + " u datoteci" + nazivDatoteke + ")");
                         continue;
                     }
 
@@ -66,4 +78,12 @@ public class CitacRezervacija {
         }
         return rezervacije;
     }
+
+    private boolean provjeriPostojanjeAranzmana(int oznakaAranzmana) {
+        return TuristickaAgencija.dohvatiInstancu()
+                .dohvatiAranzmane()
+                .stream()
+                .anyMatch(aranzman -> aranzman.dohvatiOznaka() == oznakaAranzmana);
+    }
+
 }

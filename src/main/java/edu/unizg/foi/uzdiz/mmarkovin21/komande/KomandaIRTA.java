@@ -28,7 +28,7 @@ public class KomandaIRTA implements Komanda {
                 return;
             }
         } else {
-            System.out.println("Greška: Neispravan broj parametara za komandu IRTA. Očekivano 2 parametra.");
+            System.out.println("Greška: Neispravan broj parametara za komandu IRTA. Očekivano IRTA <oznaka> [PA|Č|O].");
             return;
         }
 

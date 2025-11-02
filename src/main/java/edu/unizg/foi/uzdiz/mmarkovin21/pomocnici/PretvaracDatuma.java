@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.util.Date;
 
 public class PretvaracDatuma {
     private static final DateTimeFormatter[] DATUM_FORMATI = new DateTimeFormatter[] {
@@ -21,14 +22,22 @@ public class PretvaracDatuma {
 
     private static final DateTimeFormatter[] DATUM_VRIJEME_FORMATI = new DateTimeFormatter[] {
             DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm:ss"),
-            DateTimeFormatter.ofPattern("d.M.yyyy HH:mm:ss"),
+            DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm"),
+            DateTimeFormatter.ofPattern("dd.MM.yyyy H:mm"),
             DateTimeFormatter.ofPattern("dd.MM.yyyy. HH:mm:ss"),
-            DateTimeFormatter.ofPattern("d.M.yyyy. HH:mm:ss")
+            DateTimeFormatter.ofPattern("dd.MM.yyyy. HH:mm"),
+            DateTimeFormatter.ofPattern("dd.MM.yyyy. H:mm"),
+            DateTimeFormatter.ofPattern("d.M.yyyy HH:mm:ss"),
+            DateTimeFormatter.ofPattern("d.M.yyyy HH:mm"),
+            DateTimeFormatter.ofPattern("d.M.yyyy H:mm"),
+            DateTimeFormatter.ofPattern("d.M.yyyy. HH:mm:ss"),
+            DateTimeFormatter.ofPattern("d.M.yyyy. HH:mm"),
+            DateTimeFormatter.ofPattern("d.M.yyyy. H:mm")
     };
 
     private static final DateTimeFormatter HRVATSKI_DATUM_FORMAT = DateTimeFormatter.ofPattern("dd.MM.yyyy.");
     private static final DateTimeFormatter HRVATSKI_VRIJEME_FORMAT = DateTimeFormatter.ofPattern("HH:mm:ss");
-    private static final DateTimeFormatter HRVATSKI_DATUM_VRIJEME_FORMAT = DateTimeFormatter.ofPattern("dd.MM.yyyy. HH:mm:ss");
+    private static final DateTimeFormatter HRVATSKI_DATUM_VRIJEME_FORMAT = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm:ss");
 
     public static LocalDate parsirajDatum(String datumString) {
         if (datumString == null || datumString.trim().isEmpty()) {

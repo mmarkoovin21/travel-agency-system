@@ -17,6 +17,7 @@ public class CitacAranzmana {
     private List<Aranzman> aranzmani = new ArrayList<>();
     private ValidatorAranzmana validator = new ValidatorAranzmana();
     private AranzmanDirektor direktor = new AranzmanDirektor(new AranzmanGraditelj());
+    final int OCEKIVANI_BROJ_ATRIBUTA = 16;
 
     public List<Aranzman> ucitaj(String nazivDatoteke) {
 
@@ -37,6 +38,13 @@ public class CitacAranzmana {
 
                 try {
                     String[] atributi = parsirajRedak(linija);
+                    if (atributi.length != OCEKIVANI_BROJ_ATRIBUTA) {
+                        System.err.println("Greška pri obradi retka " + brojRetka +
+                                " u datoteci" + nazivDatoteke + ": Očekivano " + OCEKIVANI_BROJ_ATRIBUTA +
+                                " atributa, pronađeno " + atributi.length);
+                        continue;
+                    }
+
                     ValidiraniPodaci podaci = this.validator.validiraj(atributi);
 
                     if (podaci != null) {
