@@ -7,11 +7,7 @@ import edu.unizg.foi.uzdiz.mmarkovin21.pomocnici.PretvaracDatuma;
 import java.time.LocalDate;
 
 public class KomandaITAK implements Komanda {
-    private TuristickaAgencija agencija;
-
-    public KomandaITAK(TuristickaAgencija agencija) {
-        this.agencija = agencija;
-    }
+    private TuristickaAgencija agencija = TuristickaAgencija.dohvatiInstancu();
 
     @Override
     public void izvrsi(String[] parametri) {

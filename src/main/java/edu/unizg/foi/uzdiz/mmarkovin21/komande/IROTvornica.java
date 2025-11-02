@@ -5,6 +5,6 @@ import edu.unizg.foi.uzdiz.mmarkovin21.TuristickaAgencija;
 public class IROTvornica extends KomandaTvornica{
     @Override
     public Komanda kreirajKomandu() {
-        return new KomandaIRO(TuristickaAgencija.dohvatiInstancu());
+        return new KomandaIRO();
     }
 }
