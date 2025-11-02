@@ -13,7 +13,6 @@ import java.util.List;
 public class CitacRezervacija {
     private final ValidatorRezervacija validator;
     private final UpraviteljStanjaRezervacija upraviteljStanja;
-    private final int OCEKIVANI_BROJ_ATRIBUTA = 4;
 
     public CitacRezervacija() {
         this.upraviteljStanja = new UpraviteljStanjaRezervacija();
@@ -38,6 +37,7 @@ public class CitacRezervacija {
                 }
 
                 String[] atributi = linija.split(",");
+                int OCEKIVANI_BROJ_ATRIBUTA = 4;
                 if (atributi.length != OCEKIVANI_BROJ_ATRIBUTA) {
                     System.err.println("Greška pri obradi retka " + brojRetka +
                             " u datoteci" + nazivDatoteke + ": Očekivano " + OCEKIVANI_BROJ_ATRIBUTA +
@@ -60,15 +60,16 @@ public class CitacRezervacija {
 
                     String pocetnoStanje = upraviteljStanja.odrediPocetnoStanje(
                             validnaRezervacija.dohvatiOznakaAranzmana(),
-                            rezervacije, validnaRezervacija.dohvatiIme(), validnaRezervacija.dohvatiIme()
+                            rezervacije, validnaRezervacija.dohvatiIme(), validnaRezervacija.dohvatiPrezime()
                     );
+
+                    // Ne dodaj rezervaciju ako nije validna (pocetnoStanje je prazan string)
+                    if (pocetnoStanje.isEmpty()) {
+                        continue;
+                    }
+
                     validnaRezervacija.promijeniStanje(pocetnoStanje);
                     rezervacije.add(validnaRezervacija);
-
-                    upraviteljStanja.azurirajStanja(
-                            validnaRezervacija.dohvatiOznakaAranzmana(),
-                            rezervacije
-                    );
                 } catch (Exception e) {
                     System.err.println("Greška pri obradi retka " + brojRetka + ": " + e.getMessage());
                 }
@@ -76,6 +77,16 @@ public class CitacRezervacija {
         } catch (Exception e) {
             System.err.println("Greška pri čitanju datoteke: " + e.getMessage());
         }
+
+        List<Integer> oznakaAranzmana = rezervacije.stream()
+                .map(Rezervacija::dohvatiOznakaAranzmana)
+                .distinct()
+                .toList();
+
+        for (Integer oznaka : oznakaAranzmana) {
+            upraviteljStanja.azurirajStanja(oznaka, rezervacije);
+        }
+
         return rezervacije;
     }
 

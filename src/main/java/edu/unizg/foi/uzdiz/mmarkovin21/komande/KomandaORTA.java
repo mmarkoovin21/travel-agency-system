@@ -4,36 +4,36 @@ import edu.unizg.foi.uzdiz.mmarkovin21.TuristickaAgencija;
 import edu.unizg.foi.uzdiz.mmarkovin21.upravitelji.UpraviteljStanjaRezervacija;
 
 public class KomandaORTA implements Komanda {
-    TuristickaAgencija agencija = TuristickaAgencija.dohvatiInstancu();
-    UpraviteljStanjaRezervacija upraviteljStanja = new UpraviteljStanjaRezervacija();
+    private final TuristickaAgencija agencija;
+    private final UpraviteljStanjaRezervacija upraviteljStanja;
+
+    public KomandaORTA(TuristickaAgencija agencija, UpraviteljStanjaRezervacija upraviteljStanja) {
+        this.agencija = agencija;
+        this.upraviteljStanja = upraviteljStanja;
+    }
 
     @Override
     public void izvrsi(String[] parametri) {
-        String ime;
-        String prezime;
+        if (parametri.length != 4) {
+            System.out.println("Greška: Neispravan broj parametara za komandu ORTA. Očekivano ORTA <ime> <prezime> <oznaka>.");
+            return;
+        }
+
+        String ime = parametri[1];
+        String prezime = parametri[2];
         int oznakaAranzmana;
 
-        if (parametri.length == 4) {
-            try {
-                ime = parametri[1];
-                prezime = parametri[2];
-                oznakaAranzmana = Integer.parseInt(parametri[3]);
-            } catch (NumberFormatException e) {
-                ime = "";
-                prezime = "";
-                oznakaAranzmana = 0;
-                System.out.println("Greška: Neispravan format oznake. Oznaka mora biti cijeli broj.");
-                return;
-            }
-        } else {
-            System.out.println("Greška: Neispravan broj parametara za komandu ORTA. Očekivano ORTA <ime> <prezime> <oznaka>.");
+        try {
+            oznakaAranzmana = Integer.parseInt(parametri[3]);
+        } catch (NumberFormatException e) {
+            System.out.println("Greška: Neispravan format oznake. Oznaka mora biti cijeli broj.");
             return;
         }
 
         boolean jeOtkazana = upraviteljStanja.otkazirezervaciju(ime, prezime, oznakaAranzmana);
 
         if (jeOtkazana) {
-            System.out.println("Rezervacija za " + ime + " " + prezime + " na aranžmanu " + oznakaAranzmana + " je uspješno otkazana.");
+            System.out.println("Otkazana rezervacija " + ime + " " + prezime + " za turistički aranžman " + oznakaAranzmana + ".");
         } else {
             System.out.println("Nije pronađena rezervacija za " + ime + " " + prezime + " na aranžmanu " + oznakaAranzmana + ".");
         }

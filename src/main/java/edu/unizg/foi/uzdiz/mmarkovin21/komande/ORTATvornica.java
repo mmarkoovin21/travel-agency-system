@@ -1,12 +1,19 @@
 package edu.unizg.foi.uzdiz.mmarkovin21.komande;
 
 import edu.unizg.foi.uzdiz.mmarkovin21.TuristickaAgencija;
+import edu.unizg.foi.uzdiz.mmarkovin21.upravitelji.UpraviteljStanjaRezervacija;
 
 public class ORTATvornica extends KomandaTvornica {
-    public ORTATvornica() {}
+    private final TuristickaAgencija agencija;
+    private final UpraviteljStanjaRezervacija upraviteljStanja;
+
+    public ORTATvornica(TuristickaAgencija agencija, UpraviteljStanjaRezervacija upraviteljStanja) {
+        this.agencija = agencija;
+        this.upraviteljStanja = upraviteljStanja;
+    }
 
     @Override
     public Komanda kreirajKomandu() {
-        return new KomandaORTA();
+        return new KomandaORTA(agencija, upraviteljStanja);
     }
 }

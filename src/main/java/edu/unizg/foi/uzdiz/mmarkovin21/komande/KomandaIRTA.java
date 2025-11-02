@@ -5,6 +5,7 @@ import edu.unizg.foi.uzdiz.mmarkovin21.modeli.Rezervacija;
 import edu.unizg.foi.uzdiz.mmarkovin21.pomocnici.FormaterTablice;
 import edu.unizg.foi.uzdiz.mmarkovin21.pomocnici.PretvaracDatuma;
 
+import java.util.Comparator;
 import java.util.List;
 
 public class KomandaIRTA implements Komanda {
@@ -49,22 +50,25 @@ public class KomandaIRTA implements Komanda {
         }
 
         for (Rezervacija rez : rezervacije) {
-//            if (prikaziDatumOtkaza && rez.dohvatiStanje().equals("otkazana")) {
-//                tablica.dodajRed(
-//                        rez.dohvatiIme(),
-//                        rez.dohvatiPrezime(),
-//                        PretvaracDatuma.formatirajDatumVrijeme(rez.dohvatiDatumVrijemePrijema()),
-//                        rez.dohvatiStanje(),
-//                        rez.dohvatiDatumOtkaza()
-//                );
-//            } else {
+            if (prikaziDatumOtkaza) {
+                String datumOtkaza = rez.dohvatiStanje().equals("otkazana")
+                        ? PretvaracDatuma.formatirajDatumVrijeme(rez.dohvatiDatumVrijemeOtkazivanja())
+                        : "";
+                tablica.dodajRed(
+                        rez.dohvatiIme(),
+                        rez.dohvatiPrezime(),
+                        PretvaracDatuma.formatirajDatumVrijeme(rez.dohvatiDatumVrijemePrijema()),
+                        rez.dohvatiStanje(),
+                        datumOtkaza
+                );
+            } else {
                 tablica.dodajRed(
                         rez.dohvatiIme(),
                         rez.dohvatiPrezime(),
                         PretvaracDatuma.formatirajDatumVrijeme(rez.dohvatiDatumVrijemePrijema()),
                         rez.dohvatiStanje()
                 );
-//            }
+            }
         }
 
         System.out.println(tablica.formatiraj());
@@ -78,18 +82,22 @@ public class KomandaIRTA implements Komanda {
             case "PA" -> rezervacije.stream()
                     .filter(r -> r.dohvatiOznakaAranzmana() == oznakaAranzmana)
                     .filter(r -> r.dohvatiStanje().equals("primljena") || r.dohvatiStanje().equals("aktivna"))
+                    .sorted(Comparator.comparing(Rezervacija::dohvatiDatumVrijemePrijema))
                     .toList();
             case "Č" -> rezervacije.stream()
                     .filter(r -> r.dohvatiOznakaAranzmana() == oznakaAranzmana)
                     .filter(r -> r.dohvatiStanje().equals("na čekanju"))
+                    .sorted(Comparator.comparing(Rezervacija::dohvatiDatumVrijemePrijema))
                     .toList();
-//            case "O" -> rezervacije.stream()
-//                    .filter(r -> r.dohvatiOznakaAranzmana() == oznakaAranzmana)
-//                    .filter(r -> r.dohvatiStanje().equals("otkazana"))
-//                    .toList();
-//            case "PAČO" -> rezervacije.stream()
-//                    .filter(r -> r.dohvatiOznakaAranzmana() == oznakaAranzmana)
-//                    .toList();
+            case "O" -> rezervacije.stream()
+                    .filter(r -> r.dohvatiOznakaAranzmana() == oznakaAranzmana)
+                    .filter(r -> r.dohvatiStanje().equals("otkazana"))
+                    .sorted(Comparator.comparing(Rezervacija::dohvatiDatumVrijemePrijema))
+                    .toList();
+            case "PAČO" -> rezervacije.stream()
+                    .filter(r -> r.dohvatiOznakaAranzmana() == oznakaAranzmana)
+                    .sorted(Comparator.comparing(Rezervacija::dohvatiDatumVrijemePrijema))
+                    .toList();
             default -> List.of();
         };
     }

@@ -23,15 +23,19 @@ public class PretvaracDatuma {
     private static final DateTimeFormatter[] DATUM_VRIJEME_FORMATI = new DateTimeFormatter[] {
             DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm:ss"),
             DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm"),
+            DateTimeFormatter.ofPattern("dd.MM.yyyy H:mm:ss"),
             DateTimeFormatter.ofPattern("dd.MM.yyyy H:mm"),
             DateTimeFormatter.ofPattern("dd.MM.yyyy. HH:mm:ss"),
             DateTimeFormatter.ofPattern("dd.MM.yyyy. HH:mm"),
+            DateTimeFormatter.ofPattern("dd.MM.yyyy. H:mm:ss"),
             DateTimeFormatter.ofPattern("dd.MM.yyyy. H:mm"),
             DateTimeFormatter.ofPattern("d.M.yyyy HH:mm:ss"),
             DateTimeFormatter.ofPattern("d.M.yyyy HH:mm"),
+            DateTimeFormatter.ofPattern("d.M.yyyy H:mm:ss"),
             DateTimeFormatter.ofPattern("d.M.yyyy H:mm"),
             DateTimeFormatter.ofPattern("d.M.yyyy. HH:mm:ss"),
             DateTimeFormatter.ofPattern("d.M.yyyy. HH:mm"),
+            DateTimeFormatter.ofPattern("d.M.yyyy. H:mm:ss"),
             DateTimeFormatter.ofPattern("d.M.yyyy. H:mm")
     };
 
