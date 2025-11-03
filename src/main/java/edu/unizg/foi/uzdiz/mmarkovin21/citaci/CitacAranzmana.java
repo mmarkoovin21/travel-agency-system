@@ -9,9 +9,7 @@ import edu.unizg.foi.uzdiz.mmarkovin21.validatori.ValidatorAranzmana;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class CitacAranzmana {
     private List<Aranzman> aranzmani = new ArrayList<>();
@@ -28,20 +26,25 @@ public class CitacAranzmana {
 
             while ((linija = citac.readLine()) != null) {
                 brojRetka++;
-                if (prviRedak) {
-                    prviRedak = false;
-                    continue;
-                }
                 if (linija.trim().isEmpty() || linija.startsWith("#")) {
                     continue;
                 }
 
                 try {
-                    String[] atributi = parsirajRedak(linija);
+                    String[] atributi = CSVHelper.parsirajRedakCSV(linija);
+
+                    if (prviRedak) {
+                        prviRedak = false;
+                        boolean imaHeader = jeInformativniRedak(atributi);
+                        CSVHelper.ispisiHeaderInfo(nazivDatoteke, imaHeader, OCEKIVANI_BROJ_ATRIBUTA, atributi.length);
+
+                        if (imaHeader) {
+                            continue;
+                        }
+                    }
+
                     if (atributi.length != OCEKIVANI_BROJ_ATRIBUTA) {
-                        System.err.println("Greška pri obradi retka " + brojRetka +
-                                " u datoteci" + nazivDatoteke + ": Očekivano " + OCEKIVANI_BROJ_ATRIBUTA +
-                                " atributa, pronađeno " + atributi.length);
+                        CSVHelper.ispisiGreskaBrojaAtributa(brojRetka, nazivDatoteke, OCEKIVANI_BROJ_ATRIBUTA, atributi.length);
                         continue;
                     }
 
@@ -62,48 +65,22 @@ public class CitacAranzmana {
         return aranzmani;
     }
 
-    public String[] parsirajRedak(String redak) {
-        List<String> rezultat = new ArrayList<>();
-        StringBuilder trenutniAtribut = new StringBuilder();
-        boolean unutarNavodnika = false;
-
-        for (int i = 0; i < redak.length(); i++) {
-            char trenutniZnak = redak.charAt(i);
-
-            if (trenutniZnak == '"') {
-                unutarNavodnika = !unutarNavodnika;
-            } else if (trenutniZnak == ',' && !unutarNavodnika) {
-                rezultat.add(ocistiAtribut(trenutniAtribut.toString()));
-                trenutniAtribut.setLength(0);
-            } else {
-                trenutniAtribut.append(trenutniZnak);
-            }
+    private boolean jeInformativniRedak(String[] atributi) {
+        if (atributi.length == 0) {
+            return false;
         }
 
-        rezultat.add(ocistiAtribut(trenutniAtribut.toString()));
-
-        return rezultat.toArray(new String[0]);
-    }
-
-    private String ocistiAtribut(String atribut) {
-        String ociscen = atribut.trim();
-
-        if (ociscen.startsWith("\"") && ociscen.endsWith("\"")) {
-            ociscen = ociscen.substring(1, ociscen.length() - 1);
+        String[] kljucneRijeci = {"oznaka", "naziv", "program"};
+        if (CSVHelper.sadrziKljucneRijeci(atributi, kljucneRijeci)) {
+            return true;
         }
 
-        return ociscen;
-    }
-
-    private List<String> parsirajPrijevoz(String prijevozString) {
-        if (prijevozString == null || prijevozString.trim().isEmpty()) {
-            return new ArrayList<>();
+        String prviAtribut = CSVHelper.ocistiAtribut(atributi[0]);
+        if (CSVHelper.jeBroj(prviAtribut)) {
+            return false;
         }
 
-        return Arrays.stream(prijevozString.split(";"))
-                .map(String::trim)
-                .filter(s -> !s.isEmpty())
-                .collect(Collectors.toList());
+        return prviAtribut.trim().isEmpty();
     }
 
 }

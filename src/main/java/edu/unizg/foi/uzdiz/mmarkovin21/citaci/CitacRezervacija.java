@@ -28,20 +28,25 @@ public class CitacRezervacija {
 
             while ((linija = citac.readLine()) != null) {
                 brojRetka++;
-                if (prviRedak) {
-                    prviRedak = false;
-                    continue;
-                }
                 if (linija.trim().isEmpty() || linija.startsWith("#")) {
                     continue;
                 }
 
-                String[] atributi = linija.split(",");
+                String[] atributi = CSVHelper.parsirajRedakCSV(linija);
                 int OCEKIVANI_BROJ_ATRIBUTA = 4;
+
+                if (prviRedak) {
+                    prviRedak = false;
+                    boolean imaHeader = jeInformativniRedak(atributi);
+                    CSVHelper.ispisiHeaderInfo(nazivDatoteke, imaHeader, OCEKIVANI_BROJ_ATRIBUTA, atributi.length);
+
+                    if (imaHeader) {
+                        continue;
+                    }
+                }
+
                 if (atributi.length != OCEKIVANI_BROJ_ATRIBUTA) {
-                    System.err.println("Greška pri obradi retka " + brojRetka +
-                            " u datoteci" + nazivDatoteke + ": Očekivano " + OCEKIVANI_BROJ_ATRIBUTA +
-                            " atributa, pronađeno " + atributi.length);
+                    CSVHelper.ispisiGreskaBrojaAtributa(brojRetka, nazivDatoteke, OCEKIVANI_BROJ_ATRIBUTA, atributi.length);
                     continue;
                 }
 
@@ -63,7 +68,6 @@ public class CitacRezervacija {
                             rezervacije, validnaRezervacija.dohvatiIme(), validnaRezervacija.dohvatiPrezime()
                     );
 
-                    // Ne dodaj rezervaciju ako nije validna (pocetnoStanje je prazan string)
                     if (pocetnoStanje.isEmpty()) {
                         continue;
                     }
@@ -95,6 +99,15 @@ public class CitacRezervacija {
                 .dohvatiAranzmane()
                 .stream()
                 .anyMatch(aranzman -> aranzman.dohvatiOznaka() == oznakaAranzmana);
+    }
+
+    private boolean jeInformativniRedak(String[] atributi) {
+        if (atributi.length == 0) {
+            return false;
+        }
+
+        String[] kljucneRijeci = {"ime", "prezime", "oznaka", "datum"};
+        return CSVHelper.sadrziKljucneRijeci(atributi, kljucneRijeci);
     }
 
 }
