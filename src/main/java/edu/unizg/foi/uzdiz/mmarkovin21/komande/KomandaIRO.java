@@ -9,7 +9,11 @@ import edu.unizg.foi.uzdiz.mmarkovin21.pomocnici.PretvaracDatuma;
 import java.util.List;
 
 public class KomandaIRO implements Komanda {
-    TuristickaAgencija agencija = TuristickaAgencija.dohvatiInstancu();
+    private final TuristickaAgencija agencija;
+
+    public KomandaIRO(TuristickaAgencija agencija) {
+        this.agencija = agencija;
+    }
 
     @Override
     public void izvrsi(String[] parametri) {

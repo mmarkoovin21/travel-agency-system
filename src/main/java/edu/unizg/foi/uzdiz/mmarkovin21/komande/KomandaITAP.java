@@ -5,7 +5,11 @@ import edu.unizg.foi.uzdiz.mmarkovin21.pomocnici.FormaterTablice;
 import edu.unizg.foi.uzdiz.mmarkovin21.pomocnici.PretvaracDatuma;
 
 public class KomandaITAP implements Komanda {
-    private TuristickaAgencija agencija = TuristickaAgencija.dohvatiInstancu();
+    private final TuristickaAgencija agencija;
+
+    public KomandaITAP(TuristickaAgencija agencija) {
+        this.agencija = agencija;
+    }
     @Override
     public void izvrsi(String[] parametri) {
         String oznaka = null;

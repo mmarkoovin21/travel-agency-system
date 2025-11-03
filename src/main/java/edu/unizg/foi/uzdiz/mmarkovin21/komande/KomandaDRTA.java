@@ -9,45 +9,57 @@ import edu.unizg.foi.uzdiz.mmarkovin21.validatori.ValidatorRezervacija;
 import java.time.LocalDateTime;
 
 public class KomandaDRTA implements Komanda {
-    TuristickaAgencija agencija = TuristickaAgencija.dohvatiInstancu();
-    UpraviteljStanjaRezervacija upraviteljStanja = new UpraviteljStanjaRezervacija();
-    ValidatorRezervacija validatorRezervacija = new ValidatorRezervacija();
+    private final TuristickaAgencija agencija;
+    private final UpraviteljStanjaRezervacija upraviteljStanja;
+    private final ValidatorRezervacija validator;
+
+    public KomandaDRTA(TuristickaAgencija agencija, UpraviteljStanjaRezervacija upraviteljStanja,
+                       ValidatorRezervacija validator) {
+        this.agencija = agencija;
+        this.upraviteljStanja = upraviteljStanja;
+        this.validator = validator;
+    }
 
     @Override
     public void izvrsi(String[] parametri) {
-        String ime, prezime;
-        int oznakaAranzmana;
-        LocalDateTime datumVrijeme;
-        String[] atributi;
-
-        if (parametri.length == 6) {
-            ime = parametri[1];
-            prezime = parametri[2];
-            oznakaAranzmana = Integer.parseInt(parametri[3]);
-
-            String datumVrijemeString = parametri[4] + " " + parametri[5];
-            datumVrijeme = PretvaracDatuma.parsirajDatumVrijeme(datumVrijemeString);
-            atributi  = new String[] {ime, prezime, String.valueOf(oznakaAranzmana), datumVrijemeString};
-
-            if (datumVrijeme == null) {
-                System.out.println("Greška: Neispravan format datuma/vremena.");
-                return;
-            }
-        } else {
+        if (parametri.length != 6) {
             System.out.println("Greška: Neispravan broj parametara za komandu DRTA. Očekivano DRTA <ime> <prezime> <oznaka> <datum> <vrijeme>.");
             return;
         }
-        Rezervacija novaRezervacija = validatorRezervacija.validiraj(atributi);
+
+        String ime = parametri[1];
+        String prezime = parametri[2];
+        int oznakaAranzmana;
+
+        try {
+            oznakaAranzmana = Integer.parseInt(parametri[3]);
+        } catch (NumberFormatException e) {
+            System.out.println("Greška: Neispravan format oznake. Oznaka mora biti cijeli broj.");
+            return;
+        }
+
+        String datumVrijemeString = parametri[4] + " " + parametri[5];
+        LocalDateTime datumVrijeme = PretvaracDatuma.parsirajDatumVrijeme(datumVrijemeString);
+
+        if (datumVrijeme == null) {
+            System.out.println("Greška: Neispravan format datuma/vremena. Očekivani format: DD.MM.YYYY HH:MM:SS (npr. 01.01.2010 01:00:01)");
+            return;
+        }
+
+        String[] atributi = new String[] {ime, prezime, String.valueOf(oznakaAranzmana), datumVrijemeString};
+        Rezervacija novaRezervacija = validator.validiraj(atributi);
+
         if (novaRezervacija == null) {
             System.out.println("Greška: Neispravni podaci za rezervaciju.");
+            return;
         }
+
         boolean jeDodana = upraviteljStanja.dodajRezervaciju(novaRezervacija);
         if (jeDodana) {
-            System.out.println("Dodana rezervacija" + ime + " " + prezime + " za turistički aranžman s\n" +
-                    "oznakom " + oznakaAranzmana + " u " + datumVrijeme + ".");
+            System.out.println("Dodana rezervacija " + ime + " " + prezime + " za turistički aranžman s oznakom " +
+                    oznakaAranzmana + " u " + PretvaracDatuma.formatirajDatumVrijeme(datumVrijeme) + ".");
         } else {
             System.out.println("Greška: Rezervacija nije dodana!");
         }
     }
-
 }

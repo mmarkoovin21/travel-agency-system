@@ -9,7 +9,11 @@ import java.util.Comparator;
 import java.util.List;
 
 public class KomandaIRTA implements Komanda {
-    private final TuristickaAgencija agencija = TuristickaAgencija.dohvatiInstancu();
+    private final TuristickaAgencija agencija;
+
+    public KomandaIRTA(TuristickaAgencija agencija) {
+        this.agencija = agencija;
+    }
 
     @Override
     public void izvrsi(String[] parametri) {
