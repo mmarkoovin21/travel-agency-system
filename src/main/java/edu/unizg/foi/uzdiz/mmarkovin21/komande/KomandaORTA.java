@@ -2,6 +2,7 @@ package edu.unizg.foi.uzdiz.mmarkovin21.komande;
 
 import edu.unizg.foi.uzdiz.mmarkovin21.TuristickaAgencija;
 import edu.unizg.foi.uzdiz.mmarkovin21.upravitelji.UpraviteljStanjaRezervacija;
+import edu.unizg.foi.uzdiz.mmarkovin21.validatori.Validator;
 
 public class KomandaORTA implements Komanda {
     private final TuristickaAgencija agencija;
@@ -21,12 +22,9 @@ public class KomandaORTA implements Komanda {
 
         String ime = parametri[1];
         String prezime = parametri[2];
-        int oznakaAranzmana;
 
-        try {
-            oznakaAranzmana = Integer.parseInt(parametri[3]);
-        } catch (NumberFormatException e) {
-            System.out.println("Greška: Neispravan format oznake. Oznaka mora biti cijeli broj.");
+        Integer oznakaAranzmana = Validator.parsirajIValidirajOznaku(parametri[3], "ORTA");
+        if (oznakaAranzmana == null) {
             return;
         }
 

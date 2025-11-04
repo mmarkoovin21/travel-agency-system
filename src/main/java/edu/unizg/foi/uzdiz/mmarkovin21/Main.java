@@ -27,8 +27,5 @@ public class Main {
         TuristickaAgencija agencija = TuristickaAgencija.dohvatiInstancu();
         agencija.inicijaliziraj(datotekaAranzmani, datotekaRezervacije);
         agencija.pokreniInteraktivniNacin();
-
-        System.out.println("Učitavam: " + datotekaAranzmani);
-        System.out.println("Učitavam: " + datotekaRezervacije);
     }
 }

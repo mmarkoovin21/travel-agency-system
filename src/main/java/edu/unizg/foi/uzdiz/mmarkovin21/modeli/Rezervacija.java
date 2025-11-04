@@ -7,7 +7,7 @@ public class Rezervacija {
     private String prezime;
     private int oznakaAranzmana;
     private LocalDateTime datumVrijemePrijema;
-    private String stanje;
+    private StanjeRezervacije stanje;
     private LocalDateTime datumVrijemeOtkazivanja;
 
     public Rezervacija(String ime, String prezime, int oznakaAranzmana,
@@ -16,7 +16,7 @@ public class Rezervacija {
         this.prezime = prezime;
         this.oznakaAranzmana = oznakaAranzmana;
         this.datumVrijemePrijema = datumVrijemePrijema;
-        this.stanje = vrsta;
+        this.stanje = StanjeRezervacije.fromString(vrsta);
     }
 
     public String dohvatiIme() {
@@ -35,11 +35,19 @@ public class Rezervacija {
         return oznakaAranzmana;
     }
 
-    public String dohvatiStanje() {
+    public StanjeRezervacije dohvatiStanje() {
         return stanje;
     }
 
+    public String dohvatiStanjeString() {
+        return stanje != null ? stanje.getVrijednost() : "";
+    }
+
     public void promijeniStanje(String novoStanje) {
+        this.stanje = StanjeRezervacije.fromString(novoStanje);
+    }
+
+    public void promijeniStanje(StanjeRezervacije novoStanje) {
         this.stanje = novoStanje;
     }
 

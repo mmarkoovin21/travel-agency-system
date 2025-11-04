@@ -5,6 +5,8 @@ import edu.unizg.foi.uzdiz.mmarkovin21.modeli.Aranzman;
 import edu.unizg.foi.uzdiz.mmarkovin21.modeli.Rezervacija;
 import edu.unizg.foi.uzdiz.mmarkovin21.pomocnici.FormaterTablice;
 import edu.unizg.foi.uzdiz.mmarkovin21.pomocnici.PretvaracDatuma;
+import edu.unizg.foi.uzdiz.mmarkovin21.pomocnici.RezervacijaFilter;
+import edu.unizg.foi.uzdiz.mmarkovin21.validatori.Validator;
 
 import java.util.List;
 
@@ -20,18 +22,16 @@ public class KomandaIRO implements Komanda {
         String ime;
         String prezime;
 
-        if (parametri.length == 3) {
-            ime = parametri[1];
-            prezime = parametri[2];
-
-            if (!ime.matches("[a-zA-ZčćžšđČĆŽŠĐ]+") || !prezime.matches("[a-zA-ZčćžšđČĆŽŠĐ]+")) {
-                System.out.println("Greška: Ime i prezime moraju sadržavati samo slova.");
-                return;
-            }
-        } else {
-            prezime = "";
-            ime = "";
+        if (parametri.length != 3) {
             System.out.println("Greška: Neispravan broj parametara. Očekivano: IRO <ime> <prezime>");
+            return;
+        }
+
+        ime = parametri[1];
+        prezime = parametri[2];
+
+        if (!Validator.validirajImeIliPrezime(ime) || !Validator.validirajImeIliPrezime(prezime)) {
+            System.out.println("Greška: Ime i prezime moraju sadržavati samo slova.");
             return;
         }
 
@@ -41,8 +41,7 @@ public class KomandaIRO implements Komanda {
                 "Oznaka aranžmana", "Naziv aranžmana", "Vrsta");
 
         List<Rezervacija> rezervacijeKlijenta = agencija.dohvatiRezervacije().stream()
-                .filter(r -> r.dohvatiIme().equalsIgnoreCase(ime)
-                        && r.dohvatiPrezime().equalsIgnoreCase(prezime))
+                .filter(RezervacijaFilter.zaOsobu(ime, prezime))
                 .toList();
 
         if (rezervacijeKlijenta.isEmpty()) {
@@ -61,7 +60,7 @@ public class KomandaIRO implements Komanda {
                         PretvaracDatuma.formatirajDatumVrijeme(rezervacija.dohvatiDatumVrijemePrijema()),
                         String.valueOf(rezervacija.dohvatiOznakaAranzmana()),
                         aranzman.dohvatiNaziv(),
-                        rezervacija.dohvatiStanje()
+                        rezervacija.dohvatiStanjeString()
                 );
             }
         }

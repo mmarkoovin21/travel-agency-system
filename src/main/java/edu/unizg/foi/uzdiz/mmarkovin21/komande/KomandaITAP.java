@@ -3,6 +3,7 @@ package edu.unizg.foi.uzdiz.mmarkovin21.komande;
 import edu.unizg.foi.uzdiz.mmarkovin21.TuristickaAgencija;
 import edu.unizg.foi.uzdiz.mmarkovin21.pomocnici.FormaterTablice;
 import edu.unizg.foi.uzdiz.mmarkovin21.pomocnici.PretvaracDatuma;
+import edu.unizg.foi.uzdiz.mmarkovin21.validatori.Validator;
 
 public class KomandaITAP implements Komanda {
     private final TuristickaAgencija agencija;
@@ -12,24 +13,24 @@ public class KomandaITAP implements Komanda {
     }
     @Override
     public void izvrsi(String[] parametri) {
-        String oznaka = null;
-        String pronadenaOznaka = null;
-
-        if (parametri.length == 2) {
-            oznaka = parametri[1];
-        } else {
+        if (parametri.length != 2) {
             System.out.println("Greška: Neispravan broj parametara. Očekivano: ITAP <oznaka>");
             return;
         }
+
+        Integer oznaka = Validator.parsirajIValidirajOznaku(parametri[1], "ITAP");
+        if (oznaka == null) {
+            return;
+        }
+
         FormaterTablice tablica = new FormaterTablice(new int[]{5, 20, 40, 12, 12, 8, 8, 8, 8, 8, 8, 8, 10, 8, 8, 8});
 
         tablica.dodajRed("Oznaka", "Naziv", "Program", "Početni datum", "Završni datum", "Vrijeme kretanja", "Vrijeme povratka", "Cijena", "Min broj putnika", "Maks broj putnika", "Broj noćenja", "Doplata za jednokrevetnu sobu", "Prijevoz", "Broj doručka", "Broj ručkova", "Broj večera");
 
+        boolean pronadjen = false;
+
         for (var aranzman : agencija.dohvatiAranzmane()) {
-            if (oznaka != null) {
-                if (!String.valueOf(aranzman.dohvatiOznaka()).equals(oznaka)) {
-                    continue;
-                } else {
+            if (aranzman.dohvatiOznaka() == oznaka) {
                     tablica.dodajRed(
                             String.valueOf(aranzman.dohvatiOznaka()),
                             aranzman.dohvatiNaziv(),
@@ -48,12 +49,13 @@ public class KomandaITAP implements Komanda {
                             String.valueOf(aranzman.dohvatiBrojRuckova()),
                             String.valueOf(aranzman.dohvatiBrojVecera())
                     );
-                    pronadenaOznaka = oznaka;
+                    pronadjen = true;
                     System.out.println(tablica.formatiraj());
-                }
+                    break;
             }
         }
-        if (pronadenaOznaka == null) {
+
+        if (!pronadjen) {
             System.err.println("Greška: Aranžman s oznakom " + oznaka + " nije pronađen.");
         }
     }

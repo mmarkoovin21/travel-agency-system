@@ -2,6 +2,7 @@ package edu.unizg.foi.uzdiz.mmarkovin21.citaci;
 
 import edu.unizg.foi.uzdiz.mmarkovin21.TuristickaAgencija;
 import edu.unizg.foi.uzdiz.mmarkovin21.modeli.Rezervacija;
+import edu.unizg.foi.uzdiz.mmarkovin21.modeli.StanjeRezervacije;
 import edu.unizg.foi.uzdiz.mmarkovin21.upravitelji.UpraviteljStanjaRezervacija;
 import edu.unizg.foi.uzdiz.mmarkovin21.validatori.ValidatorRezervacija;
 
@@ -63,12 +64,12 @@ public class CitacRezervacija {
                         continue;
                     }
 
-                    String pocetnoStanje = upraviteljStanja.odrediPocetnoStanje(
+                    StanjeRezervacije pocetnoStanje = upraviteljStanja.odrediPocetnoStanje(
                             validnaRezervacija.dohvatiOznakaAranzmana(),
                             rezervacije, validnaRezervacija.dohvatiIme(), validnaRezervacija.dohvatiPrezime()
                     );
 
-                    if (pocetnoStanje.isEmpty()) {
+                    if (pocetnoStanje == null) {
                         continue;
                     }
 

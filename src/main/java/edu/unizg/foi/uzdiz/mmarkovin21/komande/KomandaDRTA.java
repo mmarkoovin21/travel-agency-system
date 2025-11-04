@@ -4,6 +4,7 @@ import edu.unizg.foi.uzdiz.mmarkovin21.TuristickaAgencija;
 import edu.unizg.foi.uzdiz.mmarkovin21.modeli.Rezervacija;
 import edu.unizg.foi.uzdiz.mmarkovin21.pomocnici.PretvaracDatuma;
 import edu.unizg.foi.uzdiz.mmarkovin21.upravitelji.UpraviteljStanjaRezervacija;
+import edu.unizg.foi.uzdiz.mmarkovin21.validatori.Validator;
 import edu.unizg.foi.uzdiz.mmarkovin21.validatori.ValidatorRezervacija;
 
 import java.time.LocalDateTime;
@@ -29,12 +30,14 @@ public class KomandaDRTA implements Komanda {
 
         String ime = parametri[1];
         String prezime = parametri[2];
-        int oznakaAranzmana;
 
-        try {
-            oznakaAranzmana = Integer.parseInt(parametri[3]);
-        } catch (NumberFormatException e) {
-            System.out.println("Greška: Neispravan format oznake. Oznaka mora biti cijeli broj.");
+        if (!Validator.validirajImeIliPrezime(ime) || !Validator.validirajImeIliPrezime(prezime)) {
+            System.out.println("Greška: Ime i prezime moraju sadržavati samo slova.");
+            return;
+        }
+
+        Integer oznakaAranzmana = Validator.parsirajIValidirajOznaku(parametri[3], "DRTA");
+        if (oznakaAranzmana == null) {
             return;
         }
 

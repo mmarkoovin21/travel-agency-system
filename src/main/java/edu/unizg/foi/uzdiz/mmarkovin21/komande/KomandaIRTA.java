@@ -2,8 +2,11 @@ package edu.unizg.foi.uzdiz.mmarkovin21.komande;
 
 import edu.unizg.foi.uzdiz.mmarkovin21.TuristickaAgencija;
 import edu.unizg.foi.uzdiz.mmarkovin21.modeli.Rezervacija;
+import edu.unizg.foi.uzdiz.mmarkovin21.modeli.StanjeRezervacije;
 import edu.unizg.foi.uzdiz.mmarkovin21.pomocnici.FormaterTablice;
 import edu.unizg.foi.uzdiz.mmarkovin21.pomocnici.PretvaracDatuma;
+import edu.unizg.foi.uzdiz.mmarkovin21.pomocnici.RezervacijaFilter;
+import edu.unizg.foi.uzdiz.mmarkovin21.validatori.Validator;
 
 import java.util.Comparator;
 import java.util.List;
@@ -17,21 +20,17 @@ public class KomandaIRTA implements Komanda {
 
     @Override
     public void izvrsi(String[] parametri) {
-        int oznaka = 0;
-        String stanjeRezervacije = "";
-
-        if (parametri.length == 3) {
-            try {
-                oznaka = Integer.parseInt(parametri[1]);
-                stanjeRezervacije = parametri[2];
-            } catch (NumberFormatException e) {
-                System.out.println("Greška: Neispravan format oznake aranžmana. Oznaka mora biti cijeli broj.");
-                return;
-            }
-        } else {
-            System.out.println("Greška: Neispravan broj parametara za komandu IRTA. Očekivano IRTA <oznaka> [PA|Č|O].");
+        if (parametri.length != 3) {
+            System.out.println("Greška: Neispravan broj parametara za komandu IRTA. Očekivano IRTA <oznaka> [PA|Č|O|PAČO].");
             return;
         }
+
+        Integer oznaka = Validator.parsirajIValidirajOznaku(parametri[1], "IRTA");
+        if (oznaka == null) {
+            return;
+        }
+
+        String stanjeRezervacije = parametri[2];
 
         List<Rezervacija> rezervacije = vratiRezervacijeSaStanjem(stanjeRezervacije, oznaka);
 
@@ -55,14 +54,14 @@ public class KomandaIRTA implements Komanda {
 
         for (Rezervacija rez : rezervacije) {
             if (prikaziDatumOtkaza) {
-                String datumOtkaza = rez.dohvatiStanje().equals("otkazana")
+                String datumOtkaza = rez.dohvatiStanje() == StanjeRezervacije.OTKAZANA
                         ? PretvaracDatuma.formatirajDatumVrijeme(rez.dohvatiDatumVrijemeOtkazivanja())
                         : "";
                 tablica.dodajRed(
                         rez.dohvatiIme(),
                         rez.dohvatiPrezime(),
                         PretvaracDatuma.formatirajDatumVrijeme(rez.dohvatiDatumVrijemePrijema()),
-                        rez.dohvatiStanje(),
+                        rez.dohvatiStanjeString(),
                         datumOtkaza
                 );
             } else {
@@ -70,7 +69,7 @@ public class KomandaIRTA implements Komanda {
                         rez.dohvatiIme(),
                         rez.dohvatiPrezime(),
                         PretvaracDatuma.formatirajDatumVrijeme(rez.dohvatiDatumVrijemePrijema()),
-                        rez.dohvatiStanje()
+                        rez.dohvatiStanjeString()
                 );
             }
         }
@@ -84,22 +83,17 @@ public class KomandaIRTA implements Komanda {
 
         return switch (stanje) {
             case "PA" -> rezervacije.stream()
-                    .filter(r -> r.dohvatiOznakaAranzmana() == oznakaAranzmana)
-                    .filter(r -> r.dohvatiStanje().equals("primljena") || r.dohvatiStanje().equals("aktivna"))
+                    .filter(RezervacijaFilter.zaAranzman(oznakaAranzmana))
+                    .filter(RezervacijaFilter.primljenIliAktivna())
                     .sorted(Comparator.comparing(Rezervacija::dohvatiDatumVrijemePrijema))
                     .toList();
             case "Č" -> rezervacije.stream()
-                    .filter(r -> r.dohvatiOznakaAranzmana() == oznakaAranzmana)
-                    .filter(r -> r.dohvatiStanje().equals("na čekanju"))
-                    .sorted(Comparator.comparing(Rezervacija::dohvatiDatumVrijemePrijema))
-                    .toList();
-            case "O" -> rezervacije.stream()
-                    .filter(r -> r.dohvatiOznakaAranzmana() == oznakaAranzmana)
-                    .filter(r -> r.dohvatiStanje().equals("otkazana"))
+                    .filter(RezervacijaFilter.zaAranzman(oznakaAranzmana))
+                    .filter(RezervacijaFilter.naCekanju())
                     .sorted(Comparator.comparing(Rezervacija::dohvatiDatumVrijemePrijema))
                     .toList();
             case "PAČO" -> rezervacije.stream()
-                    .filter(r -> r.dohvatiOznakaAranzmana() == oznakaAranzmana)
+                    .filter(RezervacijaFilter.zaAranzman(oznakaAranzmana))
                     .sorted(Comparator.comparing(Rezervacija::dohvatiDatumVrijemePrijema))
                     .toList();
             default -> List.of();
