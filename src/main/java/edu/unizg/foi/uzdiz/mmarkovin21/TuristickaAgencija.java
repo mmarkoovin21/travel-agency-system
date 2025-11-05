@@ -37,7 +37,8 @@ public class TuristickaAgencija {
         Scanner scanner = new Scanner(System.in);
 
         while (true) {
-            System.out.print("Unesite komandu: ");
+            System.out.println("\n" + "=".repeat(50));
+            System.out.print(">>> Unesite komandu: ");
             String unos = scanner.nextLine().trim();
 
             String[] dijelovi = unos.split("\\s+");
