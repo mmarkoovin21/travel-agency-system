@@ -31,12 +31,12 @@ public class CitacAranzmana {
                 }
 
                 try {
-                    String[] atributi = CSVHelper.parsirajRedakCSV(linija);
+                    String[] atributi = CSVPomagac.parsirajRedakCSV(linija);
 
                     if (prviRedak) {
                         prviRedak = false;
                         boolean imaHeader = jeInformativniRedak(atributi);
-                        CSVHelper.ispisiHeaderInfo(nazivDatoteke, imaHeader, OCEKIVANI_BROJ_ATRIBUTA, atributi.length);
+                        CSVPomagac.ispisiHeaderInfo(nazivDatoteke, imaHeader, OCEKIVANI_BROJ_ATRIBUTA, atributi.length);
 
                         if (imaHeader) {
                             continue;
@@ -44,7 +44,7 @@ public class CitacAranzmana {
                     }
 
                     if (atributi.length != OCEKIVANI_BROJ_ATRIBUTA) {
-                        CSVHelper.ispisiGreskaBrojaAtributa(brojRetka, nazivDatoteke, OCEKIVANI_BROJ_ATRIBUTA, atributi.length);
+                        CSVPomagac.ispisiGreskaBrojaAtributa(brojRetka, nazivDatoteke, OCEKIVANI_BROJ_ATRIBUTA, atributi.length);
                         continue;
                     }
 
@@ -71,12 +71,12 @@ public class CitacAranzmana {
         }
 
         String[] kljucneRijeci = {"oznaka", "naziv", "program"};
-        if (CSVHelper.sadrziKljucneRijeci(atributi, kljucneRijeci)) {
+        if (CSVPomagac.sadrziKljucneRijeci(atributi, kljucneRijeci)) {
             return true;
         }
 
-        String prviAtribut = CSVHelper.ocistiAtribut(atributi[0]);
-        if (CSVHelper.jeBroj(prviAtribut)) {
+        String prviAtribut = CSVPomagac.ocistiAtribut(atributi[0]);
+        if (CSVPomagac.jeBroj(prviAtribut)) {
             return false;
         }
 

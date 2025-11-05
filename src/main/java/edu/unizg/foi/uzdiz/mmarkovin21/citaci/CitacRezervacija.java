@@ -33,13 +33,13 @@ public class CitacRezervacija {
                     continue;
                 }
 
-                String[] atributi = CSVHelper.parsirajRedakCSV(linija);
+                String[] atributi = CSVPomagac.parsirajRedakCSV(linija);
                 int OCEKIVANI_BROJ_ATRIBUTA = 4;
 
                 if (prviRedak) {
                     prviRedak = false;
                     boolean imaHeader = jeInformativniRedak(atributi);
-                    CSVHelper.ispisiHeaderInfo(nazivDatoteke, imaHeader, OCEKIVANI_BROJ_ATRIBUTA, atributi.length);
+                    CSVPomagac.ispisiHeaderInfo(nazivDatoteke, imaHeader, OCEKIVANI_BROJ_ATRIBUTA, atributi.length);
 
                     if (imaHeader) {
                         continue;
@@ -47,7 +47,7 @@ public class CitacRezervacija {
                 }
 
                 if (atributi.length != OCEKIVANI_BROJ_ATRIBUTA) {
-                    CSVHelper.ispisiGreskaBrojaAtributa(brojRetka, nazivDatoteke, OCEKIVANI_BROJ_ATRIBUTA, atributi.length);
+                    CSVPomagac.ispisiGreskaBrojaAtributa(brojRetka, nazivDatoteke, OCEKIVANI_BROJ_ATRIBUTA, atributi.length);
                     continue;
                 }
 
@@ -108,7 +108,7 @@ public class CitacRezervacija {
         }
 
         String[] kljucneRijeci = {"ime", "prezime", "oznaka", "datum"};
-        return CSVHelper.sadrziKljucneRijeci(atributi, kljucneRijeci);
+        return CSVPomagac.sadrziKljucneRijeci(atributi, kljucneRijeci);
     }
 
 }

@@ -3,7 +3,7 @@ package edu.unizg.foi.uzdiz.mmarkovin21.citaci;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CSVHelper {
+public class CSVPomagac {
 
     public static String ocistiAtribut(String atribut) {
         if (atribut == null) {
