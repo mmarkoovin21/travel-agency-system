@@ -10,6 +10,7 @@
     </parent>
 
     <artifactId>mmarkovin21_zadaca_2_app</artifactId>
+    <packaging>jar</packaging>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -22,12 +23,22 @@
         <maven.clean>3.4.1</maven.clean>
         <maven.resources>3.3.1</maven.resources>
         <maven.compiler>3.14.0</maven.compiler>
-        <maven.surefire>3.5.2</maven.surefire>
+        <maven.surefire>3.5.3</maven.surefire>
+        <maven.failsafe>3.5.3</maven.failsafe>
+        <maven.javadoc>3.11.2</maven.javadoc>
+        <maven.dependency>3.8.1</maven.dependency>
+        <maven.assembly>3.7.1</maven.assembly>
         <maven.jar>3.4.2</maven.jar>
         <maven.install>3.1.4</maven.install>
     </properties>
 
     <dependencies>
+        <dependency>
+            <groupId>edu.unizg.foi.uzdiz.mmarkovin21</groupId>
+            <artifactId>mmarkovin21_zadaca_2_lib</artifactId>
+            <version>2.0.0.</version>
+            <scope>compile</scope>
+        </dependency>
     </dependencies>
 
     <build>
@@ -58,6 +69,32 @@
                             <mainClass>edu.unizg.foi.uzdiz.mmarkovin21.Main</mainClass>
                         </manifest>
                     </archive>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <version>${maven.assembly}</version>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <descriptorRefs>
+                        <descriptorRef>jar-with-dependencies</descriptorRef>
+                    </descriptorRefs>
+                    <archive>
+                        <manifest>
+                            <mainClass>
+                                edu.unizg.foi.uzdiz.mmarkovin21.Main
+                            </mainClass>
+                        </manifest>
+                    </archive>
+                    <appendAssemblyId>false</appendAssemblyId>
                 </configuration>
             </plugin>
             <plugin>

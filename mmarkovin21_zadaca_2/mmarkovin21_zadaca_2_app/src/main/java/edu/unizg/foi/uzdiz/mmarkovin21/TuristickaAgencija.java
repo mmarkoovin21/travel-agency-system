@@ -1,11 +1,11 @@
 package edu.unizg.foi.uzdiz.mmarkovin21;
 
-//import edu.unizg.foi.uzdiz.mmarkovin21.citaci.CitacAranzmana;
-//import edu.unizg.foi.uzdiz.mmarkovin21.citaci.CitacRezervacija;
 //import edu.unizg.foi.uzdiz.mmarkovin21.komande.Komanda;
 //import edu.unizg.foi.uzdiz.mmarkovin21.komande.KomandaTvornica;
-//import edu.unizg.foi.uzdiz.mmarkovin21.modeli.Aranzman;
-//import edu.unizg.foi.uzdiz.mmarkovin21.modeli.Rezervacija;
+import edu.unizg.foi.uzdiz.mmarkovin21.modeli.Aranzman;
+import edu.unizg.foi.uzdiz.mmarkovin21.modeli.Rezervacija;
+
+import edu.unizg.foi.uzdiz.mmarkovin21.Facade.UcitaniPodaciFacade;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,8 +13,8 @@ import java.util.Scanner;
 
 public class TuristickaAgencija {
     private static TuristickaAgencija instanca;
-//    private List<Aranzman> aranzmani = new ArrayList<>();
-//    private List<Rezervacija> rezervacije = new ArrayList<>();
+    private List<Aranzman> aranzmani = new ArrayList<>();
+    private List<Rezervacija> rezervacije = new ArrayList<>();
 
     private TuristickaAgencija() {}
 
@@ -26,11 +26,11 @@ public class TuristickaAgencija {
     }
 
     public void inicijaliziraj(String datotekaAranzmani, String datotekaRezervacije) {
-//        CitacAranzmana citacA = new CitacAranzmana();
-//        CitacRezervacija citacR = new CitacRezervacija();
-//
-//        this.aranzmani = citacA.ucitaj(datotekaAranzmani);
-//        this.rezervacije = citacR.ucitajRezervacije(datotekaRezervacije);
+        UcitaniPodaciFacade podaci = new UcitaniPodaciFacade();
+        podaci.ucitajAranzmane(datotekaAranzmani);
+        podaci.ucitajRezervacije(datotekaRezervacije);
+        System.out.println("Aranzmani: \n" + aranzmani);
+        System.out.println("Rezervacije: \n" + rezervacije);
     }
 
     public void pokreniInteraktivniNacin() {
@@ -57,6 +57,6 @@ public class TuristickaAgencija {
         scanner.close();
     }
 
-//    public List<Aranzman> dohvatiAranzmane() { return aranzmani; }
-//    public List<Rezervacija> dohvatiRezervacije() { return rezervacije; }
+    public List<Aranzman> dohvatiAranzmane() { return aranzmani; }
+    public List<Rezervacija> dohvatiRezervacije() { return rezervacije; }
 }

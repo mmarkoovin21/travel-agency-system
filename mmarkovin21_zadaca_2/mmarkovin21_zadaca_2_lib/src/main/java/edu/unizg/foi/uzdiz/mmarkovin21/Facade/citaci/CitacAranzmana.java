@@ -11,7 +11,6 @@ import java.util.Map;
 public class CitacAranzmana {
     private List<Map<String, String>> aranzmani = new ArrayList<>();
     private ValidatorAranzmana validator = new ValidatorAranzmana();
-//    private AranzmanDirektor direktor = new AranzmanDirektor(new AranzmanGraditelj());
     final int OCEKIVANI_BROJ_ATRIBUTA = 16;
 
     public List<Map<String, String>> ucitaj(String nazivDatoteke) {
