@@ -2,6 +2,8 @@ package edu.unizg.foi.uzdiz.mmarkovin21;
 
 //import edu.unizg.foi.uzdiz.mmarkovin21.komande.Komanda;
 //import edu.unizg.foi.uzdiz.mmarkovin21.komande.KomandaTvornica;
+import edu.unizg.foi.uzdiz.mmarkovin21.komande.Komanda;
+import edu.unizg.foi.uzdiz.mmarkovin21.komande.KomandaTvornica;
 import edu.unizg.foi.uzdiz.mmarkovin21.modeli.Aranzman;
 import edu.unizg.foi.uzdiz.mmarkovin21.modeli.Rezervacija;
 
@@ -36,27 +38,24 @@ public class TuristickaAgencija {
     public void pokreniInteraktivniNacin() {
         Scanner scanner = new Scanner(System.in);
 
-//        while (true) {
-//            System.out.println("\n" + "=".repeat(50));
-//            System.out.print(">>> Unesite komandu: ");
-//            String unos = scanner.nextLine().trim();
-//
-//            String[] dijelovi = unos.split("\\s+");
-//            String nazivKomande = dijelovi[0];
-//
-//            KomandaTvornica factory = KomandaTvornica.dohvatiFactory(nazivKomande);
-//            if (factory != null) {
-//                Komanda komanda = factory.kreirajKomandu();
-//                komanda.izvrsi(dijelovi);
-//
-//                if (nazivKomande.equals("Q")) break;
-//            } else {
-//                System.out.println("Nepoznata komanda: " + nazivKomande);
-//            }
-//        }
+        while (true) {
+            System.out.println("\n" + "=".repeat(50));
+            System.out.print(">>> Unesite komandu: ");
+            String unos = scanner.nextLine().trim();
+
+            String[] dijelovi = unos.split("\\s+");
+            String nazivKomande = dijelovi[0];
+
+            KomandaTvornica factory = KomandaTvornica.dohvatiFactory(nazivKomande);
+            if (factory != null) {
+                Komanda komanda = factory.kreirajKomandu();
+                komanda.izvrsi(dijelovi);
+
+                if (nazivKomande.equals("Q")) break;
+            } else {
+                System.out.println("Nepoznata komanda: " + nazivKomande);
+            }
+        }
         scanner.close();
     }
-
-    public List<Aranzman> dohvatiAranzmane() { return aranzmani; }
-    public List<Rezervacija> dohvatiRezervacije() { return rezervacije; }
 }
