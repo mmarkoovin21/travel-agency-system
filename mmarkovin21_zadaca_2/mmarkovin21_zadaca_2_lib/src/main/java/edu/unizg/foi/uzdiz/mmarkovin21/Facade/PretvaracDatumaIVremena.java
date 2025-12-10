@@ -52,7 +52,7 @@ public class PretvaracDatumaIVremena {
         return null;
     }
 
-    public static LocalTime parsirajVrijeme(String vrijemeString) {
+    protected static LocalTime parsirajVrijeme(String vrijemeString) {
         if (vrijemeString == null || vrijemeString.trim().isEmpty()) {
             return null;
         }
@@ -66,7 +66,7 @@ public class PretvaracDatumaIVremena {
         return null;
     }
 
-    public static LocalDateTime parsirajDatumVrijeme(String datumVrijemeString) {
+    protected static LocalDateTime parsirajDatumVrijeme(String datumVrijemeString) {
         if (datumVrijemeString == null || datumVrijemeString.trim().isEmpty()) {
             return null;
         }

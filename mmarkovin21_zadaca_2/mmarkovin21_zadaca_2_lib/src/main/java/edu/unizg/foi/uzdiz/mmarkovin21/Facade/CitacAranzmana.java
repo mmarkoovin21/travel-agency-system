@@ -1,6 +1,4 @@
-package edu.unizg.foi.uzdiz.mmarkovin21.Facade.citaci;
-
-import edu.unizg.foi.uzdiz.mmarkovin21.Facade.validatori.ValidatorAranzmana;
+package edu.unizg.foi.uzdiz.mmarkovin21.Facade;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -13,7 +11,7 @@ public class CitacAranzmana {
     private ValidatorAranzmana validator = new ValidatorAranzmana();
     final int OCEKIVANI_BROJ_ATRIBUTA = 16;
 
-    public List<Map<String, String>> ucitaj(String nazivDatoteke) {
+    protected List<Map<String, String>> ucitaj(String nazivDatoteke) {
 
         try (BufferedReader citac = new BufferedReader(new FileReader(nazivDatoteke))) {
             String linija;

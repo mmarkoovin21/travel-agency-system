@@ -1,4 +1,4 @@
-package edu.unizg.foi.uzdiz.mmarkovin21.Facade.citaci;
+package edu.unizg.foi.uzdiz.mmarkovin21.Facade;
 
 import java.util.ArrayList;
 import java.util.List;

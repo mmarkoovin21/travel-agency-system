@@ -1,6 +1,4 @@
-package edu.unizg.foi.uzdiz.mmarkovin21.Facade.citaci;
-
-import edu.unizg.foi.uzdiz.mmarkovin21.Facade.validatori.ValidatorRezervacija;
+package edu.unizg.foi.uzdiz.mmarkovin21.Facade;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -11,11 +9,11 @@ import java.util.Map;
 public class CitacRezervacija {
     private final ValidatorRezervacija validator;
 
-    public CitacRezervacija() {
+    protected CitacRezervacija() {
         this.validator = new ValidatorRezervacija();
     }
 
-    public List<Map<String, String>> ucitajRezervacije(String nazivDatoteke) {
+    protected List<Map<String, String>> ucitajRezervacije(String nazivDatoteke) {
         List<Map<String, String>> rezervacije = new ArrayList<>();
         try (BufferedReader citac = new BufferedReader(new FileReader(nazivDatoteke))) {
             String linija;

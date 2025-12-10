@@ -1,8 +1,5 @@
 package edu.unizg.foi.uzdiz.mmarkovin21.Facade;
 
-import edu.unizg.foi.uzdiz.mmarkovin21.Facade.citaci.CitacAranzmana;
-import edu.unizg.foi.uzdiz.mmarkovin21.Facade.citaci.CitacRezervacija;
-
 import java.util.List;
 import java.util.Map;
 

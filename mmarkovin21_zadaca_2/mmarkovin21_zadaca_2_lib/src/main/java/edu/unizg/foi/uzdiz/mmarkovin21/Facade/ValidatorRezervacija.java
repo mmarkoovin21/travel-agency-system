@@ -1,4 +1,4 @@
-package edu.unizg.foi.uzdiz.mmarkovin21.Facade.validatori;
+package edu.unizg.foi.uzdiz.mmarkovin21.Facade;
 
 import java.time.LocalDateTime;
 import java.util.HashMap;
