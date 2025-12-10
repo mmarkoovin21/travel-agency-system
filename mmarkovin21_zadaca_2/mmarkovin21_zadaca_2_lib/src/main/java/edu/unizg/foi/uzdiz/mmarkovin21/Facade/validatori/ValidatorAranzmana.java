@@ -50,13 +50,4 @@ public class ValidatorAranzmana extends Validator {
             return null;
         }
     }
-//    private String parsirajPrijevoz(String prijevozString) {
-//        if (prijevozString == null || prijevozString.trim().isEmpty()) {
-//            return "";
-//        }
-//        return Arrays.stream(prijevozString.split(";"))
-//                .map(String::trim)
-//                .filter(s -> !s.isEmpty())
-//                .collect(Collectors.joining(";"));
-//    }
 }
