@@ -1,6 +1,7 @@
 package edu.unizg.foi.uzdiz.mmarkovin21.modeli;
 
 import edu.unizg.foi.uzdiz.mmarkovin21.composite.TuristickaKomponenta;
+import edu.unizg.foi.uzdiz.mmarkovin21.state.*;
 
 import java.time.LocalDateTime;
 
@@ -20,7 +21,7 @@ public class Rezervacija extends TuristickaKomponenta {
         this.prezime = prezime;
         this.oznakaAranzmana = oznakaAranzmana;
         this.datumVrijemePrijema = datumVrijemePrijema;
-        this.stanje = StanjeRezervacije.fromString(vrsta);
+        this.stanje = odredPOcetnoStanjePremaNazivu(vrsta);
     }
 
     public String dohvatiIme() {
@@ -44,11 +45,7 @@ public class Rezervacija extends TuristickaKomponenta {
     }
 
     public String dohvatiStanjeString() {
-        return stanje != null ? stanje.getVrijednost() : "";
-    }
-
-    public void promijeniStanje(String novoStanje) {
-        this.stanje = StanjeRezervacije.fromString(novoStanje);
+        return stanje.dohvatiNazivStanja();
     }
 
     public void promijeniStanje(StanjeRezervacije novoStanje) {
@@ -61,14 +58,6 @@ public class Rezervacija extends TuristickaKomponenta {
 
     public void postaviDatumVrijemeOtkazivanja(LocalDateTime datumVrijemeOtkazivanja) {
         this.datumVrijemeOtkazivanja = datumVrijemeOtkazivanja;
-    }
-
-    @Override
-    public void ispisi(int razina) {
-    // ovo će se mijenjati kasnije
-        String uvlaka = "  ".repeat(razina);
-        System.out.println(uvlaka + "└─ Rezervacija: " + ime + " " + prezime +
-                " (stanje: " + dohvatiStanjeString() + ")");
     }
 
     @Override
@@ -86,5 +75,36 @@ public class Rezervacija extends TuristickaKomponenta {
 
     public Aranzman dohvatiAranzman() {
         return aranzman;
+    }
+
+    private StanjeRezervacije odredPOcetnoStanjePremaNazivu(String naziv) {
+        switch (naziv.toLowerCase()) {
+            case "primljena": return new PrimljenoStanje();
+            case "aktivna": return new AktivnoStanje();
+            case "na čekanju": return new NaCekanjuStanje();
+            case "otkazana": return new OtkazanoStanje();
+            default: return new NovoStanje();
+        }
+    }
+
+    public void primi() {
+        stanje.primi(this);
+    }
+
+    public void aktiviraj() {
+        stanje.aktiviraj(this);
+    }
+
+    public void staviNaCekanje() {
+        stanje.staviNaCekanje(this);
+    }
+
+    public void otkazi() {
+        stanje.otkazi(this);
+        this.datumVrijemeOtkazivanja = LocalDateTime.now();
+    }
+
+    public void odgodi() {
+        stanje.odgodi(this);
     }
 }

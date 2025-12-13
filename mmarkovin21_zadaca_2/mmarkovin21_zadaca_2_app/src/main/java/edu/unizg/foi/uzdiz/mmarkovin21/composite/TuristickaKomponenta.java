@@ -5,7 +5,6 @@ import java.util.List;
 
 public abstract class TuristickaKomponenta {
     // Zajedničke operacije za sve komponente
-    public abstract void ispisi(int razina);
     public abstract double izracunajUkupnuCijenu();
 
     // Composite operacije - default implementacija za Leaf
@@ -24,6 +23,6 @@ public abstract class TuristickaKomponenta {
     }
 
     public boolean jeLiComposite() {
-        return false;  // Override u Composite klasama
+        return false;
     }
 }

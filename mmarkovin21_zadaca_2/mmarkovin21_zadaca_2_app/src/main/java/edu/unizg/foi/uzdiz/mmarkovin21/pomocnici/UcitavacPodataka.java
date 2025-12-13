@@ -7,6 +7,7 @@ import edu.unizg.foi.uzdiz.mmarkovin21.graditelji.AranzmanDirektor;
 import edu.unizg.foi.uzdiz.mmarkovin21.graditelji.AranzmanGraditelj;
 import edu.unizg.foi.uzdiz.mmarkovin21.modeli.Aranzman;
 import edu.unizg.foi.uzdiz.mmarkovin21.modeli.Rezervacija;
+import edu.unizg.foi.uzdiz.mmarkovin21.state.StanjeRezervacije;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -59,7 +60,7 @@ public class UcitavacPodataka {
                         (String) rezervacija.get("prezime"),
                         (Integer) rezervacija.get("oznaka"),
                         (LocalDateTime) rezervacija.get("datumIVrijemePrijema"),
-                        (String) rezervacija.get("staneje")
+                        (String) rezervacija.get("stanje")
                 );
 
                 Aranzman nadredeniAranzman = pronadjiAranzmanPoOznaci((Integer) rezervacija.get("oznaka"));

@@ -26,7 +26,8 @@ public class AranzmanDirektor {
                 (LocalDate) podaci.get("zavrsniDatum"),
                 (Integer) podaci.get("minBrojPutnika"),
                 (Integer) podaci.get("maxBrojPutnika"),
-                (Long) podaci.get("cijenaPoOsobi")
+                (Long) podaci.get("cijenaPoOsobi"),
+                "U PRIPREMI"
         );
 
         // Dodajemo opcionalne parametre ako postoje

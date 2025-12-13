@@ -28,8 +28,9 @@ public class Aranzman extends TuristickaKomponenta {
     private int brojDorucaka;
     private int brojRucakova;
     private int brojVecera;
+    private String status;
 
-    private List<TuristickaKomponenta> djeca = new ArrayList<>();
+    private final List<TuristickaKomponenta> djeca = new ArrayList<>();
 
     public Aranzman() {
     }
@@ -41,7 +42,8 @@ public class Aranzman extends TuristickaKomponenta {
             LocalDate zavrsniDatum,
             int minBrojPutnika,
             int maxBrojPutnika,
-            Long cijenaPoOsobi
+            Long cijenaPoOsobi,
+            String status
     ) {
         this.oznaka = oznaka;
         this.naziv = naziv;
@@ -51,6 +53,7 @@ public class Aranzman extends TuristickaKomponenta {
         this.minBrojPutnika = minBrojPutnika;
         this.maxBrojPutnika = maxBrojPutnika;
         this.cijenaPoOsobi = cijenaPoOsobi;
+        this.status = status;
     }
 
     public int dohvatiOznaka() {
@@ -92,6 +95,8 @@ public class Aranzman extends TuristickaKomponenta {
     public Long dohvatiCijenaPoOsobi() {
         return cijenaPoOsobi;
     }
+
+    public String dohvatStatus(){ return status; }
     
     // neobavezni getteri i setteri
     public LocalTime dohvatiVrijemeKretanja() {
@@ -156,20 +161,6 @@ public class Aranzman extends TuristickaKomponenta {
     
     public void postaviBrojVecera(int brojVecera) {
         this.brojVecera = brojVecera;
-    }
-
-    // composite metode
-    @Override
-    public void ispisi(int razina) {
-        // ovdje treba neki formater tablice
-        String uvlaka = "  ".repeat(razina);
-        System.out.println(uvlaka + "Aranžman: " + naziv +
-                " (oznaka: " + oznaka + ", cijena: " + cijenaPoOsobi + ")");
-
-        // Rekurzivno ispisuj djecu, ne znam bas oce li mi ovo trebati
-//        for (TuristickaKomponenta dijete : djeca) {
-//            dijete.ispisi(razina + 1);
-//        }
     }
 
     @Override

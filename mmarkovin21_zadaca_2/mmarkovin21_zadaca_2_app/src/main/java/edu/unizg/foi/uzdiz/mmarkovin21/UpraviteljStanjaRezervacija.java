@@ -1,15 +1,5 @@
 package edu.unizg.foi.uzdiz.mmarkovin21;
 
-import edu.unizg.foi.uzdiz.mmarkovin21.modeli.Aranzman;
-import edu.unizg.foi.uzdiz.mmarkovin21.modeli.Rezervacija;
-import edu.unizg.foi.uzdiz.mmarkovin21.modeli.StanjeRezervacije;
-import edu.unizg.foi.uzdiz.mmarkovin21.pomocnici.RezervacijaFilter;
-
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.*;
-import java.util.stream.Collectors;
-
 public class UpraviteljStanjaRezervacija {
 //    private final TuristickaAgencija agencija;
 //

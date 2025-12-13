@@ -18,7 +18,8 @@ public class AranzmanGraditelj {
             LocalDate zavrsniDatum,
             int minBrojPutnika,
             int maxBrojPutnika,
-            Long cijenaPoOsobi
+            Long cijenaPoOsobi,
+            String status
     ) {
         this.aranzman = new Aranzman(
                 oznaka,
@@ -28,7 +29,8 @@ public class AranzmanGraditelj {
                 zavrsniDatum,
                 minBrojPutnika,
                 maxBrojPutnika,
-                cijenaPoOsobi
+                cijenaPoOsobi,
+                status
         );
         return this;
     }
