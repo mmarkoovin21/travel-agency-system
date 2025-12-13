@@ -4,6 +4,7 @@ import edu.unizg.foi.uzdiz.mmarkovin21.Facade.UcitaniPodaciFacade;
 import edu.unizg.foi.uzdiz.mmarkovin21.TuristickaAgencija;
 import edu.unizg.foi.uzdiz.mmarkovin21.graditelji.AranzmanDirektor;
 import edu.unizg.foi.uzdiz.mmarkovin21.graditelji.AranzmanGraditelj;
+import edu.unizg.foi.uzdiz.mmarkovin21.pomocnici.UcitavacPodataka;
 
 import java.io.File;
 import java.util.List;
@@ -44,18 +45,14 @@ public class KomandaUP implements Komanda {
 
         switch (argument) {
             case "A":
-                UcitaniPodaciFacade.ucitajAranzmane(datoteka);
-                List<Map<String, Object>> aranzmani = UcitaniPodaciFacade.dohvatiAranzmane();
-                for (Map<String, Object> aranzman : aranzmani) {
-                    agencija.dodajPodatak(aranzmanDirektor.konstruiraj(aranzman));
-                }
-                System.out.println("Aranžmani uspješno učitani!");
+                UcitavacPodataka.ucitajAranzmane(datoteka);
+                System.out.println("Aranžmani su uspješno učitani iz datoteke '" + datoteka + "'.");
                 break;
             case "R":
                 UcitaniPodaciFacade.ucitajRezervacije(datoteka);
                 List<Map<String, Object>> rezervacije = UcitaniPodaciFacade.dohvatiRezervacije();
-                // Dodaj logiku za rezervacije
-                System.out.println("Rezervacije uspješno učitane!");
+                UcitavacPodataka.ucitajRezervacije(datoteka);
+                System.out.println("Rezervacije su uspješno učitane iz datoteke '" + datoteka + "'.");
                 break;
         }
     }
