@@ -1,10 +1,15 @@
 package edu.unizg.foi.uzdiz.mmarkovin21.komande;
 
 import edu.unizg.foi.uzdiz.mmarkovin21.TuristickaAgencija;
-import edu.unizg.foi.uzdiz.mmarkovin21.pomocnici.FormaterTablice;
+import edu.unizg.foi.uzdiz.mmarkovin21.bridge.FormaterListeAranzmana;
+import edu.unizg.foi.uzdiz.mmarkovin21.bridge.IspisivacAranzmana;
+import edu.unizg.foi.uzdiz.mmarkovin21.composite.TuristickaKomponenta;
+import edu.unizg.foi.uzdiz.mmarkovin21.modeli.Aranzman;
 import edu.unizg.foi.uzdiz.mmarkovin21.pomocnici.PretvaracTipovaPodataka;
 
 import java.time.LocalDate;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class KomandaITAK implements Komanda {
     private final TuristickaAgencija agencija;
@@ -35,40 +40,29 @@ public class KomandaITAK implements Komanda {
             return;
         }
 
-        FormaterTablice tablica = new FormaterTablice(new int[]{5, 30, 12, 12, 10, 10, 8, 8, 8});
-
-        tablica.dodajRed("Oznaka", "Naziv", "Početni datum", "Završni datum", "Vrijeme kretanja", "Vrijeme povratka", "Cijena", "Min broj putnika", "Maks broj putnika");
+        // Bridge uzorak: kreiranje ispisivača s odgovarajućim formaterom
+        IspisivacAranzmana ispisivac = new IspisivacAranzmana(new FormaterListeAranzmana());
 
         LocalDate finalDatumOd = datumOd;
         LocalDate finalDatumDo = datumDo;
-        int brojPronadenih = 0;
 
-//        for (var aranzman : agencija.dohvatiAranzmane()) {
-//            if (finalDatumOd != null && finalDatumDo != null) {
-//                if (aranzman.dohvatiPocetniDatum().isBefore(finalDatumOd) ||
-//                        aranzman.dohvatiPocetniDatum().isAfter(finalDatumDo)) {
-//                    continue;
-//                }
-//            }
-//
-//            tablica.dodajRed(
-//                    String.valueOf(aranzman.dohvatiOznaka()),
-//                    aranzman.dohvatiNaziv(),
-//                    PretvaracDatuma.formatirajDatum(aranzman.dohvatiPocetniDatum()),
-//                    PretvaracDatuma.formatirajDatum(aranzman.dohvatiZavrsniDatum()),
-//                    aranzman.dohvatiVrijemeKretanja() != null ? PretvaracDatuma.formatirajVrijeme(aranzman.dohvatiVrijemeKretanja()) : "",
-//                    aranzman.dohvatiVrijemePovratka() != null ? PretvaracDatuma.formatirajVrijeme(aranzman.dohvatiVrijemePovratka()) : "",
-//                    String.valueOf(aranzman.dohvatiCijenaPoOsobi()),
-//                    String.valueOf(aranzman.dohvatiMinBrojPutnika()),
-//                    String.valueOf(aranzman.dohvatiMaxBrojPutnika())
-//            );
-//            brojPronadenih++;
-//        }
-//
-//        if (brojPronadenih == 0) {
-//            System.out.println("Nema pronađenih aranžmana za ovo razdoblje.");
-//        } else {
-//            System.out.println(tablica.formatiraj());
-//        }
+        // Filtriranje aranžmana prema datumu (ako je specificiran)
+        List<TuristickaKomponenta> aranzmaniZaPrikaz = agencija.dohvatiPodatke().stream()
+                .filter(k -> k instanceof Aranzman)
+                .map(k -> (Aranzman) k)
+                .filter(aranzman -> {
+                    if (finalDatumOd != null && finalDatumDo != null) {
+                        return !aranzman.dohvatiPocetniDatum().isBefore(finalDatumOd) &&
+                               !aranzman.dohvatiZavrsniDatum().isAfter(finalDatumDo);
+                    }
+                    return true;
+                })
+                .collect(Collectors.toList());
+
+        if (aranzmaniZaPrikaz.isEmpty()) {
+            System.out.println("Nema pronađenih aranžmana za ovo razdoblje.");
+        } else {
+            ispisivac.ispisi(aranzmaniZaPrikaz);
+        }
     }
 }

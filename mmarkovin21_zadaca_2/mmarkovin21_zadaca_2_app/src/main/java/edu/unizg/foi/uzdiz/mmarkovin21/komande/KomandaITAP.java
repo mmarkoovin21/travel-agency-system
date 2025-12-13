@@ -1,7 +1,6 @@
 package edu.unizg.foi.uzdiz.mmarkovin21.komande;
 
 import edu.unizg.foi.uzdiz.mmarkovin21.TuristickaAgencija;
-import edu.unizg.foi.uzdiz.mmarkovin21.pomocnici.FormaterTablice;
 import edu.unizg.foi.uzdiz.mmarkovin21.pomocnici.ValidatorKomandi;
 
 public class KomandaITAP implements Komanda {
@@ -22,9 +21,9 @@ public class KomandaITAP implements Komanda {
             return;
         }
 
-        FormaterTablice tablica = new FormaterTablice(new int[]{5, 20, 40, 12, 12, 8, 8, 8, 8, 8, 8, 8, 10, 8, 8, 8});
-
-        tablica.dodajRed("Oznaka", "Naziv", "Program", "Početni datum", "Završni datum", "Vrijeme kretanja", "Vrijeme povratka", "Cijena", "Min broj putnika", "Maks broj putnika", "Broj noćenja", "Doplata za jednokrevetnu sobu", "Prijevoz", "Broj doručka", "Broj ručkova", "Broj večera");
+//        FormaterTablice tablica = new FormaterTablice(new int[]{5, 20, 40, 12, 12, 8, 8, 8, 8, 8, 8, 8, 10, 8, 8, 8});
+//
+//        tablica.dodajRed("Oznaka", "Naziv", "Program", "Početni datum", "Završni datum", "Vrijeme kretanja", "Vrijeme povratka", "Cijena", "Min broj putnika", "Maks broj putnika", "Broj noćenja", "Doplata za jednokrevetnu sobu", "Prijevoz", "Broj doručka", "Broj ručkova", "Broj večera");
 
         boolean pronadjen = false;
 

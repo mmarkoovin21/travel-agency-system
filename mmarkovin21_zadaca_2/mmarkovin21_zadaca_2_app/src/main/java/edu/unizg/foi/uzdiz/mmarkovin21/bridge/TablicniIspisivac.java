@@ -1,40 +1,59 @@
-package edu.unizg.foi.uzdiz.mmarkovin21.pomocnici;
+package edu.unizg.foi.uzdiz.mmarkovin21.bridge;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class FormaterTablice {
-    private int[] sirineKolona;
-    private List<String[]> redovi;
+// Apstrakcijska strana Bridge uzorka.
+public abstract class TablicniIspisivac {
 
-    public FormaterTablice(int[] sirineKolona) {
-        this.sirineKolona = sirineKolona;
-        this.redovi = new ArrayList<>();
+    protected TablicniFormater formater;
+
+    public TablicniIspisivac(TablicniFormater formater) {
+        this.formater = formater;
     }
 
-    public void dodajRed(String... vrijednosti) {
-        if (vrijednosti.length != sirineKolona.length) {
-            throw new IllegalArgumentException(
-                    "Broj vrijednosti (" + vrijednosti.length +
-                            ") ne odgovara broju kolona (" + sirineKolona.length + ")"
-            );
+    public void ispisi(List<?> podaci) {
+        if (podaci == null || podaci.isEmpty()) {
+            System.out.println("Nema podataka za prikaz.");
+            return;
         }
-        redovi.add(vrijednosti);
+
+        int[] sirineKolona = formater.definirajSirineKolona();
+        List<String[]> redovi = new ArrayList<>();
+
+        redovi.add(formater.kreirajZaglavlje());
+
+        for (Object podatak : podaci) {
+            String[] red = formater.formatirajRed(podatak);
+            redovi.add(red);
+        }
+
+        System.out.println(formatirajTablicu(sirineKolona, redovi));
     }
 
-    public String formatiraj() {
+    public void postaviFormater(TablicniFormater formater) {
+        this.formater = formater;
+    }
+
+    private String formatirajTablicu(int[] sirineKolona, List<String[]> redovi) {
         StringBuilder sb = new StringBuilder();
 
         for (String[] red : redovi) {
-            sb.append(ispisiLiniju()).append("\n");
-            sb.append(ispisiRed(red)).append("\n");
+            if (red.length != sirineKolona.length) {
+                throw new IllegalArgumentException(
+                        "Broj vrijednosti (" + red.length +
+                                ") ne odgovara broju kolona (" + sirineKolona.length + ")"
+                );
+            }
+            sb.append(ispisiLiniju(sirineKolona)).append("\n");
+            sb.append(ispisiRed(red, sirineKolona)).append("\n");
         }
-        sb.append(ispisiLiniju()).append("\n");
+        sb.append(ispisiLiniju(sirineKolona)).append("\n");
 
         return sb.toString();
     }
 
-    private String ispisiLiniju() {
+    private String ispisiLiniju(int[] sirineKolona) {
         StringBuilder sb = new StringBuilder("+");
         for (int sirina : sirineKolona) {
             sb.append("-".repeat(sirina + 2)).append("+");
@@ -42,7 +61,7 @@ public class FormaterTablice {
         return sb.toString();
     }
 
-    private String ispisiRed(String[] vrijednosti) {
+    private String ispisiRed(String[] vrijednosti, int[] sirineKolona) {
         StringBuilder sb = new StringBuilder();
         String[][] omotaneVrijednosti = new String[vrijednosti.length][];
         int maxLinija = 1;

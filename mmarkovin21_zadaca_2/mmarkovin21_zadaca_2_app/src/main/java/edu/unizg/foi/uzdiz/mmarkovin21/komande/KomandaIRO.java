@@ -1,7 +1,6 @@
 package edu.unizg.foi.uzdiz.mmarkovin21.komande;
 
 import edu.unizg.foi.uzdiz.mmarkovin21.TuristickaAgencija;
-import edu.unizg.foi.uzdiz.mmarkovin21.pomocnici.FormaterTablice;
 import edu.unizg.foi.uzdiz.mmarkovin21.pomocnici.ValidatorKomandi;
 
 public class KomandaIRO implements Komanda {
@@ -29,7 +28,7 @@ public class KomandaIRO implements Komanda {
             return;
         }
 
-        FormaterTablice tablica = new FormaterTablice(new int[]{15, 15, 15, 15});
+//        FormaterTablice tablica = new FormaterTablice(new int[]{15, 15, 15, 15});
 //
 //        tablica.dodajRed("Datum i vrijeme",
 //                "Oznaka aranžmana", "Naziv aranžmana", "Vrsta");

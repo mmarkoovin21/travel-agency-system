@@ -1,7 +1,6 @@
 package edu.unizg.foi.uzdiz.mmarkovin21.komande;
 
 import edu.unizg.foi.uzdiz.mmarkovin21.TuristickaAgencija;
-import edu.unizg.foi.uzdiz.mmarkovin21.pomocnici.FormaterTablice;
 import edu.unizg.foi.uzdiz.mmarkovin21.pomocnici.ValidatorKomandi;
 
 public class KomandaIRTA implements Komanda {
@@ -33,18 +32,18 @@ public class KomandaIRTA implements Komanda {
 //        }
 
         boolean prikaziDatumOtkaza = stanjeRezervacije.equals("O") || stanjeRezervacije.equals("PAČO");
-        int[] sirine = prikaziDatumOtkaza ?
-                new int[]{15, 15, 20, 10, 20} :
-                new int[]{15, 15, 20, 10};
-
-        FormaterTablice tablica = new FormaterTablice(sirine);
-
-        if (prikaziDatumOtkaza) {
-            tablica.dodajRed("Ime", "Prezime", "Datum i vrijeme", "Vrsta", "Datum i vrijeme otkaza");
-        } else {
-            tablica.dodajRed("Ime", "Prezime", "Datum i vrijeme", "Vrsta");
-        }
-
+//        int[] sirine = prikaziDatumOtkaza ?
+//                new int[]{15, 15, 20, 10, 20} :
+//                new int[]{15, 15, 20, 10};
+//
+//        FormaterTablice tablica = new FormaterTablice(sirine);
+//
+//        if (prikaziDatumOtkaza) {
+//            tablica.dodajRed("Ime", "Prezime", "Datum i vrijeme", "Vrsta", "Datum i vrijeme otkaza");
+//        } else {
+//            tablica.dodajRed("Ime", "Prezime", "Datum i vrijeme", "Vrsta");
+//        }
+//
 //        for (Rezervacija rez : rezervacije) {
 //            if (prikaziDatumOtkaza) {
 //                String datumOtkaza = rez.dohvatiStanje() == StanjeRezervacije.OTKAZANA
@@ -66,8 +65,8 @@ public class KomandaIRTA implements Komanda {
 //                );
 //            }
 //        }
-
-        System.out.println(tablica.formatiraj());
+//
+//        System.out.println(tablica.formatiraj());
 
     }
 
