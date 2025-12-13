@@ -9,12 +9,10 @@ import edu.unizg.foi.uzdiz.mmarkovin21.komande.KomandaTvornica;
 import edu.unizg.foi.uzdiz.mmarkovin21.Facade.UcitaniPodaciFacade;
 import edu.unizg.foi.uzdiz.mmarkovin21.modeli.Aranzman;
 import edu.unizg.foi.uzdiz.mmarkovin21.modeli.Rezervacija;
-import edu.unizg.foi.uzdiz.mmarkovin21.pomocnici.RezervacijaFilter;
+import edu.unizg.foi.uzdiz.mmarkovin21.pomocnici.UcitavacPodataka;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.Scanner;
 
 public class TuristickaAgencija {
@@ -32,40 +30,8 @@ public class TuristickaAgencija {
     }
 
     public void inicijaliziraj(String datotekaAranzmani, String datotekaRezervacije) {
-        if (datotekaAranzmani != null && !datotekaAranzmani.isEmpty()) {
-            UcitaniPodaciFacade.ucitajAranzmane(datotekaAranzmani);
-            List<Map<String, Object>> aranzmani = UcitaniPodaciFacade.dohvatiAranzmane();
-            for (Map<String, Object> aranzman : aranzmani) {
-                instanca.dodajPodatak(aranzmanDirektor.konstruiraj(aranzman));
-            }
-        }
-        if (datotekaRezervacije != null && !datotekaRezervacije.isEmpty()) {
-            UcitaniPodaciFacade.ucitajRezervacije(datotekaRezervacije);
-            List<Map<String, Object>> rezervacije = UcitaniPodaciFacade.dohvatiRezervacije();
-            for (Map<String, Object> rezervacija : rezervacije) {
-                Rezervacija rez = new Rezervacija(
-                        (String) rezervacija.get("ime"),
-                        (String) rezervacija.get("prezime"),
-                        (Integer) rezervacija.get("oznaka"),
-                        (LocalDateTime) rezervacija.get("datumIVrijemePrijema"),
-                        (String) rezervacija.get("staneje")
-                );
-
-                Aranzman nadredeniAranzman = podaci.stream()
-                        .filter(a -> a instanceof Aranzman)
-                        .map(a -> (Aranzman) a)
-                        .filter(a -> a.dohvatiOznaka() == (Integer) rezervacija.get("oznaka"))
-                        .findFirst()
-                        .orElse(null);
-
-                if (nadredeniAranzman != null) {
-                    instanca.dodajPodatak(rez);
-                    nadredeniAranzman.dodajDijete(rez);
-                } else {
-                    System.out.println("Greška: Aranžman s oznakom " + rezervacija.get("oznaka") + " nije pronađen za rezervaciju " + rez.dohvatiIme() + " " + rez.dohvatiPrezime());
-                }
-            }
-        }
+        UcitavacPodataka.ucitajAranzmane(datotekaAranzmani);
+        UcitavacPodataka.ucitajRezervacije(datotekaRezervacije);
     }
 
     public void pokreniInteraktivniNacin() {
