@@ -2,7 +2,7 @@ package edu.unizg.foi.uzdiz.mmarkovin21.komande;
 
 import edu.unizg.foi.uzdiz.mmarkovin21.TuristickaAgencija;
 import edu.unizg.foi.uzdiz.mmarkovin21.pomocnici.FormaterTablice;
-import edu.unizg.foi.uzdiz.mmarkovin21.pomocnici.PretvaracDatuma;
+import edu.unizg.foi.uzdiz.mmarkovin21.pomocnici.PretvaracTipovaPodataka;
 
 import java.time.LocalDate;
 
@@ -19,8 +19,8 @@ public class KomandaITAK implements Komanda {
         LocalDate datumDo = null;
 
         if (parametri.length == 3) {
-            datumOd = PretvaracDatuma.parsirajDatum(parametri[1]);
-            datumDo = PretvaracDatuma.parsirajDatum(parametri[2]);
+            datumOd = PretvaracTipovaPodataka.parsirajDatum(parametri[1]);
+            datumDo = PretvaracTipovaPodataka.parsirajDatum(parametri[2]);
 
             if (datumOd == null || datumDo == null) {
                 System.out.println("Greška: Neispravan format datuma. Koristite format: d.M.yyyy. ili dd.MM.yyyy.");
@@ -43,32 +43,32 @@ public class KomandaITAK implements Komanda {
         LocalDate finalDatumDo = datumDo;
         int brojPronadenih = 0;
 
-        for (var aranzman : agencija.dohvatiAranzmane()) {
-            if (finalDatumOd != null && finalDatumDo != null) {
-                if (aranzman.dohvatiPocetniDatum().isBefore(finalDatumOd) ||
-                        aranzman.dohvatiPocetniDatum().isAfter(finalDatumDo)) {
-                    continue;
-                }
-            }
-
-            tablica.dodajRed(
-                    String.valueOf(aranzman.dohvatiOznaka()),
-                    aranzman.dohvatiNaziv(),
-                    PretvaracDatuma.formatirajDatum(aranzman.dohvatiPocetniDatum()),
-                    PretvaracDatuma.formatirajDatum(aranzman.dohvatiZavrsniDatum()),
-                    aranzman.dohvatiVrijemeKretanja() != null ? PretvaracDatuma.formatirajVrijeme(aranzman.dohvatiVrijemeKretanja()) : "",
-                    aranzman.dohvatiVrijemePovratka() != null ? PretvaracDatuma.formatirajVrijeme(aranzman.dohvatiVrijemePovratka()) : "",
-                    String.valueOf(aranzman.dohvatiCijenaPoOsobi()),
-                    String.valueOf(aranzman.dohvatiMinBrojPutnika()),
-                    String.valueOf(aranzman.dohvatiMaxBrojPutnika())
-            );
-            brojPronadenih++;
-        }
-
-        if (brojPronadenih == 0) {
-            System.out.println("Nema pronađenih aranžmana za ovo razdoblje.");
-        } else {
-            System.out.println(tablica.formatiraj());
-        }
+//        for (var aranzman : agencija.dohvatiAranzmane()) {
+//            if (finalDatumOd != null && finalDatumDo != null) {
+//                if (aranzman.dohvatiPocetniDatum().isBefore(finalDatumOd) ||
+//                        aranzman.dohvatiPocetniDatum().isAfter(finalDatumDo)) {
+//                    continue;
+//                }
+//            }
+//
+//            tablica.dodajRed(
+//                    String.valueOf(aranzman.dohvatiOznaka()),
+//                    aranzman.dohvatiNaziv(),
+//                    PretvaracDatuma.formatirajDatum(aranzman.dohvatiPocetniDatum()),
+//                    PretvaracDatuma.formatirajDatum(aranzman.dohvatiZavrsniDatum()),
+//                    aranzman.dohvatiVrijemeKretanja() != null ? PretvaracDatuma.formatirajVrijeme(aranzman.dohvatiVrijemeKretanja()) : "",
+//                    aranzman.dohvatiVrijemePovratka() != null ? PretvaracDatuma.formatirajVrijeme(aranzman.dohvatiVrijemePovratka()) : "",
+//                    String.valueOf(aranzman.dohvatiCijenaPoOsobi()),
+//                    String.valueOf(aranzman.dohvatiMinBrojPutnika()),
+//                    String.valueOf(aranzman.dohvatiMaxBrojPutnika())
+//            );
+//            brojPronadenih++;
+//        }
+//
+//        if (brojPronadenih == 0) {
+//            System.out.println("Nema pronađenih aranžmana za ovo razdoblje.");
+//        } else {
+//            System.out.println(tablica.formatiraj());
+//        }
     }
 }

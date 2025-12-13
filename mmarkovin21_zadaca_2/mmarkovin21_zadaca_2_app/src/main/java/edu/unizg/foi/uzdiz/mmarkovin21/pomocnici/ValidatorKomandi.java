@@ -19,7 +19,7 @@ public class ValidatorKomandi {
         return vrijednost.matches("[a-zA-ZčćžšđČĆŽŠĐ]+");
     }
 
-    public static Integer parsirajIValidirajOznaku(String parametar, String nazivKomande) {
+    public static Integer parsirajIValidirajOznakuAranzmana(String parametar) {
         Integer oznaka = parsirajOznakuAranzmana(parametar);
         if (oznaka == null) {
             System.out.println("Greška: Neispravan format oznake aranžmana. Oznaka mora biti cijeli broj.");

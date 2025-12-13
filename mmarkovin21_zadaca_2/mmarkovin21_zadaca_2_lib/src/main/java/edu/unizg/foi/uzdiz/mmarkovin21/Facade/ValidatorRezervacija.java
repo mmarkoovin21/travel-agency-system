@@ -6,18 +6,18 @@ import java.util.Map;
 
 public class ValidatorRezervacija extends Validator {
 
-    public Map<String, String> validiraj(String[] atributi) {
+    public Map<String, Object> validiraj(String[] atributi) {
         try {
             String ime = validirajString(atributi[0], "Ime", true);
             String prezime = validirajString(atributi[1], "Prezime", true);
             int oznaka = validirajInt(atributi[2], "Oznaka aranžmana", true);
             LocalDateTime datumIVrijemePrijema = validirajDatumVrijeme(atributi[3], "Datum i vrijeme prijema", true);
 
-            Map<String, String> rezervacija = new HashMap<>();
+            Map<String, Object> rezervacija = new HashMap<>();
             rezervacija.put("ime", ime);
             rezervacija.put("prezime", prezime);
-            rezervacija.put("oznaka", String.valueOf(oznaka));
-            rezervacija.put("datumIVrijemePrijema", datumIVrijemePrijema.toString());
+            rezervacija.put("oznaka", oznaka);
+            rezervacija.put("datumIVrijemePrijema", datumIVrijemePrijema);
             rezervacija.put("stanje", "NOVA");
             return rezervacija;
 

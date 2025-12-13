@@ -6,7 +6,7 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 
-public class PretvaracDatuma {
+public class PretvaracTipovaPodataka {
     private static final DateTimeFormatter[] DATUM_FORMATI = new DateTimeFormatter[] {
             DateTimeFormatter.ofPattern("dd.MM.yyyy."),
             DateTimeFormatter.ofPattern("d.M.yyyy.")
@@ -83,6 +83,36 @@ public class PretvaracDatuma {
             }
         }
         return null;
+    }
+
+    public static boolean valjanString(String vrijednost) {
+        return vrijednost != null &&
+                !vrijednost.trim().isEmpty() &&
+                !vrijednost.equalsIgnoreCase("null");
+    }
+
+    public static int parsirajInt(String vrijednost) {
+        if (!valjanString(vrijednost)) {
+            return 0;
+        }
+        try {
+            return Integer.parseInt(vrijednost.trim());
+        } catch (NumberFormatException e) {
+            System.err.println("Greška pri parsiranju integera: " + vrijednost);
+            return 0;
+        }
+    }
+
+    public static long parsirajLong(String vrijednost) {
+        if (!valjanString(vrijednost)) {
+            return 0L;
+        }
+        try {
+            return Long.parseLong(vrijednost.trim());
+        } catch (NumberFormatException e) {
+            System.err.println("Greška pri parsiranju longa: " + vrijednost);
+            return 0L;
+        }
     }
 
     public static String formatirajDatum(LocalDate datum) {

@@ -4,29 +4,24 @@ import java.util.List;
 import java.util.Map;
 
 public class UcitaniPodaciFacade {
-    private final CitacAranzmana citacAranzmana;
-    private final CitacRezervacija citacRezervacija;
-    private List<Map<String, String>> aranzmani;
-    private List<Map<String, String>> rezervacije;
+    private static final CitacAranzmana citacAranzmana = new CitacAranzmana();
+    private static final CitacRezervacija citacRezervacija = new CitacRezervacija();
+    private static List<Map<String, Object>> aranzmani;
+    private static List<Map<String, Object>> rezervacije;
 
-    public UcitaniPodaciFacade() {
-        this.citacAranzmana = new CitacAranzmana();
-        this.citacRezervacija = new CitacRezervacija();
+    public static void ucitajAranzmane(String putanjaDatoteke) {
+        aranzmani = citacAranzmana.ucitaj(putanjaDatoteke);
     }
 
-    public void ucitajAranzmane(String putanjaDatoteke) {
-        this.aranzmani = citacAranzmana.ucitaj(putanjaDatoteke);
+    public static void ucitajRezervacije(String putanjaDatoteke) {
+        rezervacije = citacRezervacija.ucitajRezervacije(putanjaDatoteke);
     }
 
-    public void ucitajRezervacije(String putanjaDatoteke) {
-        this.rezervacije = citacRezervacija.ucitajRezervacije(putanjaDatoteke);
-    }
-
-    public List<Map<String, String>> dohvatiAranzmane() {
+    public static List<Map<String, Object>> dohvatiAranzmane() {
         return aranzmani;
     }
 
-    public List<Map<String, String>> dohvatiRezervacije() {
+    public static List<Map<String, Object>> dohvatiRezervacije() {
         return rezervacije;
     }
 }

@@ -23,17 +23,17 @@ public class KomandaORTA implements Komanda {
         String ime = parametri[1];
         String prezime = parametri[2];
 
-        Integer oznakaAranzmana = ValidatorKomandi.parsirajIValidirajOznaku(parametri[3], "ORTA");
+        Integer oznakaAranzmana = ValidatorKomandi.parsirajIValidirajOznakuAranzmana(parametri[3]);
         if (oznakaAranzmana == null) {
             return;
         }
 
-        boolean jeOtkazana = upraviteljStanja.otkazirezervaciju(ime, prezime, oznakaAranzmana);
-
-        if (jeOtkazana) {
-            System.out.println("Otkazana rezervacija " + ime + " " + prezime + " za turistički aranžman " + oznakaAranzmana + ".");
-        } else {
-            System.out.println("Nije pronađena rezervacija za " + ime + " " + prezime + " na aranžmanu " + oznakaAranzmana + ".");
-        }
+//        boolean jeOtkazana = upraviteljStanja.otkazirezervaciju(ime, prezime, oznakaAranzmana);
+//
+//        if (jeOtkazana) {
+//            System.out.println("Otkazana rezervacija " + ime + " " + prezime + " za turistički aranžman " + oznakaAranzmana + ".");
+//        } else {
+//            System.out.println("Nije pronađena rezervacija za " + ime + " " + prezime + " na aranžmanu " + oznakaAranzmana + ".");
+//        }
     }
 }

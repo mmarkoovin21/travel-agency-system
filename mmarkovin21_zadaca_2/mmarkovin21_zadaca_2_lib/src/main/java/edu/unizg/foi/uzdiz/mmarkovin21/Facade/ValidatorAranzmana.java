@@ -5,7 +5,7 @@ import java.time.LocalTime;
 import java.util.*;
 
 public class ValidatorAranzmana extends Validator {
-    public Map<String, String> validiraj(String[] atributi) {
+    public Map<String, Object> validiraj(String[] atributi) {
         try {
             int oznaka = validirajInt(atributi[0], "Oznaka", true);
             String naziv = validirajString(atributi[1], "Naziv", true);
@@ -26,23 +26,23 @@ public class ValidatorAranzmana extends Validator {
             int brojRucakova = validirajInt(atributi[14], "Broj ručkova", false);
             int brojVecera = validirajInt(atributi[15], "Broj večera", false);
 
-            Map<String, String> aranzmani = new HashMap<>();
-            aranzmani.put("oznaka", String.valueOf(oznaka));
+            Map<String, Object> aranzmani = new HashMap<>();
+            aranzmani.put("oznaka", oznaka);
             aranzmani.put("naziv", naziv);
             aranzmani.put("program", program);
-            aranzmani.put("pocetniDatum", pocetniDatum.toString());
-            aranzmani.put("zavrsniDatum", zavrsniDatum.toString());
-            aranzmani.put("vrijemeKretanja", vrijemeKretanja != null ? vrijemeKretanja.toString() : "");
-            aranzmani.put("vrijemePovratka", vrijemePovratka != null ? vrijemePovratka.toString() : "");
-            aranzmani.put("cijenaPoOsobi", String.valueOf(cijenaPoOsobi));
-            aranzmani.put("minBrojPutnika", String.valueOf(minBrojPutnika));
-            aranzmani.put("maxBrojPutnika", String.valueOf(maxBrojPutnika));
-            aranzmani.put("brojNocenja", String.valueOf(brojNocenja));
-            aranzmani.put("doplataZaJednokrevetnuSobu", String.valueOf(doplataZaJednokrevetnuSobu));
+            aranzmani.put("pocetniDatum", pocetniDatum);
+            aranzmani.put("zavrsniDatum", zavrsniDatum);
+            aranzmani.put("vrijemeKretanja", vrijemeKretanja);
+            aranzmani.put("vrijemePovratka", vrijemePovratka);
+            aranzmani.put("cijenaPoOsobi", cijenaPoOsobi);
+            aranzmani.put("minBrojPutnika", minBrojPutnika);
+            aranzmani.put("maxBrojPutnika", maxBrojPutnika);
+            aranzmani.put("brojNocenja", brojNocenja);
+            aranzmani.put("doplataZaJednokrevetnuSobu", doplataZaJednokrevetnuSobu);
             aranzmani.put("prijevoz", prijevoz);
-            aranzmani.put("brojDorucaka", String.valueOf(brojDorucaka));
-            aranzmani.put("brojRucakova", String.valueOf(brojRucakova));
-            aranzmani.put("brojVecera", String.valueOf(brojVecera));
+            aranzmani.put("brojDorucaka", brojDorucaka);
+            aranzmani.put("brojRucakova", brojRucakova);
+            aranzmani.put("brojVecera", brojVecera);
 
             return aranzmani;
         } catch (Exception e) {

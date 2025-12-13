@@ -2,7 +2,6 @@ package edu.unizg.foi.uzdiz.mmarkovin21.komande;
 
 import edu.unizg.foi.uzdiz.mmarkovin21.TuristickaAgencija;
 import edu.unizg.foi.uzdiz.mmarkovin21.pomocnici.FormaterTablice;
-import edu.unizg.foi.uzdiz.mmarkovin21.pomocnici.PretvaracDatuma;
 import edu.unizg.foi.uzdiz.mmarkovin21.pomocnici.ValidatorKomandi;
 
 public class KomandaITAP implements Komanda {
@@ -18,7 +17,7 @@ public class KomandaITAP implements Komanda {
             return;
         }
 
-        Integer oznaka = ValidatorKomandi.parsirajIValidirajOznaku(parametri[1], "ITAP");
+        Integer oznaka = ValidatorKomandi.parsirajIValidirajOznakuAranzmana(parametri[1]);
         if (oznaka == null) {
             return;
         }
@@ -29,31 +28,31 @@ public class KomandaITAP implements Komanda {
 
         boolean pronadjen = false;
 
-        for (var aranzman : agencija.dohvatiAranzmane()) {
-            if (aranzman.dohvatiOznaka() == oznaka) {
-                    tablica.dodajRed(
-                            String.valueOf(aranzman.dohvatiOznaka()),
-                            aranzman.dohvatiNaziv(),
-                            aranzman.dohvatiProgram(),
-                            PretvaracDatuma.formatirajDatum(aranzman.dohvatiPocetniDatum()),
-                            PretvaracDatuma.formatirajDatum(aranzman.dohvatiZavrsniDatum()),
-                            aranzman.dohvatiVrijemeKretanja() != null ? PretvaracDatuma.formatirajVrijeme(aranzman.dohvatiVrijemeKretanja()) : "",
-                            aranzman.dohvatiVrijemePovratka() != null ? PretvaracDatuma.formatirajVrijeme(aranzman.dohvatiVrijemePovratka()) : "",
-                            String.valueOf(aranzman.dohvatiCijenaPoOsobi()),
-                            String.valueOf(aranzman.dohvatiMinBrojPutnika()),
-                            String.valueOf(aranzman.dohvatiMaxBrojPutnika()),
-                            String.valueOf(aranzman.dohvatiBrojNocenja()),
-                            String.valueOf(aranzman.dohvatiDoplataZaJednokrevetnuSobu()),
-                            String.valueOf(aranzman.dohvatiPrijevoz() != null ? aranzman.dohvatiPrijevoz() : ""),
-                            String.valueOf(aranzman.dohvatiBrojDorucaka()),
-                            String.valueOf(aranzman.dohvatiBrojRuckova()),
-                            String.valueOf(aranzman.dohvatiBrojVecera())
-                    );
-                    pronadjen = true;
-                    System.out.println(tablica.formatiraj());
-                    break;
-            }
-        }
+//        for (var aranzman : agencija.dohvatiAranzmane()) {
+//            if (aranzman.dohvatiOznaka() == oznaka) {
+//                    tablica.dodajRed(
+//                            String.valueOf(aranzman.dohvatiOznaka()),
+//                            aranzman.dohvatiNaziv(),
+//                            aranzman.dohvatiProgram(),
+//                            PretvaracDatuma.formatirajDatum(aranzman.dohvatiPocetniDatum()),
+//                            PretvaracDatuma.formatirajDatum(aranzman.dohvatiZavrsniDatum()),
+//                            aranzman.dohvatiVrijemeKretanja() != null ? PretvaracDatuma.formatirajVrijeme(aranzman.dohvatiVrijemeKretanja()) : "",
+//                            aranzman.dohvatiVrijemePovratka() != null ? PretvaracDatuma.formatirajVrijeme(aranzman.dohvatiVrijemePovratka()) : "",
+//                            String.valueOf(aranzman.dohvatiCijenaPoOsobi()),
+//                            String.valueOf(aranzman.dohvatiMinBrojPutnika()),
+//                            String.valueOf(aranzman.dohvatiMaxBrojPutnika()),
+//                            String.valueOf(aranzman.dohvatiBrojNocenja()),
+//                            String.valueOf(aranzman.dohvatiDoplataZaJednokrevetnuSobu()),
+//                            String.valueOf(aranzman.dohvatiPrijevoz() != null ? aranzman.dohvatiPrijevoz() : ""),
+//                            String.valueOf(aranzman.dohvatiBrojDorucaka()),
+//                            String.valueOf(aranzman.dohvatiBrojRuckova()),
+//                            String.valueOf(aranzman.dohvatiBrojVecera())
+//                    );
+//                    pronadjen = true;
+//                    System.out.println(tablica.formatiraj());
+//                    break;
+//            }
+//        }
 
         if (!pronadjen) {
             System.err.println("Greška: Aranžman s oznakom " + oznaka + " nije pronađen.");

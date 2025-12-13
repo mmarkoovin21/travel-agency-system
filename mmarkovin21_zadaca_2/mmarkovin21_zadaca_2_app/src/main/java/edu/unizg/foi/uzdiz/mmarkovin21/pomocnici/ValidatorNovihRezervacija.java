@@ -55,7 +55,7 @@ public class ValidatorNovihRezervacija {
                 throw new IllegalArgumentException(imePolja + " je obavezno polje!");
             }
         }
-        LocalDateTime datumVrijeme = PretvaracDatuma.parsirajDatumVrijeme(vrijednost);
+        LocalDateTime datumVrijeme = PretvaracTipovaPodataka.parsirajDatumVrijeme(vrijednost);
         if (datumVrijeme == null && obavezan) {
             throw new IllegalArgumentException("Nevažeći format datuma i vremena za " + imePolja + ": " + vrijednost);
         }

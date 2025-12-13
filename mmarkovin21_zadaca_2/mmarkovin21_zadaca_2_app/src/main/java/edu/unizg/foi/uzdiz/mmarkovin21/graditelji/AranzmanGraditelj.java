@@ -1,6 +1,7 @@
 package edu.unizg.foi.uzdiz.mmarkovin21.graditelji;
 
 import edu.unizg.foi.uzdiz.mmarkovin21.modeli.Aranzman;
+import edu.unizg.foi.uzdiz.mmarkovin21.modeli.Rezervacija;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -68,6 +69,11 @@ public class AranzmanGraditelj {
 
     public AranzmanGraditelj postaviBrojVecera(int brojVecera) {
         this.aranzman.postaviBrojVecera(brojVecera);
+        return this;
+    }
+
+    public AranzmanGraditelj dodajRezervaciju(Rezervacija rezervacija) {
+        this.aranzman.dodajDijete(rezervacija);
         return this;
     }
 

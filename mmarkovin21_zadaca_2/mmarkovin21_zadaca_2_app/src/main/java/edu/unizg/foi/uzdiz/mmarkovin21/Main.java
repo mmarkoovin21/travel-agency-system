@@ -3,8 +3,8 @@ package edu.unizg.foi.uzdiz.mmarkovin21;
 public class Main {
     public static void main(String[] args) {
         if (args.length < 4) {
-            System.out.println("Nedostaju argumenti! Potrebno: --ta <datoteka> --rta <datoteka>");
-            return;
+            System.out.println("Niste unjeli argumente datoteka za učitavanje aranžmana i rezervacija!");
+            System.out.println("Učitajte ih korištenjem komande UP [A|R] <datoteka> prije pokretanja interaktivnog načina rada.");
         }
 
         String datotekaAranzmani = null;
@@ -16,12 +16,9 @@ public class Main {
                 datotekaAranzmani = args[i + 1];
             } else if (args[i].equals("--rta")) {
                 datotekaRezervacije = args[i + 1];
+            } else {
+                System.out.println("Neispravan format argumenata!");
             }
-        }
-
-        if (datotekaAranzmani == null || datotekaRezervacije == null) {
-            System.out.println("Nedostaju obavezni argumenti --ta i --rta!");
-            return;
         }
 
         TuristickaAgencija agencija = TuristickaAgencija.dohvatiInstancu();

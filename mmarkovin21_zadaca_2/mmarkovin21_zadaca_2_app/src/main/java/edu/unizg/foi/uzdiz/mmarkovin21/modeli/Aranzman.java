@@ -1,11 +1,14 @@
 package edu.unizg.foi.uzdiz.mmarkovin21.modeli;
 
+import edu.unizg.foi.uzdiz.mmarkovin21.composite.TuristickaKomponenta;
+
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class Aranzman {
+public class Aranzman extends TuristickaKomponenta {
     // nužni
     private int oznaka;
     private String naziv;
@@ -25,6 +28,8 @@ public class Aranzman {
     private int brojDorucaka;
     private int brojRucakova;
     private int brojVecera;
+
+    private List<TuristickaKomponenta> djeca = new ArrayList<>();
 
     public Aranzman() {
     }
@@ -151,5 +156,44 @@ public class Aranzman {
     
     public void postaviBrojVecera(int brojVecera) {
         this.brojVecera = brojVecera;
+    }
+
+    // composite metode
+    @Override
+    public void ispisi(int razina) {
+        // ovdje treba neki formater tablice
+        String uvlaka = "  ".repeat(razina);
+        System.out.println(uvlaka + "Aranžman: " + naziv +
+                " (oznaka: " + oznaka + ", cijena: " + cijenaPoOsobi + ")");
+
+        // Rekurzivno ispisuj djecu, ne znam bas oce li mi ovo trebati
+//        for (TuristickaKomponenta dijete : djeca) {
+//            dijete.ispisi(razina + 1);
+//        }
+    }
+
+    @Override
+    public double izracunajUkupnuCijenu() {
+        // Osnovna cijena aranžmana + zbroj cijena sve djece
+        double ukupno = 0;
+
+        for (TuristickaKomponenta dijete : djeca) {
+            ukupno += dijete.izracunajUkupnuCijenu();
+        }
+        return ukupno;
+    }
+
+    @Override
+    public void dodajDijete(TuristickaKomponenta koponenta) {
+        djeca.add(koponenta);
+
+        // Ako je dijete Rezervacija, postavi referencu
+        if (koponenta instanceof Rezervacija) {
+            ((Rezervacija) koponenta).postaviAranzman(this);
+        }
+    }
+    @Override
+    public void ukloniDijete(TuristickaKomponenta koponenta) {
+        djeca.remove(koponenta);
     }
 }

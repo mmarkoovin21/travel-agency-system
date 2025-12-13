@@ -13,8 +13,8 @@ public class CitacRezervacija {
         this.validator = new ValidatorRezervacija();
     }
 
-    protected List<Map<String, String>> ucitajRezervacije(String nazivDatoteke) {
-        List<Map<String, String>> rezervacije = new ArrayList<>();
+    protected List<Map<String, Object>> ucitajRezervacije(String nazivDatoteke) {
+        List<Map<String, Object>> rezervacije = new ArrayList<>();
         try (BufferedReader citac = new BufferedReader(new FileReader(nazivDatoteke))) {
             String linija;
             boolean prviRedak = true;
@@ -45,7 +45,7 @@ public class CitacRezervacija {
                 }
 
                 try {
-                    Map<String, String> validnaRezervacija = validator.validiraj(atributi);
+                    Map<String, Object> validnaRezervacija = validator.validiraj(atributi);
 
                     if (validnaRezervacija == null) {
                         System.err.println("Neispravan format rezervacije na retku " + brojRetka);

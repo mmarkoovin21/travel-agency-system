@@ -7,11 +7,11 @@ import java.util.List;
 import java.util.Map;
 
 public class CitacAranzmana {
-    private List<Map<String, String>> aranzmani = new ArrayList<>();
+    private List<Map<String, Object>> aranzmani = new ArrayList<>();
     private ValidatorAranzmana validator = new ValidatorAranzmana();
     final int OCEKIVANI_BROJ_ATRIBUTA = 16;
 
-    protected List<Map<String, String>> ucitaj(String nazivDatoteke) {
+    protected List<Map<String, Object>> ucitaj(String nazivDatoteke) {
 
         try (BufferedReader citac = new BufferedReader(new FileReader(nazivDatoteke))) {
             String linija;
@@ -42,7 +42,7 @@ public class CitacAranzmana {
                         continue;
                     }
 
-                    Map<String, String> podaci = this.validator.validiraj(atributi);
+                    Map<String, Object>  podaci = this.validator.validiraj(atributi);
                     aranzmani.add(podaci);
                 } catch (Exception e) {
                     System.err.println("Greška pri obradi retka " + brojRetka + ": " + e.getMessage());

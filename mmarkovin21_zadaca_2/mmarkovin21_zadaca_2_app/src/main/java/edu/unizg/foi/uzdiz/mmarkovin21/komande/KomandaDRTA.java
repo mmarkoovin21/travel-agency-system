@@ -2,7 +2,7 @@ package edu.unizg.foi.uzdiz.mmarkovin21.komande;
 
 import edu.unizg.foi.uzdiz.mmarkovin21.TuristickaAgencija;
 import edu.unizg.foi.uzdiz.mmarkovin21.modeli.Rezervacija;
-import edu.unizg.foi.uzdiz.mmarkovin21.pomocnici.PretvaracDatuma;
+import edu.unizg.foi.uzdiz.mmarkovin21.pomocnici.PretvaracTipovaPodataka;
 import edu.unizg.foi.uzdiz.mmarkovin21.pomocnici.ValidatorKomandi;
 import edu.unizg.foi.uzdiz.mmarkovin21.UpraviteljStanjaRezervacija;
 import edu.unizg.foi.uzdiz.mmarkovin21.pomocnici.ValidatorNovihRezervacija;
@@ -37,13 +37,13 @@ public class KomandaDRTA implements Komanda {
             return;
         }
 
-        Integer oznakaAranzmana = ValidatorKomandi.parsirajIValidirajOznaku(parametri[3], "DRTA");
+        Integer oznakaAranzmana = ValidatorKomandi.parsirajIValidirajOznakuAranzmana(parametri[3]);
         if (oznakaAranzmana == null) {
             return;
         }
 
         String datumVrijemeString = parametri[4] + " " + parametri[5];
-        LocalDateTime datumVrijeme = PretvaracDatuma.parsirajDatumVrijeme(datumVrijemeString);
+        LocalDateTime datumVrijeme = PretvaracTipovaPodataka.parsirajDatumVrijeme(datumVrijemeString);
 
         if (datumVrijeme == null) {
             System.out.println("Greška: Neispravan format datuma/vremena. Očekivani format: DD.MM.YYYY HH:MM:SS (npr. 01.01.2010 01:00:01)");
@@ -58,12 +58,12 @@ public class KomandaDRTA implements Komanda {
             return;
         }
 
-        boolean jeDodana = upraviteljStanja.dodajRezervaciju(novaRezervacija);
-        if (jeDodana) {
-            System.out.println("Dodana rezervacija " + ime + " " + prezime + " za turistički aranžman s oznakom " +
-                    oznakaAranzmana + " u " + PretvaracDatuma.formatirajDatumVrijeme(datumVrijeme) + ".");
-        } else {
-            System.out.println("Greška: Rezervacija nije dodana!");
-        }
+//        boolean jeDodana = upraviteljStanja.dodajRezervaciju(novaRezervacija);
+//        if (jeDodana) {
+//            System.out.println("Dodana rezervacija " + ime + " " + prezime + " za turistički aranžman s oznakom " +
+//                    oznakaAranzmana + " u " + PretvaracDatuma.formatirajDatumVrijeme(datumVrijeme) + ".");
+//        } else {
+//            System.out.println("Greška: Rezervacija nije dodana!");
+//        }
     }
 }
