@@ -12,7 +12,6 @@ public class AktivanStatusAranzmana implements StanjeAranzmana {
 
     @Override
     public void aktiviraj(Aranzman aranzman) {
-        System.out.println("Aranzman je vec u stanju AKTIVAN");
     }
 
     @Override

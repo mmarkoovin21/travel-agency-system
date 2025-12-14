@@ -10,7 +10,7 @@ public class AktivnoStanjeRezervacije implements StanjeRezervacije{
 
     @Override
     public void aktiviraj(Rezervacija rezervacija) {
-        System.out.println("Rezervacija je već u stanju AKTIVNA!");
+
     }
 
     @Override

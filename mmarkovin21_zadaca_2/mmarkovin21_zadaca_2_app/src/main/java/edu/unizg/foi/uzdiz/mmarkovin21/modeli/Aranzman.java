@@ -1,6 +1,7 @@
 package edu.unizg.foi.uzdiz.mmarkovin21.modeli;
 
 import edu.unizg.foi.uzdiz.mmarkovin21.composite.TuristickaKomponenta;
+import edu.unizg.foi.uzdiz.mmarkovin21.observer.AranzmanObserver;
 import edu.unizg.foi.uzdiz.mmarkovin21.state.*;
 
 import java.time.LocalDate;
@@ -33,6 +34,7 @@ public class Aranzman extends TuristickaKomponenta {
     private StanjeAranzmana status;
 
     private final List<TuristickaKomponenta> djeca = new ArrayList<>();
+    private List<AranzmanObserver> observers = new ArrayList<>();
 
     public Aranzman() {
     }
@@ -198,6 +200,10 @@ public class Aranzman extends TuristickaKomponenta {
         djeca.remove(koponenta);
     }
 
+    public List<TuristickaKomponenta> dohvatiDjecu() {
+        return djeca;
+    }
+
     private StanjeAranzmana odrediPocetniStatusPremaNazivu(String nazivStatusa) {
         switch (nazivStatusa.toUpperCase()) {
             case "U PRIPREMI":
@@ -227,5 +233,19 @@ public class Aranzman extends TuristickaKomponenta {
 
     public void otkazi() {
         status.otkazi(this);
+    }
+
+    public void dodajObserver(AranzmanObserver observer) {
+        observers.add(observer);
+    }
+
+    public void ukloniObserver(AranzmanObserver observer) {
+        observers.remove(observer);
+    }
+
+    public void obavijestObservere() {
+        for (AranzmanObserver observer : observers) {
+            observer.obavijesti(this);
+        }
     }
 }

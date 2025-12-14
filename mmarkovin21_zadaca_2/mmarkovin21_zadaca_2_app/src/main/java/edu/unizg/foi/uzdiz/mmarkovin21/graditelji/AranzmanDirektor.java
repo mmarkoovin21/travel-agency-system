@@ -30,7 +30,6 @@ public class AranzmanDirektor {
                 "U PRIPREMI"
         );
 
-        // Dodajemo opcionalne parametre ako postoje
         LocalTime vrijemeKretanja = (LocalTime) podaci.get("vrijemeKretanja");
         if (vrijemeKretanja != null) {
             graditelj.postaviVrijemeKretanja(vrijemeKretanja);

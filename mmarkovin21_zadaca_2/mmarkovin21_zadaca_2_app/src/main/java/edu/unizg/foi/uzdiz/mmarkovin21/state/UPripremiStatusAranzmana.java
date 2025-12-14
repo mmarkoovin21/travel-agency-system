@@ -6,7 +6,6 @@ public class UPripremiStatusAranzmana implements StanjeAranzmana {
 
     @Override
     public void pripremi(Aranzman aranzman) {
-        System.out.println("Aranžman je već u stanju U PRIPREMI");
     }
 
     @Override

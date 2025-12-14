@@ -5,7 +5,6 @@ import edu.unizg.foi.uzdiz.mmarkovin21.modeli.Rezervacija;
 public class PrimljenoStanjeRezervacije implements StanjeRezervacije{
     @Override
     public void primi(Rezervacija rezervacija) {
-        System.out.println("Rezervacija je već u stanju PRIMLJENA");
     }
 
     @Override

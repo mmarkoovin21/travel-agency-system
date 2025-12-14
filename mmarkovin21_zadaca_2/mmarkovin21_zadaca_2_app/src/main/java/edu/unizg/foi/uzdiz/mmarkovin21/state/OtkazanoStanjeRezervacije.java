@@ -20,7 +20,6 @@ public class OtkazanoStanjeRezervacije implements StanjeRezervacije{
 
     @Override
     public void otkazi(Rezervacija rezervacija) {
-        System.out.println("Rezervacija je već u stanju OTKAZANA");
     }
 
     @Override

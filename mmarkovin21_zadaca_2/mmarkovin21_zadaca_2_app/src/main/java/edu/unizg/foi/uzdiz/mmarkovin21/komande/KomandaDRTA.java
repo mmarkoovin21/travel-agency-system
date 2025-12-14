@@ -2,9 +2,9 @@ package edu.unizg.foi.uzdiz.mmarkovin21.komande;
 
 import edu.unizg.foi.uzdiz.mmarkovin21.TuristickaAgencija;
 import edu.unizg.foi.uzdiz.mmarkovin21.modeli.Rezervacija;
+import edu.unizg.foi.uzdiz.mmarkovin21.observer.UpraviteljStanjaAranzmana;
 import edu.unizg.foi.uzdiz.mmarkovin21.pomocnici.PretvaracTipovaPodataka;
 import edu.unizg.foi.uzdiz.mmarkovin21.pomocnici.ValidatorKomandi;
-import edu.unizg.foi.uzdiz.mmarkovin21.UpraviteljStanjaRezervacija;
 import edu.unizg.foi.uzdiz.mmarkovin21.pomocnici.ValidatorNovihRezervacija;
 //import edu.unizg.foi.uzdiz.mmarkovin21.validatori.ValidatorRezervacija;
 
@@ -12,10 +12,10 @@ import java.time.LocalDateTime;
 
 public class KomandaDRTA implements Komanda {
     private final TuristickaAgencija agencija;
-    private final UpraviteljStanjaRezervacija upraviteljStanja;
+    private final UpraviteljStanjaAranzmana upraviteljStanja;
     private final ValidatorNovihRezervacija validator;
 
-    public KomandaDRTA(TuristickaAgencija agencija, UpraviteljStanjaRezervacija upraviteljStanja,
+    public KomandaDRTA(TuristickaAgencija agencija, UpraviteljStanjaAranzmana upraviteljStanja,
                        ValidatorNovihRezervacija validator) {
         this.agencija = agencija;
         this.upraviteljStanja = upraviteljStanja;

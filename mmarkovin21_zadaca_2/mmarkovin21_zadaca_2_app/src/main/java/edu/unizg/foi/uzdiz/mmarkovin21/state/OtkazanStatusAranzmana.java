@@ -20,7 +20,6 @@ public class OtkazanStatusAranzmana implements StanjeAranzmana {
 
     @Override
     public void otkazi(Aranzman aranzman) {
-        System.out.println("Aranzman je vec u stanju OTKAZAN");
     }
 
     @Override

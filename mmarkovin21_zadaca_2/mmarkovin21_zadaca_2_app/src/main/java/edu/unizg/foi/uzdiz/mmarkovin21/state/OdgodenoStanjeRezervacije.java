@@ -25,7 +25,6 @@ public class OdgodenoStanjeRezervacije implements StanjeRezervacije{
 
     @Override
     public void odgodi(Rezervacija rezervacija) {
-        System.out.println("Rezervacija je već u stanju ODGOĐENA");
     }
 
     @Override

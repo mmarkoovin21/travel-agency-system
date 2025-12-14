@@ -15,7 +15,6 @@ public class NaCekanjuStanjeRezervacije implements StanjeRezervacije{
 
     @Override
     public void staviNaCekanje(Rezervacija rezervacija) {
-        System.out.println("Rezervacija je već u stanju NA ČEKANJU");
     }
 
     @Override

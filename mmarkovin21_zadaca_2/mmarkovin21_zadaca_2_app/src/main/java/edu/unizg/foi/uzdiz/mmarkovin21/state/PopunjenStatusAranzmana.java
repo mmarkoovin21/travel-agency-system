@@ -15,7 +15,6 @@ public class PopunjenStatusAranzmana implements StanjeAranzmana {
 
     @Override
     public void popuni(Aranzman aranzman) {
-        System.out.println("Aranžman je već u stanju POPUNJEN");
     }
 
     @Override
