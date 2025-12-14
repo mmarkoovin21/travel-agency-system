@@ -5,7 +5,6 @@ import edu.unizg.foi.uzdiz.mmarkovin21.observer.AranzmanObserver;
 import edu.unizg.foi.uzdiz.mmarkovin21.state.*;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -100,7 +99,7 @@ public class Aranzman extends TuristickaKomponenta {
         return cijenaPoOsobi;
     }
 
-    public String dohvatStatusStrirng(){ return status.dohvatiNazivStanja(); }
+    public String dohvatiStatusString(){ return status.dohvatiNazivStanja(); }
 
     public StanjeAranzmana dohvatiStatus() {
         return status;

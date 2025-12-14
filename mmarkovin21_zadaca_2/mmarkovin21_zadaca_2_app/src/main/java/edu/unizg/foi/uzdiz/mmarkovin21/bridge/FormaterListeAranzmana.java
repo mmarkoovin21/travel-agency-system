@@ -11,7 +11,7 @@ public class FormaterListeAranzmana implements TablicniFormater {
 
     @Override
     public int[] definirajSirineKolona() {
-        return new int[]{5, 30, 12, 12, 10, 10, 8, 8, 8};
+        return new int[]{5, 30, 12, 12, 10, 10, 8, 8, 8, 8};
     }
 
     @Override
@@ -25,7 +25,8 @@ public class FormaterListeAranzmana implements TablicniFormater {
                 "Vrijeme povratka",
                 "Cijena",
                 "Min broj putnika",
-                "Maks broj putnika"
+                "Maks broj putnika",
+                "Status"
         };
     }
 
@@ -50,7 +51,8 @@ public class FormaterListeAranzmana implements TablicniFormater {
                     : "",
                 String.valueOf(aranzman.dohvatiCijenaPoOsobi()),
                 String.valueOf(aranzman.dohvatiMinBrojPutnika()),
-                String.valueOf(aranzman.dohvatiMaxBrojPutnika())
+                String.valueOf(aranzman.dohvatiMaxBrojPutnika()),
+                aranzman.dohvatiStatusString()
         };
     }
 }

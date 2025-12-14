@@ -11,7 +11,7 @@ public class FormaterDetaljaAranzmana implements TablicniFormater {
 
     @Override
     public int[] definirajSirineKolona() {
-        return new int[]{5, 20, 40, 12, 12, 8, 8, 8, 8, 8, 8, 8, 10, 8, 8, 8};
+        return new int[]{5, 15, 30, 12, 12, 8, 8, 8, 8, 8, 8, 8, 10, 8, 8, 8, 8};
     }
 
     @Override
@@ -32,7 +32,8 @@ public class FormaterDetaljaAranzmana implements TablicniFormater {
                 "Prijevoz",
                 "Broj doručka",
                 "Broj ručkova",
-                "Broj večera"
+                "Broj večera",
+                "Status"
         };
     }
 
@@ -64,7 +65,8 @@ public class FormaterDetaljaAranzmana implements TablicniFormater {
                     : "",
                 String.valueOf(aranzman.dohvatiBrojDorucaka()),
                 String.valueOf(aranzman.dohvatiBrojRuckova()),
-                String.valueOf(aranzman.dohvatiBrojVecera())
+                String.valueOf(aranzman.dohvatiBrojVecera()),
+                aranzman.dohvatiStatusString()
         };
     }
 }
