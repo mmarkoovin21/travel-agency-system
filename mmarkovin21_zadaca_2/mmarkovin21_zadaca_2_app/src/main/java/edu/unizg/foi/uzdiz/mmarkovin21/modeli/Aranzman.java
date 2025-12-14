@@ -1,8 +1,10 @@
 package edu.unizg.foi.uzdiz.mmarkovin21.modeli;
 
 import edu.unizg.foi.uzdiz.mmarkovin21.composite.TuristickaKomponenta;
+import edu.unizg.foi.uzdiz.mmarkovin21.state.*;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -28,7 +30,7 @@ public class Aranzman extends TuristickaKomponenta {
     private int brojDorucaka;
     private int brojRucakova;
     private int brojVecera;
-    private String status;
+    private StanjeAranzmana status;
 
     private final List<TuristickaKomponenta> djeca = new ArrayList<>();
 
@@ -53,7 +55,7 @@ public class Aranzman extends TuristickaKomponenta {
         this.minBrojPutnika = minBrojPutnika;
         this.maxBrojPutnika = maxBrojPutnika;
         this.cijenaPoOsobi = cijenaPoOsobi;
-        this.status = status;
+        this.status = odrediPocetniStatusPremaNazivu(status);
     }
 
     public int dohvatiOznaka() {
@@ -96,7 +98,15 @@ public class Aranzman extends TuristickaKomponenta {
         return cijenaPoOsobi;
     }
 
-    public String dohvatStatus(){ return status; }
+    public String dohvatStatusStrirng(){ return status.dohvatiNazivStanja(); }
+
+    public StanjeAranzmana dohvatiStatus() {
+        return status;
+    }
+
+    public void promijeniStatus(StanjeAranzmana novoStanje) {
+        this.status = novoStanje;
+    }
     
     // neobavezni getteri i setteri
     public LocalTime dohvatiVrijemeKretanja() {
@@ -186,5 +196,36 @@ public class Aranzman extends TuristickaKomponenta {
     @Override
     public void ukloniDijete(TuristickaKomponenta koponenta) {
         djeca.remove(koponenta);
+    }
+
+    private StanjeAranzmana odrediPocetniStatusPremaNazivu(String nazivStatusa) {
+        switch (nazivStatusa.toUpperCase()) {
+            case "U PRIPREMI":
+                return new UPripremiStatusAranzmana();
+            case "AKTIVAN":
+                return new AktivanStatusAranzmana();
+            case "POPUNJEN":
+                return new PopunjenStatusAranzmana();
+            case "OTKAZAN":
+                return new OtkazanStatusAranzmana();
+            default:
+                throw new IllegalArgumentException("Nepoznat naziv statusa aranžmana: " + nazivStatusa);
+        }
+    }
+
+    public void pripremi() {
+        status.pripremi(this);
+    }
+
+    public void aktiviraj() {
+        status.aktiviraj(this);
+    }
+
+    public void popuni() {
+        status.popuni(this);
+    }
+
+    public void otkazi() {
+        status.otkazi(this);
     }
 }

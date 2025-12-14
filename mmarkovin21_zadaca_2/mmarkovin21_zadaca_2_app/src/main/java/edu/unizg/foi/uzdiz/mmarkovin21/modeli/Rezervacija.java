@@ -79,11 +79,11 @@ public class Rezervacija extends TuristickaKomponenta {
 
     private StanjeRezervacije odredPOcetnoStanjePremaNazivu(String naziv) {
         switch (naziv.toLowerCase()) {
-            case "primljena": return new PrimljenoStanje();
-            case "aktivna": return new AktivnoStanje();
-            case "na čekanju": return new NaCekanjuStanje();
-            case "otkazana": return new OtkazanoStanje();
-            default: return new NovoStanje();
+            case "primljena": return new PrimljenoStanjeRezervacije();
+            case "aktivna": return new AktivnoStanjeRezervacije();
+            case "na čekanju": return new NaCekanjuStanjeRezervacije();
+            case "otkazana": return new OtkazanoStanjeRezervacije();
+            default: return new NovoStanjeRezervacije();
         }
     }
 
