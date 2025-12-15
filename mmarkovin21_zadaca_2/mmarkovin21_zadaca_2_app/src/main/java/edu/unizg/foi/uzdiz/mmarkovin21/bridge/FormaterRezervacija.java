@@ -1,24 +1,25 @@
 package edu.unizg.foi.uzdiz.mmarkovin21.bridge;
 
+import edu.unizg.foi.uzdiz.mmarkovin21.TuristickaAgencija;
+import edu.unizg.foi.uzdiz.mmarkovin21.modeli.Aranzman;
 import edu.unizg.foi.uzdiz.mmarkovin21.modeli.Rezervacija;
 import edu.unizg.foi.uzdiz.mmarkovin21.pomocnici.PretvaracTipovaPodataka;
 
-/**
- * Konkretna implementacija formatera za rezervacije (komanda IRTA).
- * Omogućava prikaz rezervacija s opcionalnom kolonom za datum otkazivanja.
- */
+import java.util.List;
+
+
 public class FormaterRezervacija implements TablicniFormater {
 
     private final boolean prikaziDatumOtkaza;
-
-    /**
-     * Konstruktor formatera za rezervacije.
-     * @param prikaziDatumOtkaza true ako treba prikazati kolonu s datumom otkazivanja
-     */
     public FormaterRezervacija(boolean prikaziDatumOtkaza) {
         this.prikaziDatumOtkaza = prikaziDatumOtkaza;
     }
-
+    private List<Aranzman> aranzmani = TuristickaAgencija.dohvatiInstancu()
+            .dohvatiPodatke()
+            .stream()
+            .filter(k -> k instanceof Aranzman)
+            .map(k -> (Aranzman) k)
+            .toList();
     @Override
     public int[] definirajSirineKolona() {
         if (prikaziDatumOtkaza) {
@@ -32,17 +33,17 @@ public class FormaterRezervacija implements TablicniFormater {
     public String[] kreirajZaglavlje() {
         if (prikaziDatumOtkaza) {
             return new String[]{
-                    "Ime",
-                    "Prezime",
                     "Datum i vrijeme",
+                    "Oznaka aranžmana",
+                    "Naziv aranžmana",
                     "Vrsta",
                     "Datum i vrijeme otkaza"
             };
         } else {
             return new String[]{
-                    "Ime",
-                    "Prezime",
                     "Datum i vrijeme",
+                    "Oznaka aranžmana",
+                    "Naziv aranžmana",
                     "Vrsta"
             };
         }
@@ -50,11 +51,9 @@ public class FormaterRezervacija implements TablicniFormater {
 
     @Override
     public String[] formatirajRed(Object podatak) {
-        if (!(podatak instanceof Rezervacija)) {
+        if (!(podatak instanceof Rezervacija rezervacija)) {
             throw new IllegalArgumentException("Očekivan objekt tipa Rezervacija");
         }
-
-        Rezervacija rezervacija = (Rezervacija) podatak;
 
         if (prikaziDatumOtkaza) {
             String datumOtkaza = rezervacija.dohvatiDatumVrijemeOtkazivanja() != null
@@ -62,17 +61,25 @@ public class FormaterRezervacija implements TablicniFormater {
                     : "";
 
             return new String[]{
-                    rezervacija.dohvatiIme(),
-                    rezervacija.dohvatiPrezime(),
                     PretvaracTipovaPodataka.formatirajDatumVrijeme(rezervacija.dohvatiDatumVrijemePrijema()),
+                    String.valueOf(rezervacija.dohvatiOznakaAranzmana()),
+                    aranzmani.stream()
+                            .filter(a -> a.dohvatiOznaka() == rezervacija.dohvatiOznakaAranzmana())
+                            .map(Aranzman::dohvatiNaziv)
+                            .findFirst()
+                            .orElse("Nepoznat aranžman"),
                     rezervacija.dohvatiStanjeString(),
                     datumOtkaza
             };
         } else {
             return new String[]{
-                    rezervacija.dohvatiIme(),
-                    rezervacija.dohvatiPrezime(),
                     PretvaracTipovaPodataka.formatirajDatumVrijeme(rezervacija.dohvatiDatumVrijemePrijema()),
+                    String.valueOf(rezervacija.dohvatiOznakaAranzmana()),
+                    aranzmani.stream()
+                            .filter(a -> a.dohvatiOznaka() == rezervacija.dohvatiOznakaAranzmana())
+                            .map(Aranzman::dohvatiNaziv)
+                            .findFirst()
+                            .orElse("Nepoznat aranžman"),
                     rezervacija.dohvatiStanjeString()
             };
         }

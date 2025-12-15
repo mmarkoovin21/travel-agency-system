@@ -1,7 +1,12 @@
 package edu.unizg.foi.uzdiz.mmarkovin21.komande;
 
 import edu.unizg.foi.uzdiz.mmarkovin21.TuristickaAgencija;
+import edu.unizg.foi.uzdiz.mmarkovin21.bridge.FormaterRezervacija;
+import edu.unizg.foi.uzdiz.mmarkovin21.bridge.IspisivacRezervacija;
+import edu.unizg.foi.uzdiz.mmarkovin21.modeli.Rezervacija;
 import edu.unizg.foi.uzdiz.mmarkovin21.pomocnici.ValidatorKomandi;
+
+import java.util.List;
 
 public class KomandaIRO implements Komanda {
     private final TuristickaAgencija agencija;
@@ -28,6 +33,20 @@ public class KomandaIRO implements Komanda {
             return;
         }
 
+        List<Rezervacija> rezervacije = agencija.dohvatiPodatke()
+                .stream()
+                .filter(k -> k instanceof Rezervacija)
+                .map(k -> (Rezervacija) k)
+                .filter(r -> r.dohvatiIme().equalsIgnoreCase(ime) && r.dohvatiPrezime().equalsIgnoreCase(prezime))
+                .toList();
 
+        boolean imaOdgodjenih = rezervacije.stream().anyMatch(r -> r.dohvatiStanjeString().equalsIgnoreCase("ODGOĐENA"));
+        IspisivacRezervacija ispisivac = new IspisivacRezervacija(new FormaterRezervacija(imaOdgodjenih));
+
+        if (rezervacije.isEmpty()) {
+            System.out.println("Nema rezervacija za korisnika: " + ime + " " + prezime);
+        } else {
+            ispisivac.ispisi(rezervacije);
+        }
     }
 }

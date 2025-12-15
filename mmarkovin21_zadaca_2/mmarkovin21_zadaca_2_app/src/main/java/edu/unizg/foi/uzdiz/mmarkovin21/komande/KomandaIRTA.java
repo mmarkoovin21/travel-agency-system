@@ -4,6 +4,7 @@ import edu.unizg.foi.uzdiz.mmarkovin21.TuristickaAgencija;
 import edu.unizg.foi.uzdiz.mmarkovin21.bridge.FormaterRezervacija;
 import edu.unizg.foi.uzdiz.mmarkovin21.bridge.IspisivacRezervacija;
 import edu.unizg.foi.uzdiz.mmarkovin21.modeli.Rezervacija;
+import edu.unizg.foi.uzdiz.mmarkovin21.pomocnici.RezervacijaFilter;
 import edu.unizg.foi.uzdiz.mmarkovin21.pomocnici.ValidatorKomandi;
 
 import java.util.Comparator;
