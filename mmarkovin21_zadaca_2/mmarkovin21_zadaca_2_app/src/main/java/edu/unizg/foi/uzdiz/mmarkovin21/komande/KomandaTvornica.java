@@ -1,12 +1,12 @@
 package edu.unizg.foi.uzdiz.mmarkovin21.komande;
 
 import edu.unizg.foi.uzdiz.mmarkovin21.TuristickaAgencija;
-import edu.unizg.foi.uzdiz.mmarkovin21.observer.UpraviteljStanjaAranzmana;
+import edu.unizg.foi.uzdiz.mmarkovin21.mediator.MediatorRezervacija;
 import edu.unizg.foi.uzdiz.mmarkovin21.pomocnici.ValidatorNovihRezervacija;
 
 public abstract class KomandaTvornica {
     private static TuristickaAgencija agencija;
-    private static UpraviteljStanjaAranzmana upraviteljStanja;
+    private static MediatorRezervacija mediator;
     private static ValidatorNovihRezervacija validator;
 
     public abstract Komanda kreirajKomandu();
@@ -14,7 +14,7 @@ public abstract class KomandaTvornica {
     public static KomandaTvornica dohvatiFactory(String naziv) {
         if (agencija == null) {
             agencija = TuristickaAgencija.dohvatiInstancu();
-            upraviteljStanja = UpraviteljStanjaAranzmana.dohvatiInstancu();
+            mediator = MediatorRezervacija.dohvatiInstancu();
             validator = new ValidatorNovihRezervacija();
         }
 
@@ -23,8 +23,8 @@ public abstract class KomandaTvornica {
             case "ITAP" -> new ITAPTvornica(agencija);
             case "IRTA" -> new IRTATvornica(agencija);
             case "IRO" -> new IROTvornica(agencija);
-            case "ORTA" -> new ORTATvornica(agencija, upraviteljStanja);
-            case "DRTA" -> new DRTATvornica(agencija, upraviteljStanja, validator);
+            case "ORTA" -> new ORTATvornica(agencija, mediator);
+            case "DRTA" -> new DRTATvornica(agencija, mediator, validator);
             case "UP" -> new UPTvornica(agencija);
             case "Q" -> new QTvornica();
             default -> new NKTvornica(naziv);

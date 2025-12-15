@@ -1,24 +1,23 @@
 package edu.unizg.foi.uzdiz.mmarkovin21.komande;
 
 import edu.unizg.foi.uzdiz.mmarkovin21.TuristickaAgencija;
+import edu.unizg.foi.uzdiz.mmarkovin21.mediator.MediatorRezervacija;
 import edu.unizg.foi.uzdiz.mmarkovin21.modeli.Rezervacija;
-import edu.unizg.foi.uzdiz.mmarkovin21.observer.UpraviteljStanjaAranzmana;
 import edu.unizg.foi.uzdiz.mmarkovin21.pomocnici.PretvaracTipovaPodataka;
 import edu.unizg.foi.uzdiz.mmarkovin21.pomocnici.ValidatorKomandi;
 import edu.unizg.foi.uzdiz.mmarkovin21.pomocnici.ValidatorNovihRezervacija;
-//import edu.unizg.foi.uzdiz.mmarkovin21.validatori.ValidatorRezervacija;
 
 import java.time.LocalDateTime;
 
 public class KomandaDRTA implements Komanda {
     private final TuristickaAgencija agencija;
-    private final UpraviteljStanjaAranzmana upraviteljStanja;
+    private final MediatorRezervacija mediator;
     private final ValidatorNovihRezervacija validator;
 
-    public KomandaDRTA(TuristickaAgencija agencija, UpraviteljStanjaAranzmana upraviteljStanja,
+    public KomandaDRTA(TuristickaAgencija agencija, MediatorRezervacija mediator,
                        ValidatorNovihRezervacija validator) {
         this.agencija = agencija;
-        this.upraviteljStanja = upraviteljStanja;
+        this.mediator = mediator;
         this.validator = validator;
     }
 
@@ -58,12 +57,12 @@ public class KomandaDRTA implements Komanda {
             return;
         }
 
-//        boolean jeDodana = upraviteljStanja.dodajRezervaciju(novaRezervacija);
-//        if (jeDodana) {
-//            System.out.println("Dodana rezervacija " + ime + " " + prezime + " za turistički aranžman s oznakom " +
-//                    oznakaAranzmana + " u " + PretvaracDatuma.formatirajDatumVrijeme(datumVrijeme) + ".");
-//        } else {
-//            System.out.println("Greška: Rezervacija nije dodana!");
-//        }
+        boolean jeDodana = mediator.dodajRezervaciju(novaRezervacija);
+        if (jeDodana) {
+            System.out.println("Dodana rezervacija " + ime + " " + prezime + " za turistički aranžman s oznakom " +
+                    oznakaAranzmana + " u " + datumVrijemeString + ".");
+        } else {
+            System.out.println("Greška: Rezervacija nije dodana!");
+        }
     }
 }

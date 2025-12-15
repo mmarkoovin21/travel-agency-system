@@ -107,4 +107,5 @@ public class Rezervacija extends TuristickaKomponenta {
     public void odgodi() {
         stanje.odgodi(this);
     }
+
 }

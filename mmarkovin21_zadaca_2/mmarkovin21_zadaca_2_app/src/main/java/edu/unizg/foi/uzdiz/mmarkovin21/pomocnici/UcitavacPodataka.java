@@ -5,13 +5,11 @@ import edu.unizg.foi.uzdiz.mmarkovin21.TuristickaAgencija;
 import edu.unizg.foi.uzdiz.mmarkovin21.composite.TuristickaKomponenta;
 import edu.unizg.foi.uzdiz.mmarkovin21.graditelji.AranzmanDirektor;
 import edu.unizg.foi.uzdiz.mmarkovin21.graditelji.AranzmanGraditelj;
+import edu.unizg.foi.uzdiz.mmarkovin21.mediator.MediatorRezervacija;
 import edu.unizg.foi.uzdiz.mmarkovin21.modeli.Aranzman;
 import edu.unizg.foi.uzdiz.mmarkovin21.modeli.Rezervacija;
-import edu.unizg.foi.uzdiz.mmarkovin21.observer.UpraviteljStanjaAranzmana;
-import edu.unizg.foi.uzdiz.mmarkovin21.state.StanjeRezervacije;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -19,7 +17,7 @@ import java.util.Map;
 public class UcitavacPodataka {
     private static final TuristickaAgencija agencija = TuristickaAgencija.dohvatiInstancu();
     private static final AranzmanDirektor aranzmanDirektor = new AranzmanDirektor(new AranzmanGraditelj());
-    private static final UpraviteljStanjaAranzmana upravitelj = UpraviteljStanjaAranzmana.dohvatiInstancu();
+    private static final MediatorRezervacija mediator = MediatorRezervacija.dohvatiInstancu();
     public static void ucitajAranzmane(String datotekaAranzmani) {
         if (datotekaAranzmani == null || datotekaAranzmani.isEmpty()) {
             return;
@@ -42,7 +40,12 @@ public class UcitavacPodataka {
             }
         }
 
-        inicijalizirajUpravitelja();
+        // Postavi sve učitane aranžmane u Mediator
+        List<Aranzman> ucitaniAranzmani = agencija.dohvatiPodatke().stream()
+                .filter(a -> a instanceof Aranzman)
+                .map(a -> (Aranzman) a)
+                .toList();
+        mediator.postaviAranzmane(ucitaniAranzmani);
     }
 
     public static void ucitajRezervacije(String datotekaRezervacije) {
@@ -71,8 +74,8 @@ public class UcitavacPodataka {
                 Aranzman nadredeniAranzman = pronadjiAranzmanPoOznaci((Integer) rezervacija.get("oznaka"));
 
                 if (nadredeniAranzman != null) {
-                    upravitelj.dodajRezervaciju(nadredeniAranzman,rez);
                     agencija.dodajPodatak(rez);
+                    mediator.dodajRezervaciju(rez);
                 } else {
                     System.err.println("Greška: Aranžman s oznakom " + rezervacija.get("oznaka")
                             + " nije pronađen za rezervaciju " + rez.dohvatiIme() + " " + rez.dohvatiPrezime());
@@ -91,24 +94,5 @@ public class UcitavacPodataka {
                 .filter(a -> a.dohvatiOznaka() == oznaka)
                 .findFirst()
                 .orElse(null);
-    }
-
-    private static void inicijalizirajUpravitelja() {
-        List<Aranzman> sviAranzmani = new ArrayList<>();
-        for (TuristickaKomponenta komponenta : agencija.dohvatiPodatke()) {
-            if (komponenta instanceof Aranzman) {
-                sviAranzmani.add((Aranzman) komponenta);
-            }
-        }
-
-        upravitelj.postaviAranzmane(sviAranzmani);
-
-        for (Aranzman aranzman : sviAranzmani) {
-            aranzman.dodajObserver(upravitelj);
-        }
-    }
-
-    public static UpraviteljStanjaAranzmana dohvatiUpravitelja() {
-        return upravitelj;
     }
 }

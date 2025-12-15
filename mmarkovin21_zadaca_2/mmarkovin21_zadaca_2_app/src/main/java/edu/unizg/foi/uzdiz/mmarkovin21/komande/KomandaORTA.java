@@ -1,16 +1,16 @@
 package edu.unizg.foi.uzdiz.mmarkovin21.komande;
 
 import edu.unizg.foi.uzdiz.mmarkovin21.TuristickaAgencija;
-import edu.unizg.foi.uzdiz.mmarkovin21.observer.UpraviteljStanjaAranzmana;
+import edu.unizg.foi.uzdiz.mmarkovin21.mediator.MediatorRezervacija;
 import edu.unizg.foi.uzdiz.mmarkovin21.pomocnici.ValidatorKomandi;
 
 public class KomandaORTA implements Komanda {
     private final TuristickaAgencija agencija;
-    private final UpraviteljStanjaAranzmana upraviteljStanja;
+    private final MediatorRezervacija mediator;
 
-    public KomandaORTA(TuristickaAgencija agencija, UpraviteljStanjaAranzmana upraviteljStanja) {
+    public KomandaORTA(TuristickaAgencija agencija, MediatorRezervacija mediator) {
         this.agencija = agencija;
-        this.upraviteljStanja = upraviteljStanja;
+        this.mediator = mediator;
     }
 
     @Override
@@ -28,12 +28,12 @@ public class KomandaORTA implements Komanda {
             return;
         }
 
-//        boolean jeOtkazana = upraviteljStanja.otkazirezervaciju(ime, prezime, oznakaAranzmana);
-//
-//        if (jeOtkazana) {
-//            System.out.println("Otkazana rezervacija " + ime + " " + prezime + " za turistički aranžman " + oznakaAranzmana + ".");
-//        } else {
-//            System.out.println("Nije pronađena rezervacija za " + ime + " " + prezime + " na aranžmanu " + oznakaAranzmana + ".");
-//        }
+        boolean jeOtkazana = mediator.otkaziRezervaciju(ime, prezime, oznakaAranzmana);
+
+        if (jeOtkazana) {
+            System.out.println("Otkazana rezervacija " + ime + " " + prezime + " za turistički aranžman " + oznakaAranzmana + ".");
+        } else {
+            System.out.println("Nije pronađena rezervacija za " + ime + " " + prezime + " na aranžmanu " + oznakaAranzmana + ".");
+        }
     }
 }
