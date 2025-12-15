@@ -1,7 +1,13 @@
 package edu.unizg.foi.uzdiz.mmarkovin21.komande;
 
 import edu.unizg.foi.uzdiz.mmarkovin21.TuristickaAgencija;
+import edu.unizg.foi.uzdiz.mmarkovin21.bridge.FormaterRezervacija;
+import edu.unizg.foi.uzdiz.mmarkovin21.bridge.IspisivacRezervacija;
+import edu.unizg.foi.uzdiz.mmarkovin21.modeli.Rezervacija;
 import edu.unizg.foi.uzdiz.mmarkovin21.pomocnici.ValidatorKomandi;
+
+import java.util.Comparator;
+import java.util.List;
 
 public class KomandaIRTA implements Komanda {
     private final TuristickaAgencija agencija;
@@ -23,77 +29,51 @@ public class KomandaIRTA implements Komanda {
         }
 
         String stanjeRezervacije = parametri[2];
+        List<Rezervacija> filtriraneRezervacije = vratiRezervacijeSaStanjem(stanjeRezervacije, oznaka);
+        boolean jesuOdgodjene = filtriraneRezervacije.stream().anyMatch(r -> r.dohvatiDatumVrijemeOtkazivanja() != null);
 
-//        List<Rezervacija> rezervacije = vratiRezervacijeSaStanjem(stanjeRezervacije, oznaka);
-
-//        if (rezervacije.isEmpty()) {
-//            System.out.println("Nema rezervacija za zadane kriterije.");
-//            return;
-//        }
-
-        boolean prikaziDatumOtkaza = stanjeRezervacije.equals("O") || stanjeRezervacije.equals("PAČO");
-//        int[] sirine = prikaziDatumOtkaza ?
-//                new int[]{15, 15, 20, 10, 20} :
-//                new int[]{15, 15, 20, 10};
-//
-//        FormaterTablice tablica = new FormaterTablice(sirine);
-//
-//        if (prikaziDatumOtkaza) {
-//            tablica.dodajRed("Ime", "Prezime", "Datum i vrijeme", "Vrsta", "Datum i vrijeme otkaza");
-//        } else {
-//            tablica.dodajRed("Ime", "Prezime", "Datum i vrijeme", "Vrsta");
-//        }
-//
-//        for (Rezervacija rez : rezervacije) {
-//            if (prikaziDatumOtkaza) {
-//                String datumOtkaza = rez.dohvatiStanje() == StanjeRezervacije.OTKAZANA
-//                        ? PretvaracDatuma.formatirajDatumVrijeme(rez.dohvatiDatumVrijemeOtkazivanja())
-//                        : "";
-//                tablica.dodajRed(
-//                        rez.dohvatiIme(),
-//                        rez.dohvatiPrezime(),
-//                        PretvaracDatuma.formatirajDatumVrijeme(rez.dohvatiDatumVrijemePrijema()),
-//                        rez.dohvatiStanjeString(),
-//                        datumOtkaza
-//                );
-//            } else {
-//                tablica.dodajRed(
-//                        rez.dohvatiIme(),
-//                        rez.dohvatiPrezime(),
-//                        PretvaracDatuma.formatirajDatumVrijeme(rez.dohvatiDatumVrijemePrijema()),
-//                        rez.dohvatiStanjeString()
-//                );
-//            }
-//        }
-//
-//        System.out.println(tablica.formatiraj());
+        IspisivacRezervacija ispisivac = new IspisivacRezervacija(new FormaterRezervacija(jesuOdgodjene));
+        if (filtriraneRezervacije.isEmpty()) {
+            System.out.println("Nema rezervacija za zadane kriterije.");
+        } else {
+            ispisivac.ispisi(filtriraneRezervacije);
+        }
 
     }
 
-//    private List<Rezervacija> vratiRezervacijeSaStanjem(String stanje, int oznakaAranzmana) {
-//        List<Rezervacija> rezervacije = agencija.dohvatiRezervacije();
-//
-//        return switch (stanje) {
-//            case "PA" -> rezervacije.stream()
-//                    .filter(RezervacijaFilter.zaAranzman(oznakaAranzmana))
-//                    .filter(RezervacijaFilter.primljenIliAktivna())
-//                    .sorted(Comparator.comparing(Rezervacija::dohvatiDatumVrijemePrijema))
-//                    .toList();
-//            case "Č" -> rezervacije.stream()
-//                    .filter(RezervacijaFilter.zaAranzman(oznakaAranzmana))
-//                    .filter(RezervacijaFilter.naCekanju())
-//                    .sorted(Comparator.comparing(Rezervacija::dohvatiDatumVrijemePrijema))
-//                    .toList();
-//            case "O" -> rezervacije.stream()
-//                    .filter(RezervacijaFilter.zaAranzman(oznakaAranzmana))
-//                    .filter(RezervacijaFilter.otkazana())
-//                    .sorted(Comparator.comparing(Rezervacija::dohvatiDatumVrijemePrijema))
-//                    .toList();
-//            case "PAČO" -> rezervacije.stream()
-//                    .filter(RezervacijaFilter.zaAranzman(oznakaAranzmana))
-//                    .sorted(Comparator.comparing(Rezervacija::dohvatiDatumVrijemePrijema))
-//                    .toList();
-//            default -> List.of();
-//        };
-//    }
+    private List<Rezervacija> vratiRezervacijeSaStanjem(String stanje, int oznakaAranzmana) {
+        List<Rezervacija> rezervacije = agencija.dohvatiPodatke()
+                .stream()
+                .filter(k -> k instanceof Rezervacija)
+                .map(k -> (Rezervacija) k)
+                .toList();
+
+        return switch (stanje) {
+            case "PA" -> rezervacije.stream()
+                    .filter(RezervacijaFilter.zaAranzman(oznakaAranzmana))
+                    .filter(RezervacijaFilter.primljenIliAktivna())
+                    .sorted(Comparator.comparing(Rezervacija::dohvatiDatumVrijemePrijema))
+                    .toList();
+            case "Č" -> rezervacije.stream()
+                    .filter(RezervacijaFilter.zaAranzman(oznakaAranzmana))
+                    .filter(RezervacijaFilter.naCekanju())
+                    .sorted(Comparator.comparing(Rezervacija::dohvatiDatumVrijemePrijema))
+                    .toList();
+            case "O" -> rezervacije.stream()
+                    .filter(RezervacijaFilter.zaAranzman(oznakaAranzmana))
+                    .filter(RezervacijaFilter.otkazana())
+                    .sorted(Comparator.comparing(Rezervacija::dohvatiDatumVrijemePrijema))
+                    .toList();
+            case "PAČO" -> rezervacije.stream()
+                    .filter(RezervacijaFilter.zaAranzman(oznakaAranzmana))
+                    .sorted(Comparator.comparing(Rezervacija::dohvatiDatumVrijemePrijema))
+                    .toList();
+            case "ODO" -> rezervacije.stream()
+                    .filter(RezervacijaFilter.zaAranzman(oznakaAranzmana))
+                    .filter(RezervacijaFilter.odgodjena())
+                    .sorted(Comparator.comparing(Rezervacija::dohvatiDatumVrijemePrijema))
+                    .toList();
+            default -> List.of();
+        };
+    }
 }

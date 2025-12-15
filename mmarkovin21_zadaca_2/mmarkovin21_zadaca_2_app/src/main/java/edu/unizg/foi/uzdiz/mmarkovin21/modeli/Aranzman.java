@@ -1,6 +1,8 @@
 package edu.unizg.foi.uzdiz.mmarkovin21.modeli;
 
 import edu.unizg.foi.uzdiz.mmarkovin21.composite.TuristickaKomponenta;
+import edu.unizg.foi.uzdiz.mmarkovin21.mediator.AranzmanColleauege;
+import edu.unizg.foi.uzdiz.mmarkovin21.mediator.UpraviteljMediator;
 import edu.unizg.foi.uzdiz.mmarkovin21.state.*;
 
 import java.time.LocalDate;
@@ -9,7 +11,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class Aranzman extends TuristickaKomponenta {
+public class Aranzman extends TuristickaKomponenta implements AranzmanColleauege {
     // nužni
     private int oznaka;
     private String naziv;
@@ -30,6 +32,9 @@ public class Aranzman extends TuristickaKomponenta {
     private int brojRucakova;
     private int brojVecera;
     private StanjeAranzmana status;
+
+    // Mediator
+    private UpraviteljMediator mediator;
 
     private final List<TuristickaKomponenta> djeca = new ArrayList<>();
 
@@ -199,6 +204,11 @@ public class Aranzman extends TuristickaKomponenta {
 
     public List<TuristickaKomponenta> dohvatiDjecu() {
         return djeca;
+    }
+
+    @Override
+    public void postaviMediator(UpraviteljMediator mediator) {
+        this.mediator = mediator;
     }
 
     private StanjeAranzmana odrediPocetniStatusPremaNazivu(String nazivStatusa) {

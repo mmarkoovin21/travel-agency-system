@@ -1,12 +1,12 @@
 package edu.unizg.foi.uzdiz.mmarkovin21.komande;
 
 import edu.unizg.foi.uzdiz.mmarkovin21.TuristickaAgencija;
-import edu.unizg.foi.uzdiz.mmarkovin21.mediator.MediatorRezervacija;
+import edu.unizg.foi.uzdiz.mmarkovin21.mediator.UpraviteljRezervacijaIAranzmana;
 import edu.unizg.foi.uzdiz.mmarkovin21.pomocnici.ValidatorNovihRezervacija;
 
 public abstract class KomandaTvornica {
     private static TuristickaAgencija agencija;
-    private static MediatorRezervacija mediator;
+    private static UpraviteljRezervacijaIAranzmana mediator;
     private static ValidatorNovihRezervacija validator;
 
     public abstract Komanda kreirajKomandu();
@@ -14,7 +14,7 @@ public abstract class KomandaTvornica {
     public static KomandaTvornica dohvatiFactory(String naziv) {
         if (agencija == null) {
             agencija = TuristickaAgencija.dohvatiInstancu();
-            mediator = MediatorRezervacija.dohvatiInstancu();
+            mediator = UpraviteljRezervacijaIAranzmana.dohvatiInstancu();
             validator = new ValidatorNovihRezervacija();
         }
 

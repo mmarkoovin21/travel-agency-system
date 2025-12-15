@@ -5,7 +5,7 @@ import edu.unizg.foi.uzdiz.mmarkovin21.TuristickaAgencija;
 import edu.unizg.foi.uzdiz.mmarkovin21.composite.TuristickaKomponenta;
 import edu.unizg.foi.uzdiz.mmarkovin21.graditelji.AranzmanDirektor;
 import edu.unizg.foi.uzdiz.mmarkovin21.graditelji.AranzmanGraditelj;
-import edu.unizg.foi.uzdiz.mmarkovin21.mediator.MediatorRezervacija;
+import edu.unizg.foi.uzdiz.mmarkovin21.mediator.UpraviteljRezervacijaIAranzmana;
 import edu.unizg.foi.uzdiz.mmarkovin21.modeli.Aranzman;
 import edu.unizg.foi.uzdiz.mmarkovin21.modeli.Rezervacija;
 
@@ -13,11 +13,10 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 
-// privremena klasa za ucitavanje podataka u agenciju i za komandu UP
 public class UcitavacPodataka {
     private static final TuristickaAgencija agencija = TuristickaAgencija.dohvatiInstancu();
     private static final AranzmanDirektor aranzmanDirektor = new AranzmanDirektor(new AranzmanGraditelj());
-    private static final MediatorRezervacija mediator = MediatorRezervacija.dohvatiInstancu();
+    private static final UpraviteljRezervacijaIAranzmana mediator = UpraviteljRezervacijaIAranzmana.dohvatiInstancu();
     public static void ucitajAranzmane(String datotekaAranzmani) {
         if (datotekaAranzmani == null || datotekaAranzmani.isEmpty()) {
             return;
@@ -40,7 +39,6 @@ public class UcitavacPodataka {
             }
         }
 
-        // Postavi sve učitane aranžmane u Mediator
         List<Aranzman> ucitaniAranzmani = agencija.dohvatiPodatke().stream()
                 .filter(a -> a instanceof Aranzman)
                 .map(a -> (Aranzman) a)

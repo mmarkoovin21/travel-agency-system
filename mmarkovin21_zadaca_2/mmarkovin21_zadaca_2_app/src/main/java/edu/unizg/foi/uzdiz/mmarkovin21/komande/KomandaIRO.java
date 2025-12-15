@@ -28,35 +28,6 @@ public class KomandaIRO implements Komanda {
             return;
         }
 
-//        FormaterTablice tablica = new FormaterTablice(new int[]{15, 15, 15, 15});
-//
-//        tablica.dodajRed("Datum i vrijeme",
-//                "Oznaka aranžmana", "Naziv aranžmana", "Vrsta");
-//
-//        List<Rezervacija> rezervacijeKlijenta = agencija.dohvatiRezervacije().stream()
-//                .filter(RezervacijaFilter.zaOsobu(ime, prezime))
-//                .toList();
-//
-//        if (rezervacijeKlijenta.isEmpty()) {
-//            System.out.println("Nema rezervacija za klijenta " + ime + " " + prezime);
-//            return;
-//        }
-//
-//        for (var rezervacija : rezervacijeKlijenta) {
-//            Aranzman aranzman = agencija.dohvatiAranzmane().stream()
-//                    .filter(a -> a.dohvatiOznaka() == rezervacija.dohvatiOznakaAranzmana())
-//                    .findFirst()
-//                    .orElse(null);
-//
-//            if (aranzman != null) {
-//                tablica.dodajRed(
-//                        PretvaracDatuma.formatirajDatumVrijeme(rezervacija.dohvatiDatumVrijemePrijema()),
-//                        String.valueOf(rezervacija.dohvatiOznakaAranzmana()),
-//                        aranzman.dohvatiNaziv(),
-//                        rezervacija.dohvatiStanjeString()
-//                );
-//            }
-//        }
-//        System.out.println(tablica.formatiraj());
+
     }
 }

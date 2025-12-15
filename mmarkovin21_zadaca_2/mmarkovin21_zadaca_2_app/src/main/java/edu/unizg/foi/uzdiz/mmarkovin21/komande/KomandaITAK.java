@@ -40,13 +40,11 @@ public class KomandaITAK implements Komanda {
             return;
         }
 
-        // Bridge uzorak: kreiranje ispisivača s odgovarajućim formaterom
         IspisivacAranzmana ispisivac = new IspisivacAranzmana(new FormaterListeAranzmana());
 
         LocalDate finalDatumOd = datumOd;
         LocalDate finalDatumDo = datumDo;
 
-        // Filtriranje aranžmana prema datumu (ako je specificiran)
         List<TuristickaKomponenta> aranzmaniZaPrikaz = agencija.dohvatiPodatke().stream()
                 .filter(k -> k instanceof Aranzman)
                 .map(k -> (Aranzman) k)

@@ -1,14 +1,14 @@
 package edu.unizg.foi.uzdiz.mmarkovin21.komande;
 
 import edu.unizg.foi.uzdiz.mmarkovin21.TuristickaAgencija;
-import edu.unizg.foi.uzdiz.mmarkovin21.mediator.MediatorRezervacija;
+import edu.unizg.foi.uzdiz.mmarkovin21.mediator.UpraviteljRezervacijaIAranzmana;
 import edu.unizg.foi.uzdiz.mmarkovin21.pomocnici.ValidatorKomandi;
 
 public class KomandaORTA implements Komanda {
     private final TuristickaAgencija agencija;
-    private final MediatorRezervacija mediator;
+    private final UpraviteljRezervacijaIAranzmana mediator;
 
-    public KomandaORTA(TuristickaAgencija agencija, MediatorRezervacija mediator) {
+    public KomandaORTA(TuristickaAgencija agencija, UpraviteljRezervacijaIAranzmana mediator) {
         this.agencija = agencija;
         this.mediator = mediator;
     }

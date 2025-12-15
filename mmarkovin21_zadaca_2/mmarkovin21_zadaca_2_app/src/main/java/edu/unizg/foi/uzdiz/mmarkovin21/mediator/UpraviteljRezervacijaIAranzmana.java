@@ -9,36 +9,40 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
-public class MediatorRezervacija {
-    private static MediatorRezervacija instanca;
+public class UpraviteljRezervacijaIAranzmana implements UpraviteljMediator {
+    private static UpraviteljRezervacijaIAranzmana instanca;
     private List<Aranzman> sviAranzmani;
     private final List<Rezervacija> sveRezervacije;
 
-    private MediatorRezervacija() {
+    private UpraviteljRezervacijaIAranzmana() {
         this.sviAranzmani = new ArrayList<>();
         this.sveRezervacije = new ArrayList<>();
     }
 
-    public static MediatorRezervacija dohvatiInstancu() {
+    public static UpraviteljRezervacijaIAranzmana dohvatiInstancu() {
         if (instanca == null) {
-            instanca = new MediatorRezervacija();
+            instanca = new UpraviteljRezervacijaIAranzmana();
         }
         return instanca;
     }
 
     public void postaviAranzmane(List<Aranzman> aranzmani) {
         this.sviAranzmani = aranzmani;
+        for (Aranzman aranzman : aranzmani) {
+            aranzman.postaviMediator(this);
+        }
     }
 
+    @Override
     public boolean dodajRezervaciju(Rezervacija novaRez) {
-        // 1. Pronađi aranžman po oznaci
+        novaRez.postaviMediator(this);
+
         Aranzman aranzman = pronadjiAranzmanPoOznaci(novaRez.dohvatiOznakaAranzmana());
         if (aranzman == null) {
             System.out.println("Greška: Aranžman s oznakom " + novaRez.dohvatiOznakaAranzmana() + " ne postoji.");
             return false;
         }
 
-        // 2. Provjeri: Ima li osoba već rezervaciju na istom aranžmanu?
         if (imaRezervacijuNaIstomAranzmanu(aranzman, novaRez)) {
             novaRez.odgodi();
             aranzman.dodajDijete(novaRez);
@@ -47,7 +51,6 @@ public class MediatorRezervacija {
             return true;
         }
 
-        // 3. Provjeri: Ima li osoba AKTIVNU rezervaciju na preklapajućem aranžmanu?
         if (imaAktivnuNaPreklapajucemAranzmanu(aranzman, novaRez)) {
             novaRez.odgodi();
             aranzman.dodajDijete(novaRez);
@@ -56,10 +59,8 @@ public class MediatorRezervacija {
             return true;
         }
 
-        // 4. Izračunaj broj brojivih rezervacija + 1 (nova rezervacija)
         int brojBrojivih = izracunajBrojBrojivihRezervacija(aranzman) + 1;
 
-        // 5. Odredi inicijalno stanje nove rezervacije
         if (brojBrojivih < aranzman.dohvatiMinBrojPutnika()) {
             novaRez.primi();
         } else if (brojBrojivih <= aranzman.dohvatiMaxBrojPutnika()) {
@@ -68,43 +69,33 @@ public class MediatorRezervacija {
             novaRez.staviNaCekanje();
         }
 
-        // 6. Dodaj rezervaciju
         aranzman.dodajDijete(novaRez);
         sveRezervacije.add(novaRez);
 
-        // 7. Ažuriraj stanje aranžmana
         azurirajStanjeAranzmana(aranzman);
-
-        // 8. Ažuriraj stanja SVIH rezervacija na aranžmanu
         azurirajStanjaRezervacija(aranzman);
 
         return true;
     }
 
+    @Override
     public boolean otkaziRezervaciju(String ime, String prezime, int oznakaAranzmana) {
-        // 1. Pronađi rezervaciju
         Rezervacija rezervacija = pronadjiRezervaciju(ime, prezime, oznakaAranzmana);
         if (rezervacija == null) {
             return false;
         }
 
-        // 2. Otkaži rezervaciju
         String prethodnoStanje = rezervacija.dohvatiStanjeString();
         rezervacija.otkazi();
 
-        // 3. Pronađi nadređeni aranžman
         Aranzman aranzman = rezervacija.dohvatiAranzman();
         if (aranzman == null) {
-            return true; // Rezervacija je otkazana, ali nema aranžmana za ažuriranje
+            return true;
         }
 
-        // 4. Ažuriraj stanje aranžmana
         azurirajStanjeAranzmana(aranzman);
-
-        // 5. Ažuriraj stanja rezervacija
         azurirajStanjaRezervacija(aranzman);
 
-        // 6. Pokušaj aktivirati odgođene rezervacije iste osobe
         if (prethodnoStanje.equals("ODGOĐENA")) {
             pokusajAktiviratiOdgodjenuRezervaciju(aranzman, rezervacija);
         }
@@ -112,8 +103,8 @@ public class MediatorRezervacija {
         return true;
     }
 
-
-    private void azurirajStanjeAranzmana(Aranzman aranzman) {
+    @Override
+    public void azurirajStanjeAranzmana(Aranzman aranzman) {
         int brojBrojivih = izracunajBrojBrojivihRezervacija(aranzman);
 
         if (brojBrojivih < aranzman.dohvatiMinBrojPutnika()) {
@@ -125,7 +116,8 @@ public class MediatorRezervacija {
         }
     }
 
-    private void azurirajStanjaRezervacija(Aranzman aranzman) {
+    @Override
+    public void azurirajStanjaRezervacija(Aranzman aranzman) {
         List<Rezervacija> brojiveRezervacije = dohvatiRezervacijeAranzmana(aranzman).stream()
                 .filter(this::jeBrojiva)
                 .sorted(Comparator.comparing(Rezervacija::dohvatiDatumVrijemePrijema))
@@ -136,17 +128,14 @@ public class MediatorRezervacija {
         int maxBrojPutnika = aranzman.dohvatiMaxBrojPutnika();
 
         if (brojBrojivih < minBrojPutnika) {
-            // SVE rezervacije → PRIMLJENA
             for (Rezervacija rez : brojiveRezervacije) {
                 rez.primi();
             }
         } else if (brojBrojivih <= maxBrojPutnika) {
-            // SVE rezervacije → AKTIVNA
             for (Rezervacija rez : brojiveRezervacije) {
                 rez.aktiviraj();
             }
         } else {
-            // Prvih maxBrojPutnika → AKTIVNA, ostale → NA ČEKANJU
             for (int i = 0; i < brojiveRezervacije.size(); i++) {
                 Rezervacija rez = brojiveRezervacije.get(i);
                 if (i < maxBrojPutnika) {
@@ -167,17 +156,14 @@ public class MediatorRezervacija {
 
     private boolean imaAktivnuNaPreklapajucemAranzmanu(Aranzman trenutniAranzman, Rezervacija novaRez) {
         for (Aranzman aranzman : sviAranzmani) {
-            // Preskoči trenutni aranžman
             if (aranzman.dohvatiOznaka() == trenutniAranzman.dohvatiOznaka()) {
                 continue;
             }
 
-            // Provjeri da li se aranžmani preklapaju po datumu
             if (!aranzmaniSePreklapaju(trenutniAranzman, aranzman)) {
                 continue;
             }
 
-            // Provjeri ima li ista osoba aktivnu rezervaciju na ovom aranžmanu
             boolean imaAktivnu = dohvatiRezervacijeAranzmana(aranzman).stream()
                     .filter(rez -> rez.dohvatiIme().equals(novaRez.dohvatiIme())
                             && rez.dohvatiPrezime().equals(novaRez.dohvatiPrezime()))
@@ -250,7 +236,6 @@ public class MediatorRezervacija {
         if (!odgodeneRezervacije.isEmpty()) {
             Rezervacija prvaOdgodena = odgodeneRezervacije.get(0);
 
-            // Provjeri nema li aktivnu na preklapajućem aranžmanu
             if (!imaAktivnuNaPreklapajucemAranzmanu(aranzman, prvaOdgodena)) {
                 int brojBrojivih = izracunajBrojBrojivihRezervacija(aranzman) + 1;
 
