@@ -3,6 +3,7 @@ package edu.unizg.foi.uzdiz.mmarkovin21.bridge;
 import edu.unizg.foi.uzdiz.mmarkovin21.TuristickaAgencija;
 import edu.unizg.foi.uzdiz.mmarkovin21.modeli.Aranzman;
 import edu.unizg.foi.uzdiz.mmarkovin21.modeli.Rezervacija;
+import edu.unizg.foi.uzdiz.mmarkovin21.pomocnici.FormaterBrojeva;
 import edu.unizg.foi.uzdiz.mmarkovin21.pomocnici.PretvaracTipovaPodataka;
 
 import java.util.List;
@@ -46,6 +47,15 @@ public class FormaterRezervacijaZaOsobu implements TablicniFormater {
     }
 
     @Override
+    public boolean[] definirajBrojcanaPolja() {
+        if (prikaziDatumOtkaza) {
+            return new boolean[]{false, true, false, false, false};
+        } else {
+            return new boolean[]{false, true, false, false};
+        }
+    }
+
+    @Override
     public String[] formatirajRed(Object podatak) {
         if (!(podatak instanceof Rezervacija rezervacija)) {
             throw new IllegalArgumentException("Očekivan objekt tipa Rezervacija");
@@ -58,7 +68,7 @@ public class FormaterRezervacijaZaOsobu implements TablicniFormater {
 
             return new String[]{
                     PretvaracTipovaPodataka.formatirajDatumVrijeme(rezervacija.dohvatiDatumVrijemePrijema()),
-                    String.valueOf(rezervacija.dohvatiOznakaAranzmana()),
+                    FormaterBrojeva.formatirajCijeliBroj(rezervacija.dohvatiOznakaAranzmana()),
                     aranzmani.stream()
                             .filter(a -> a.dohvatiOznaka() == rezervacija.dohvatiOznakaAranzmana())
                             .map(Aranzman::dohvatiNaziv)
@@ -70,7 +80,7 @@ public class FormaterRezervacijaZaOsobu implements TablicniFormater {
         } else {
             return new String[]{
                     PretvaracTipovaPodataka.formatirajDatumVrijeme(rezervacija.dohvatiDatumVrijemePrijema()),
-                    String.valueOf(rezervacija.dohvatiOznakaAranzmana()),
+                    FormaterBrojeva.formatirajCijeliBroj(rezervacija.dohvatiOznakaAranzmana()),
                     aranzmani.stream()
                             .filter(a -> a.dohvatiOznaka() == rezervacija.dohvatiOznakaAranzmana())
                             .map(Aranzman::dohvatiNaziv)

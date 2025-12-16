@@ -1,6 +1,7 @@
 package edu.unizg.foi.uzdiz.mmarkovin21.bridge;
 
 import edu.unizg.foi.uzdiz.mmarkovin21.modeli.Aranzman;
+import edu.unizg.foi.uzdiz.mmarkovin21.pomocnici.FormaterBrojeva;
 import edu.unizg.foi.uzdiz.mmarkovin21.pomocnici.PretvaracTipovaPodataka;
 
 /**
@@ -31,13 +32,18 @@ public class FormaterListeAranzmana implements TablicniFormater {
     }
 
     @Override
+    public boolean[] definirajBrojcanaPolja() {
+        return new boolean[]{true, false, false, false, false, false, true, true, true, false};
+    }
+
+    @Override
     public String[] formatirajRed(Object podatak) {
         if (!(podatak instanceof Aranzman aranzman)) {
             throw new IllegalArgumentException("Očekivan objekt tipa Aranzman");
         }
 
         return new String[]{
-                String.valueOf(aranzman.dohvatiOznaka()),
+                FormaterBrojeva.formatirajCijeliBroj(aranzman.dohvatiOznaka()),
                 aranzman.dohvatiNaziv(),
                 PretvaracTipovaPodataka.formatirajDatum(aranzman.dohvatiPocetniDatum()),
                 PretvaracTipovaPodataka.formatirajDatum(aranzman.dohvatiZavrsniDatum()),
@@ -47,9 +53,9 @@ public class FormaterListeAranzmana implements TablicniFormater {
                 aranzman.dohvatiVrijemePovratka() != null
                     ? PretvaracTipovaPodataka.formatirajVrijeme(aranzman.dohvatiVrijemePovratka())
                     : "",
-                String.valueOf(aranzman.dohvatiCijenaPoOsobi()),
-                String.valueOf(aranzman.dohvatiMinBrojPutnika()),
-                String.valueOf(aranzman.dohvatiMaxBrojPutnika()),
+                FormaterBrojeva.formatirajCijeliBroj(aranzman.dohvatiCijenaPoOsobi()),
+                FormaterBrojeva.formatirajCijeliBroj(aranzman.dohvatiMinBrojPutnika()),
+                FormaterBrojeva.formatirajCijeliBroj(aranzman.dohvatiMaxBrojPutnika()),
                 aranzman.dohvatiStatusString()
         };
     }

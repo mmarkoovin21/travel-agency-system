@@ -3,7 +3,6 @@ package edu.unizg.foi.uzdiz.mmarkovin21.bridge;
 import java.util.ArrayList;
 import java.util.List;
 
-// Apstrakcijska strana Bridge uzorka.
 public abstract class TablicniIspisivac {
 
     protected TablicniFormater formater;
@@ -19,6 +18,7 @@ public abstract class TablicniIspisivac {
         }
 
         int[] sirineKolona = formater.definirajSirineKolona();
+        boolean[] brojcanaPolja = formater.definirajBrojcanaPolja();
         List<String[]> redovi = new ArrayList<>();
 
         redovi.add(formater.kreirajZaglavlje());
@@ -28,17 +28,14 @@ public abstract class TablicniIspisivac {
             redovi.add(red);
         }
 
-        System.out.println(formatirajTablicu(sirineKolona, redovi));
+        System.out.println(formatirajTablicu(sirineKolona, brojcanaPolja, redovi));
     }
 
-    public void postaviFormater(TablicniFormater formater) {
-        this.formater = formater;
-    }
-
-    private String formatirajTablicu(int[] sirineKolona, List<String[]> redovi) {
+    private String formatirajTablicu(int[] sirineKolona, boolean[] brojcanaPolja, List<String[]> redovi) {
         StringBuilder sb = new StringBuilder();
 
-        for (String[] red : redovi) {
+        for (int i = 0; i < redovi.size(); i++) {
+            String[] red = redovi.get(i);
             if (red.length != sirineKolona.length) {
                 throw new IllegalArgumentException(
                         "Broj vrijednosti (" + red.length +
@@ -46,7 +43,8 @@ public abstract class TablicniIspisivac {
                 );
             }
             sb.append(ispisiLiniju(sirineKolona)).append("\n");
-            sb.append(ispisiRed(red, sirineKolona)).append("\n");
+            boolean jeZaglavlje = (i == 0);
+            sb.append(ispisiRed(red, sirineKolona, brojcanaPolja, jeZaglavlje)).append("\n");
         }
         sb.append(ispisiLiniju(sirineKolona)).append("\n");
 
@@ -61,7 +59,7 @@ public abstract class TablicniIspisivac {
         return sb.toString();
     }
 
-    private String ispisiRed(String[] vrijednosti, int[] sirineKolona) {
+    private String ispisiRed(String[] vrijednosti, int[] sirineKolona, boolean[] brojcanaPolja, boolean jeZaglavlje) {
         StringBuilder sb = new StringBuilder();
         String[][] omotaneVrijednosti = new String[vrijednosti.length][];
         int maxLinija = 1;
@@ -77,7 +75,15 @@ public abstract class TablicniIspisivac {
                 String tekst = linija < omotaneVrijednosti[i].length
                         ? omotaneVrijednosti[i][linija]
                         : "";
-                sb.append(" ").append(String.format("%-" + sirineKolona[i] + "s", tekst)).append(" |");
+
+                String formatiraniTekst;
+                if (jeZaglavlje || !brojcanaPolja[i]) {
+                    formatiraniTekst = String.format("%-" + sirineKolona[i] + "s", tekst);
+                } else {
+                    formatiraniTekst = String.format("%" + sirineKolona[i] + "s", tekst);
+                }
+
+                sb.append(" ").append(formatiraniTekst).append(" |");
             }
             if (linija < maxLinija - 1) sb.append("\n");
         }

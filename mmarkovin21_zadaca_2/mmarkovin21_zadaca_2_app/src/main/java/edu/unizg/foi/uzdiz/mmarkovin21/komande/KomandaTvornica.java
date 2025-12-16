@@ -21,6 +21,7 @@ public abstract class KomandaTvornica {
         return switch (naziv) {
             case "ITAK" -> new ITAKTvornica(agencija);
             case "ITAP" -> new ITAPTvornica(agencija);
+            case "ITAS" -> new ITASTvornica(agencija);
             case "IRTA" -> new IRTATvornica(agencija);
             case "IRO" -> new IROTvornica(agencija);
             case "ORTA" -> new ORTATvornica(agencija, mediator);

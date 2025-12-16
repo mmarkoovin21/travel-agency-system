@@ -40,6 +40,15 @@ public class FormaterListeRezervacija implements TablicniFormater{
     }
 
     @Override
+    public boolean[] definirajBrojcanaPolja() {
+        if (prikaziDatumOtkaza) {
+            return new boolean[]{false, false, false, false, false};
+        } else {
+            return new boolean[]{false, false, false, false};
+        }
+    }
+
+    @Override
     public String[] formatirajRed(Object podatak) {
         if (!(podatak instanceof Rezervacija rezervacija)) {
             throw new IllegalArgumentException("Očekivan objekt tipa Rezervacija");
