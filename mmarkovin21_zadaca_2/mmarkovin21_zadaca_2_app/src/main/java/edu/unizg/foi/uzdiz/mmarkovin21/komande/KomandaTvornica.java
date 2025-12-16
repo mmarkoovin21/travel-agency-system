@@ -25,6 +25,7 @@ public abstract class KomandaTvornica {
             case "IRO" -> new IROTvornica(agencija);
             case "ORTA" -> new ORTATvornica(agencija, mediator);
             case "DRTA" -> new DRTATvornica(agencija, mediator, validator);
+            case "OTA" -> new OTATvornica(agencija, mediator);
             case "UP" -> new UPTvornica(agencija);
             case "Q" -> new QTvornica();
             default -> new NKTvornica(naziv);
