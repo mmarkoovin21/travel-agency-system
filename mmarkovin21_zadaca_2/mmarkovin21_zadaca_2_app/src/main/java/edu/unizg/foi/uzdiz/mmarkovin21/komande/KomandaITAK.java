@@ -4,9 +4,11 @@ import edu.unizg.foi.uzdiz.mmarkovin21.TuristickaAgencija;
 import edu.unizg.foi.uzdiz.mmarkovin21.bridge.FormaterListeAranzmana;
 import edu.unizg.foi.uzdiz.mmarkovin21.bridge.IspisivacAranzmana;
 import edu.unizg.foi.uzdiz.mmarkovin21.modeli.Aranzman;
+import edu.unizg.foi.uzdiz.mmarkovin21.pomocnici.KonfiguracijaIspisa;
 import edu.unizg.foi.uzdiz.mmarkovin21.pomocnici.PretvaracTipovaPodataka;
 
 import java.time.LocalDate;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -58,6 +60,14 @@ public class KomandaITAK implements Komanda {
         if (aranzmaniZaPrikaz.isEmpty()) {
             System.out.println("Nema pronađenih aranžmana za ovo razdoblje.");
         } else {
+            Comparator<Aranzman> usporedjivac = Comparator.comparing(Aranzman::dohvatiPocetniDatum);
+            if (KonfiguracijaIspisa.dohvatiInstancu().jeObrnutoSortiranje()) {
+                usporedjivac = usporedjivac.reversed();
+            }
+            aranzmaniZaPrikaz = aranzmaniZaPrikaz.stream()
+                    .sorted(usporedjivac)
+                    .collect(Collectors.toList());
+
             ispisivac.ispisi(aranzmaniZaPrikaz);
         }
     }

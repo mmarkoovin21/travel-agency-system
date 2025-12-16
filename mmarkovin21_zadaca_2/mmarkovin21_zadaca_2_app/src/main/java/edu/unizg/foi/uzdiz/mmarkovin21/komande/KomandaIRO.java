@@ -4,9 +4,12 @@ import edu.unizg.foi.uzdiz.mmarkovin21.TuristickaAgencija;
 import edu.unizg.foi.uzdiz.mmarkovin21.bridge.FormaterRezervacijaZaOsobu;
 import edu.unizg.foi.uzdiz.mmarkovin21.bridge.IspisivacRezervacija;
 import edu.unizg.foi.uzdiz.mmarkovin21.modeli.Rezervacija;
+import edu.unizg.foi.uzdiz.mmarkovin21.pomocnici.KonfiguracijaIspisa;
 import edu.unizg.foi.uzdiz.mmarkovin21.pomocnici.ValidatorKomandi;
 
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class KomandaIRO implements Komanda {
     private final TuristickaAgencija agencija;
@@ -44,9 +47,18 @@ public class KomandaIRO implements Komanda {
         boolean imaOdgodjenih = rezervacije.stream().anyMatch(r -> r.dohvatiStanjeString().equalsIgnoreCase("ODGOĐENA"));
         IspisivacRezervacija ispisivac = new IspisivacRezervacija(new FormaterRezervacijaZaOsobu(imaOdgodjenih));
 
+
         if (rezervacije.isEmpty()) {
             System.out.println("Nema rezervacija za korisnika: " + ime + " " + prezime);
         } else {
+            Comparator<Rezervacija> comparator = Comparator.comparing(Rezervacija::dohvatiDatumVrijemePrijema);
+            if (KonfiguracijaIspisa.dohvatiInstancu().jeObrnutoSortiranje()) {
+                comparator = comparator.reversed();
+            }
+            rezervacije = rezervacije.stream()
+                    .sorted(comparator)
+                    .collect(Collectors.toList());
+
             ispisivac.ispisi(rezervacije);
         }
     }

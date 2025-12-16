@@ -32,11 +32,9 @@ public class FormaterListeAranzmana implements TablicniFormater {
 
     @Override
     public String[] formatirajRed(Object podatak) {
-        if (!(podatak instanceof Aranzman)) {
+        if (!(podatak instanceof Aranzman aranzman)) {
             throw new IllegalArgumentException("Očekivan objekt tipa Aranzman");
         }
-
-        Aranzman aranzman = (Aranzman) podatak;
 
         return new String[]{
                 String.valueOf(aranzman.dohvatiOznaka()),

@@ -4,6 +4,7 @@ import edu.unizg.foi.uzdiz.mmarkovin21.TuristickaAgencija;
 import edu.unizg.foi.uzdiz.mmarkovin21.bridge.FormaterListeRezervacija;
 import edu.unizg.foi.uzdiz.mmarkovin21.bridge.IspisivacRezervacija;
 import edu.unizg.foi.uzdiz.mmarkovin21.modeli.Rezervacija;
+import edu.unizg.foi.uzdiz.mmarkovin21.pomocnici.KonfiguracijaIspisa;
 import edu.unizg.foi.uzdiz.mmarkovin21.pomocnici.RezervacijaFilter;
 import edu.unizg.foi.uzdiz.mmarkovin21.pomocnici.ValidatorKomandi;
 
@@ -43,7 +44,6 @@ public class KomandaIRTA implements Komanda {
     }
 
     private List<Rezervacija> vratiRezervacijeSaStanjem(String stanje, int oznakaAranzmana) {
-        // Composite uzorak: Dohvaćanje rezervacija kroz aranžmane (iz njihove djece)
         List<Rezervacija> rezervacije = agencija.dohvatiPodatke()
                 .stream()
                 .flatMap(aranzman -> aranzman.dohvatiDjecu().stream())
@@ -51,30 +51,35 @@ public class KomandaIRTA implements Komanda {
                 .map(k -> (Rezervacija) k)
                 .toList();
 
+        Comparator<Rezervacija> usporedjivac = Comparator.comparing(Rezervacija::dohvatiDatumVrijemePrijema);
+        if (KonfiguracijaIspisa.dohvatiInstancu().jeObrnutoSortiranje()) {
+            usporedjivac = usporedjivac.reversed();
+        }
+
         return switch (stanje) {
             case "PA" -> rezervacije.stream()
                     .filter(RezervacijaFilter.zaAranzman(oznakaAranzmana))
                     .filter(RezervacijaFilter.primljenIliAktivna())
-                    .sorted(Comparator.comparing(Rezervacija::dohvatiDatumVrijemePrijema))
+                    .sorted(usporedjivac)
                     .toList();
             case "Č" -> rezervacije.stream()
                     .filter(RezervacijaFilter.zaAranzman(oznakaAranzmana))
                     .filter(RezervacijaFilter.naCekanju())
-                    .sorted(Comparator.comparing(Rezervacija::dohvatiDatumVrijemePrijema))
+                    .sorted(usporedjivac)
                     .toList();
             case "O" -> rezervacije.stream()
                     .filter(RezervacijaFilter.zaAranzman(oznakaAranzmana))
                     .filter(RezervacijaFilter.otkazana())
-                    .sorted(Comparator.comparing(Rezervacija::dohvatiDatumVrijemePrijema))
+                    .sorted(usporedjivac)
                     .toList();
             case "PAČO" -> rezervacije.stream()
                     .filter(RezervacijaFilter.zaAranzman(oznakaAranzmana))
-                    .sorted(Comparator.comparing(Rezervacija::dohvatiDatumVrijemePrijema))
+                    .sorted(usporedjivac)
                     .toList();
             case "ODO" -> rezervacije.stream()
                     .filter(RezervacijaFilter.zaAranzman(oznakaAranzmana))
                     .filter(RezervacijaFilter.odgodjena())
-                    .sorted(Comparator.comparing(Rezervacija::dohvatiDatumVrijemePrijema))
+                    .sorted(usporedjivac)
                     .toList();
             default -> List.of();
         };
