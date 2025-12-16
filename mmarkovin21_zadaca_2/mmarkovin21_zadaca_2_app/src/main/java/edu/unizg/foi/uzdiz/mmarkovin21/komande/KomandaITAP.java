@@ -28,10 +28,7 @@ public class KomandaITAP implements Komanda {
         }
 
         boolean pronadjen = false;
-        List<Aranzman> aranzmani = agencija.dohvatiPodatke().stream()
-                .filter(k -> k instanceof Aranzman)
-                .map(k -> (Aranzman) k)
-                .toList();
+        List<Aranzman> aranzmani = agencija.dohvatiPodatke();
         IspisivacAranzmana ispisivac = new IspisivacAranzmana(new FormaterDetaljaAranzmana());
         for (var aranzman : aranzmani) {
             if (aranzman.dohvatiOznaka() == oznaka) {

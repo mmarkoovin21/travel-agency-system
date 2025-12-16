@@ -1,7 +1,7 @@
 package edu.unizg.foi.uzdiz.mmarkovin21.komande;
 
 import edu.unizg.foi.uzdiz.mmarkovin21.TuristickaAgencija;
-import edu.unizg.foi.uzdiz.mmarkovin21.bridge.FormaterRezervacija;
+import edu.unizg.foi.uzdiz.mmarkovin21.bridge.FormaterRezervacijaZaOsobu;
 import edu.unizg.foi.uzdiz.mmarkovin21.bridge.IspisivacRezervacija;
 import edu.unizg.foi.uzdiz.mmarkovin21.modeli.Rezervacija;
 import edu.unizg.foi.uzdiz.mmarkovin21.pomocnici.ValidatorKomandi;
@@ -35,13 +35,14 @@ public class KomandaIRO implements Komanda {
 
         List<Rezervacija> rezervacije = agencija.dohvatiPodatke()
                 .stream()
+                .flatMap(aranzman -> aranzman.dohvatiDjecu().stream())
                 .filter(k -> k instanceof Rezervacija)
                 .map(k -> (Rezervacija) k)
                 .filter(r -> r.dohvatiIme().equalsIgnoreCase(ime) && r.dohvatiPrezime().equalsIgnoreCase(prezime))
                 .toList();
 
         boolean imaOdgodjenih = rezervacije.stream().anyMatch(r -> r.dohvatiStanjeString().equalsIgnoreCase("ODGOĐENA"));
-        IspisivacRezervacija ispisivac = new IspisivacRezervacija(new FormaterRezervacija(imaOdgodjenih));
+        IspisivacRezervacija ispisivac = new IspisivacRezervacija(new FormaterRezervacijaZaOsobu(imaOdgodjenih));
 
         if (rezervacije.isEmpty()) {
             System.out.println("Nema rezervacija za korisnika: " + ime + " " + prezime);

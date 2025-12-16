@@ -1,25 +1,15 @@
 package edu.unizg.foi.uzdiz.mmarkovin21.bridge;
 
-import edu.unizg.foi.uzdiz.mmarkovin21.TuristickaAgencija;
 import edu.unizg.foi.uzdiz.mmarkovin21.modeli.Aranzman;
 import edu.unizg.foi.uzdiz.mmarkovin21.modeli.Rezervacija;
 import edu.unizg.foi.uzdiz.mmarkovin21.pomocnici.PretvaracTipovaPodataka;
 
-import java.util.List;
-
-
-public class FormaterRezervacija implements TablicniFormater {
-
+public class FormaterListeRezervacija implements TablicniFormater{
     private final boolean prikaziDatumOtkaza;
-    public FormaterRezervacija(boolean prikaziDatumOtkaza) {
+    public FormaterListeRezervacija(boolean prikaziDatumOtkaza) {
         this.prikaziDatumOtkaza = prikaziDatumOtkaza;
     }
-    private List<Aranzman> aranzmani = TuristickaAgencija.dohvatiInstancu()
-            .dohvatiPodatke()
-            .stream()
-            .filter(k -> k instanceof Aranzman)
-            .map(k -> (Aranzman) k)
-            .toList();
+
     @Override
     public int[] definirajSirineKolona() {
         if (prikaziDatumOtkaza) {
@@ -33,17 +23,17 @@ public class FormaterRezervacija implements TablicniFormater {
     public String[] kreirajZaglavlje() {
         if (prikaziDatumOtkaza) {
             return new String[]{
+                    "Ime",
+                    "Prezime",
                     "Datum i vrijeme",
-                    "Oznaka aranžmana",
-                    "Naziv aranžmana",
                     "Vrsta",
                     "Datum i vrijeme otkaza"
             };
         } else {
             return new String[]{
+                    "Ime",
+                    "Prezime",
                     "Datum i vrijeme",
-                    "Oznaka aranžmana",
-                    "Naziv aranžmana",
                     "Vrsta"
             };
         }
@@ -61,25 +51,17 @@ public class FormaterRezervacija implements TablicniFormater {
                     : "";
 
             return new String[]{
+                    rezervacija.dohvatiIme(),
+                    rezervacija.dohvatiPrezime(),
                     PretvaracTipovaPodataka.formatirajDatumVrijeme(rezervacija.dohvatiDatumVrijemePrijema()),
-                    String.valueOf(rezervacija.dohvatiOznakaAranzmana()),
-                    aranzmani.stream()
-                            .filter(a -> a.dohvatiOznaka() == rezervacija.dohvatiOznakaAranzmana())
-                            .map(Aranzman::dohvatiNaziv)
-                            .findFirst()
-                            .orElse("Nepoznat aranžman"),
                     rezervacija.dohvatiStanjeString(),
                     datumOtkaza
             };
         } else {
             return new String[]{
+                    rezervacija.dohvatiIme(),
+                    rezervacija.dohvatiPrezime(),
                     PretvaracTipovaPodataka.formatirajDatumVrijeme(rezervacija.dohvatiDatumVrijemePrijema()),
-                    String.valueOf(rezervacija.dohvatiOznakaAranzmana()),
-                    aranzmani.stream()
-                            .filter(a -> a.dohvatiOznaka() == rezervacija.dohvatiOznakaAranzmana())
-                            .map(Aranzman::dohvatiNaziv)
-                            .findFirst()
-                            .orElse("Nepoznat aranžman"),
                     rezervacija.dohvatiStanjeString()
             };
         }

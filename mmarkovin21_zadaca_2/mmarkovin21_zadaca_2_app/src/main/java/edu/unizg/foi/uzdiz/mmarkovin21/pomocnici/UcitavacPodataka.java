@@ -2,7 +2,6 @@ package edu.unizg.foi.uzdiz.mmarkovin21.pomocnici;
 
 import edu.unizg.foi.uzdiz.mmarkovin21.Facade.UcitaniPodaciFacade;
 import edu.unizg.foi.uzdiz.mmarkovin21.TuristickaAgencija;
-import edu.unizg.foi.uzdiz.mmarkovin21.composite.TuristickaKomponenta;
 import edu.unizg.foi.uzdiz.mmarkovin21.graditelji.AranzmanDirektor;
 import edu.unizg.foi.uzdiz.mmarkovin21.graditelji.AranzmanGraditelj;
 import edu.unizg.foi.uzdiz.mmarkovin21.mediator.UpraviteljRezervacijaIAranzmana;
@@ -39,10 +38,7 @@ public class UcitavacPodataka {
             }
         }
 
-        List<Aranzman> ucitaniAranzmani = agencija.dohvatiPodatke().stream()
-                .filter(a -> a instanceof Aranzman)
-                .map(a -> (Aranzman) a)
-                .toList();
+        List<Aranzman> ucitaniAranzmani = agencija.dohvatiPodatke();
         mediator.postaviAranzmane(ucitaniAranzmani);
     }
 
@@ -72,7 +68,6 @@ public class UcitavacPodataka {
                 Aranzman nadredeniAranzman = pronadjiAranzmanPoOznaci((Integer) rezervacija.get("oznaka"));
 
                 if (nadredeniAranzman != null) {
-                    agencija.dodajPodatak(rez);
                     mediator.dodajRezervaciju(rez);
                 } else {
                     System.err.println("Greška: Aranžman s oznakom " + rezervacija.get("oznaka")
@@ -85,10 +80,7 @@ public class UcitavacPodataka {
     }
 
     private static Aranzman pronadjiAranzmanPoOznaci(Integer oznaka) {
-        List<TuristickaKomponenta> podaci = agencija.dohvatiPodatke();
-        return podaci.stream()
-                .filter(a -> a instanceof Aranzman)
-                .map(a -> (Aranzman) a)
+        return agencija.dohvatiPodatke().stream()
                 .filter(a -> a.dohvatiOznaka() == oznaka)
                 .findFirst()
                 .orElse(null);

@@ -1,12 +1,8 @@
 package edu.unizg.foi.uzdiz.mmarkovin21;
 
 import edu.unizg.foi.uzdiz.mmarkovin21.composite.TuristickaKomponenta;
-import edu.unizg.foi.uzdiz.mmarkovin21.graditelji.AranzmanDirektor;
-import edu.unizg.foi.uzdiz.mmarkovin21.graditelji.AranzmanGraditelj;
 import edu.unizg.foi.uzdiz.mmarkovin21.komande.Komanda;
 import edu.unizg.foi.uzdiz.mmarkovin21.komande.KomandaTvornica;
-
-import edu.unizg.foi.uzdiz.mmarkovin21.Facade.UcitaniPodaciFacade;
 import edu.unizg.foi.uzdiz.mmarkovin21.modeli.Aranzman;
 import edu.unizg.foi.uzdiz.mmarkovin21.modeli.Rezervacija;
 import edu.unizg.foi.uzdiz.mmarkovin21.pomocnici.UcitavacPodataka;
@@ -18,7 +14,6 @@ import java.util.Scanner;
 public class TuristickaAgencija {
     private static TuristickaAgencija instanca;
     private final List<TuristickaKomponenta> podaci = new ArrayList<>();
-    private final AranzmanDirektor aranzmanDirektor = new AranzmanDirektor(new AranzmanGraditelj());
 
     private TuristickaAgencija() {}
 
@@ -53,8 +48,12 @@ public class TuristickaAgencija {
         }
         scanner.close();
     }
-    public List<TuristickaKomponenta> dohvatiPodatke() {
-        return podaci;
+
+    public List<Aranzman> dohvatiPodatke() {
+        return podaci.stream()
+                .filter(k -> k instanceof Aranzman)
+                .map(k -> (Aranzman) k)
+                .toList();
     }
 
     public void dodajPodatak(TuristickaKomponenta komponenta) {

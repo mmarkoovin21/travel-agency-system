@@ -1,9 +1,7 @@
 package edu.unizg.foi.uzdiz.mmarkovin21.pomocnici;
 
-import edu.unizg.foi.uzdiz.mmarkovin21.TuristickaAgencija;
 import edu.unizg.foi.uzdiz.mmarkovin21.modeli.Rezervacija;
 
-import java.util.List;
 import java.util.function.Predicate;
 
 public class RezervacijaFilter {

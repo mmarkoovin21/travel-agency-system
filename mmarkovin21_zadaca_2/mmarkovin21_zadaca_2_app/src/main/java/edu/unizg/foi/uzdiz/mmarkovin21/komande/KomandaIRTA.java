@@ -1,7 +1,7 @@
 package edu.unizg.foi.uzdiz.mmarkovin21.komande;
 
 import edu.unizg.foi.uzdiz.mmarkovin21.TuristickaAgencija;
-import edu.unizg.foi.uzdiz.mmarkovin21.bridge.FormaterRezervacija;
+import edu.unizg.foi.uzdiz.mmarkovin21.bridge.FormaterListeRezervacija;
 import edu.unizg.foi.uzdiz.mmarkovin21.bridge.IspisivacRezervacija;
 import edu.unizg.foi.uzdiz.mmarkovin21.modeli.Rezervacija;
 import edu.unizg.foi.uzdiz.mmarkovin21.pomocnici.RezervacijaFilter;
@@ -33,7 +33,7 @@ public class KomandaIRTA implements Komanda {
         List<Rezervacija> filtriraneRezervacije = vratiRezervacijeSaStanjem(stanjeRezervacije, oznaka);
         boolean jesuOdgodjene = filtriraneRezervacije.stream().anyMatch(r -> r.dohvatiDatumVrijemeOtkazivanja() != null);
 
-        IspisivacRezervacija ispisivac = new IspisivacRezervacija(new FormaterRezervacija(jesuOdgodjene));
+        IspisivacRezervacija ispisivac = new IspisivacRezervacija(new FormaterListeRezervacija(jesuOdgodjene));
         if (filtriraneRezervacije.isEmpty()) {
             System.out.println("Nema rezervacija za zadane kriterije.");
         } else {
@@ -43,8 +43,10 @@ public class KomandaIRTA implements Komanda {
     }
 
     private List<Rezervacija> vratiRezervacijeSaStanjem(String stanje, int oznakaAranzmana) {
+        // Composite uzorak: Dohvaćanje rezervacija kroz aranžmane (iz njihove djece)
         List<Rezervacija> rezervacije = agencija.dohvatiPodatke()
                 .stream()
+                .flatMap(aranzman -> aranzman.dohvatiDjecu().stream())
                 .filter(k -> k instanceof Rezervacija)
                 .map(k -> (Rezervacija) k)
                 .toList();

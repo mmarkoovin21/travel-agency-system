@@ -3,7 +3,6 @@ package edu.unizg.foi.uzdiz.mmarkovin21.komande;
 import edu.unizg.foi.uzdiz.mmarkovin21.TuristickaAgencija;
 import edu.unizg.foi.uzdiz.mmarkovin21.bridge.FormaterListeAranzmana;
 import edu.unizg.foi.uzdiz.mmarkovin21.bridge.IspisivacAranzmana;
-import edu.unizg.foi.uzdiz.mmarkovin21.composite.TuristickaKomponenta;
 import edu.unizg.foi.uzdiz.mmarkovin21.modeli.Aranzman;
 import edu.unizg.foi.uzdiz.mmarkovin21.pomocnici.PretvaracTipovaPodataka;
 
@@ -45,9 +44,8 @@ public class KomandaITAK implements Komanda {
         LocalDate finalDatumOd = datumOd;
         LocalDate finalDatumDo = datumDo;
 
-        List<TuristickaKomponenta> aranzmaniZaPrikaz = agencija.dohvatiPodatke().stream()
-                .filter(k -> k instanceof Aranzman)
-                .map(k -> (Aranzman) k)
+        List<Aranzman> aranzmaniZaPrikaz = agencija.dohvatiPodatke()
+                .stream()
                 .filter(aranzman -> {
                     if (finalDatumOd != null && finalDatumDo != null) {
                         return !aranzman.dohvatiPocetniDatum().isBefore(finalDatumOd) &&
