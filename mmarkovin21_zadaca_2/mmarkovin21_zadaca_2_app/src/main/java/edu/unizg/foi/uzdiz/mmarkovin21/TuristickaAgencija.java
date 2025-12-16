@@ -59,4 +59,17 @@ public class TuristickaAgencija {
     public void dodajPodatak(TuristickaKomponenta komponenta) {
         podaci.add(komponenta);
     }
+
+    public void obrisiSveAranzmane() {
+        podaci.clear();
+    }
+
+    public void obrisiSveRezervacije() {
+        for (Aranzman aranzman : dohvatiPodatke()) {
+            List<TuristickaKomponenta> djeca = new ArrayList<>(aranzman.dohvatiDjecu());
+            for (TuristickaKomponenta dijete : djeca) {
+                aranzman.ukloniDijete(dijete);
+            }
+        }
+    }
 }

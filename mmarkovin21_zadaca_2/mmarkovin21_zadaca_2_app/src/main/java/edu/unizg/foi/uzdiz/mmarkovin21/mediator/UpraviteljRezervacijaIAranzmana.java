@@ -252,4 +252,13 @@ public class UpraviteljRezervacijaIAranzmana implements UpraviteljMediator {
             }
         }
     }
+
+    public void obrisiSveAranzmane() {
+        sviAranzmani = new ArrayList<>();
+        sveRezervacije.clear();
+    }
+
+    public void obrisiSveRezervacije() {
+        sveRezervacije.clear();
+    }
 }
