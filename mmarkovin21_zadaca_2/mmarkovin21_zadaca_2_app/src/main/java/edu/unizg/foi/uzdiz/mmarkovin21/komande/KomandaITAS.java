@@ -41,6 +41,12 @@ public class KomandaITAS implements Komanda {
             return;
         }
 
+        if (parametri.length == 3) {
+            System.out.println("Naziv komande: " + parametri[0] + " " + parametri[1] + " " + parametri[2]);
+        } else {
+            System.out.println("Naziv komande: " + parametri[0]);
+        }
+
         IspisivacAranzmana ispisivac = new IspisivacAranzmana(new FormaterStatistikeAranzmana());
 
         LocalDate finalDatumOd = datumOd;
@@ -75,13 +81,11 @@ public class KomandaITAS implements Komanda {
                 .collect(Collectors.toList());
 
         if (datumOd != null) {
-            System.out.println("\n STATISTIKA ARANŽMANA ZA RAZDOBLJE " +
+            ispisivac.ispisiSNaslovom(aranzmani, "STATISTIKA ARANŽMANA ZA RAZDOBLJE " +
                     PretvaracTipovaPodataka.formatirajDatum(datumOd) + " - " +
-                    PretvaracTipovaPodataka.formatirajDatum(datumDo) + " ");
+                    PretvaracTipovaPodataka.formatirajDatum(datumDo));
         } else {
-            System.out.println("\n STATISTIKA SVIH ARANŽMANA ");
+            ispisivac.ispisiSNaslovom(aranzmani, "STATISTIKA SVIH ARANŽMANA");
         }
-
-        ispisivac.ispisi(aranzmani);
     }
 }

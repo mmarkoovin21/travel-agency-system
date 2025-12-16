@@ -28,6 +28,8 @@ public class KomandaORTA implements Komanda {
             return;
         }
 
+        System.out.println("Naziv komande: " + parametri[0] + " " + parametri[1] + " " + parametri[2] + " " + parametri[3]);
+
         boolean jeOtkazana = mediator.otkaziRezervaciju(ime, prezime, oznakaAranzmana);
 
         if (jeOtkazana) {

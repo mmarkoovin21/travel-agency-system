@@ -21,6 +21,8 @@ public class KomandaBP implements Komanda {
 
         String tipBrisanja = parametri[1].toUpperCase();
 
+        System.out.println("Naziv komande: " + parametri[0] + " " + parametri[1]);
+
         switch (tipBrisanja) {
             case "A" -> obrisiAranzmane();
             case "R" -> obrisiRezervacije();

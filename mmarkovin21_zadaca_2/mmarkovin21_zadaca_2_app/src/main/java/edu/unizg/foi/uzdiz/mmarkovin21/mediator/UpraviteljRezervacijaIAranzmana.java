@@ -47,7 +47,7 @@ public class UpraviteljRezervacijaIAranzmana implements UpraviteljMediator {
             novaRez.odgodi();
             aranzman.dodajDijete(novaRez);
             sveRezervacije.add(novaRez);
-            System.out.println("Rezervacija odgođena: korisnik već ima rezervaciju na ovom aranžmanu.");
+            System.out.println("Rezervacija odgođena: korisnik " + novaRez.dohvatiIme() + " " + novaRez.dohvatiPrezime() + " već ima rezervaciju na ovom aranžmanu.");
             return true;
         }
 
@@ -55,7 +55,7 @@ public class UpraviteljRezervacijaIAranzmana implements UpraviteljMediator {
             novaRez.odgodi();
             aranzman.dodajDijete(novaRez);
             sveRezervacije.add(novaRez);
-            System.out.println("Rezervacija odgođena: korisnik ima aktivnu rezervaciju na preklapajućem aranžmanu.");
+            System.out.println("Rezervacija odgođena: korisnik " + novaRez.dohvatiIme() + " " + novaRez.dohvatiPrezime() + " ima aktivnu rezervaciju na preklapajućem aranžmanu.");
             return true;
         }
 

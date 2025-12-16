@@ -8,6 +8,7 @@ import edu.unizg.foi.uzdiz.mmarkovin21.pomocnici.ValidatorKomandi;
 import edu.unizg.foi.uzdiz.mmarkovin21.pomocnici.ValidatorNovihRezervacija;
 
 import java.time.LocalDateTime;
+import java.util.Arrays;
 
 public class KomandaDRTA implements Komanda {
     private final TuristickaAgencija agencija;
@@ -48,7 +49,7 @@ public class KomandaDRTA implements Komanda {
             System.out.println("Greška: Neispravan format datuma/vremena. Očekivani format: DD.MM.YYYY HH:MM:SS (npr. 01.01.2010 01:00:01)");
             return;
         }
-
+        System.out.println("Naziv komande: " + parametri[0] + " " + parametri[1] + " " + parametri[2] + " " + parametri[3] + " " + parametri[4] + " " + parametri[5]);
         String[] atributi = new String[] {ime, prezime, String.valueOf(oznakaAranzmana), datumVrijemeString};
         Rezervacija novaRezervacija = validator.validiraj(atributi);
 

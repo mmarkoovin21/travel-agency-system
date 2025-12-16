@@ -36,6 +36,8 @@ public class KomandaIRO implements Komanda {
             return;
         }
 
+        System.out.println("Naziv komande: " + parametri[0] + " " + parametri[1] + " " + parametri[2]);
+
         List<Rezervacija> rezervacije = agencija.dohvatiPodatke()
                 .stream()
                 .flatMap(aranzman -> aranzman.dohvatiDjecu().stream())
@@ -59,7 +61,7 @@ public class KomandaIRO implements Komanda {
                     .sorted(comparator)
                     .collect(Collectors.toList());
 
-            ispisivac.ispisi(rezervacije);
+            ispisivac.ispisiSNaslovom(rezervacije, "REZERVACIJE ZA OSOBU");
         }
     }
 }

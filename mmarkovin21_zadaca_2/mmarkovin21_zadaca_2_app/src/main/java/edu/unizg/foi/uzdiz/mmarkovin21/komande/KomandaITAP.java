@@ -27,13 +27,16 @@ public class KomandaITAP implements Komanda {
             return;
         }
 
+        System.out.println("Naziv komande: " + parametri[0] + " " + parametri[1]);
+
         boolean pronadjen = false;
         List<Aranzman> aranzmani = agencija.dohvatiPodatke();
         IspisivacAranzmana ispisivac = new IspisivacAranzmana(new FormaterDetaljaAranzmana());
         for (var aranzman : aranzmani) {
             if (aranzman.dohvatiOznaka() == oznaka) {
                     pronadjen = true;
-                    ispisivac.ispisi(Collections.singletonList(aranzman));
+                    var redoviDetalja = FormaterDetaljaAranzmana.pretvoriAranzmanURedove(aranzman);
+                    ispisivac.ispisiSNaslovom(redoviDetalja, "DETALJI TURISTIČKOG ARANŽMANA");
                     break;
             }
         }

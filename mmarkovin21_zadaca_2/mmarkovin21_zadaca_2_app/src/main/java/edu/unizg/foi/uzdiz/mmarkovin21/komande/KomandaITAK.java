@@ -41,6 +41,12 @@ public class KomandaITAK implements Komanda {
             return;
         }
 
+        if (parametri.length == 3) {
+            System.out.println("Naziv komande: " + parametri[0] + " " + parametri[1] + " " + parametri[2]);
+        } else {
+            System.out.println("Naziv komande: " + parametri[0]);
+        }
+
         IspisivacAranzmana ispisivac = new IspisivacAranzmana(new FormaterListeAranzmana());
 
         LocalDate finalDatumOd = datumOd;
@@ -68,7 +74,7 @@ public class KomandaITAK implements Komanda {
                     .sorted(usporedjivac)
                     .collect(Collectors.toList());
 
-            ispisivac.ispisi(aranzmaniZaPrikaz);
+            ispisivac.ispisiSNaslovom(aranzmaniZaPrikaz, "TURISTIČKI ARANŽMANI");
         }
     }
 }

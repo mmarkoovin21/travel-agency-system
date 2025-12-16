@@ -1,20 +1,15 @@
 package edu.unizg.foi.uzdiz.mmarkovin21.komande;
 
-import edu.unizg.foi.uzdiz.mmarkovin21.Facade.UcitaniPodaciFacade;
 import edu.unizg.foi.uzdiz.mmarkovin21.TuristickaAgencija;
 import edu.unizg.foi.uzdiz.mmarkovin21.graditelji.AranzmanDirektor;
 import edu.unizg.foi.uzdiz.mmarkovin21.graditelji.AranzmanGraditelj;
 import edu.unizg.foi.uzdiz.mmarkovin21.pomocnici.UcitavacPodataka;
 
 import java.io.File;
-import java.util.List;
-import java.util.Map;
 
 public class KomandaUP implements Komanda {
-    AranzmanDirektor aranzmanDirektor = new AranzmanDirektor(new AranzmanGraditelj());
-    TuristickaAgencija agencija = TuristickaAgencija.dohvatiInstancu();
 
-    public KomandaUP(TuristickaAgencija agencija) {
+    public KomandaUP() {
     }
 
     @Override
@@ -42,6 +37,8 @@ public class KomandaUP implements Komanda {
             System.out.println("Greška: Datoteka mora biti u .csv formatu.");
             return;
         }
+
+        System.out.println("Naziv komande: " + parametri[0] + " " + parametri[1] + " " + parametri[2]);
 
         switch (argument) {
             case "A":

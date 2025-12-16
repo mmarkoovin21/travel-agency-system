@@ -11,13 +11,28 @@ public abstract class TablicniIspisivac {
         this.formater = formater;
     }
 
-    public void ispisi(List<?> podaci) {
+    public void ispisiSNaslovom(List<?> podaci, String nazivTablice) {
         if (podaci == null || podaci.isEmpty()) {
             System.out.println("Nema podataka za prikaz.");
             return;
         }
-
         int[] sirineKolona = formater.definirajSirineKolona();
+
+        int ukupnaSirina = 1;
+        for (int sirina : sirineKolona) {
+            ukupnaSirina += sirina + 2 + 1;
+        }
+
+        String crta = "=".repeat(ukupnaSirina);
+        System.out.println(crta);
+
+        int padding = (ukupnaSirina - nazivTablice.length()) / 2;
+        String centriranNaslov = " ".repeat(Math.max(0, padding)) + nazivTablice;
+        System.out.println(centriranNaslov);
+
+        System.out.println(crta);
+        System.out.println();
+
         boolean[] brojcanaPolja = formater.definirajBrojcanaPolja();
         List<String[]> redovi = new ArrayList<>();
 

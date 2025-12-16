@@ -30,6 +30,8 @@ public class KomandaOTA implements Komanda {
             return;
         }
 
+        System.out.println("Naziv komande: " + parametri[0] + " " + parametri[1]);
+
         // Pronađi aranžman po oznaci
         Aranzman aranzman = pronadjiAranzmanPoOznaci(oznakaAranzmana);
         if (aranzman == null) {

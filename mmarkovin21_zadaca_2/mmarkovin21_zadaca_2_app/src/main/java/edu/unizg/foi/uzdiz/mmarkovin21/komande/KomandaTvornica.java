@@ -29,7 +29,7 @@ public abstract class KomandaTvornica {
             case "OTA" -> new OTATvornica(agencija, mediator);
             case "BP" -> new BPTvornica(agencija, mediator);
             case "IP" -> new IPTvornica();
-            case "UP" -> new UPTvornica(agencija);
+            case "UP" -> new UPTvornica();
             case "Q" -> new QTvornica();
             default -> new NKTvornica(naziv);
         };

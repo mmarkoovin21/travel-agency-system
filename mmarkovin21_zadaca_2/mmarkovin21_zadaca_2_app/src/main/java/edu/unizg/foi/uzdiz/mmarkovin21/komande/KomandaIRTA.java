@@ -30,6 +30,8 @@ public class KomandaIRTA implements Komanda {
             return;
         }
 
+        System.out.println("Naziv komande: " + parametri[0] + " " + parametri[1] + " " + parametri[2]);
+
         String stanjeRezervacije = parametri[2];
         List<Rezervacija> filtriraneRezervacije = vratiRezervacijeSaStanjem(stanjeRezervacije, oznaka);
         boolean jesuOdgodjene = filtriraneRezervacije.stream().anyMatch(r -> r.dohvatiDatumVrijemeOtkazivanja() != null);
@@ -38,7 +40,7 @@ public class KomandaIRTA implements Komanda {
         if (filtriraneRezervacije.isEmpty()) {
             System.out.println("Nema rezervacija za zadane kriterije.");
         } else {
-            ispisivac.ispisi(filtriraneRezervacije);
+            ispisivac.ispisiSNaslovom(filtriraneRezervacije, "REZERVACIJE ZA TURISTIČKI ARANŽMAN");
         }
 
     }

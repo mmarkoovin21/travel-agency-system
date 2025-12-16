@@ -21,6 +21,8 @@ public class KomandaIP implements Komanda {
 
         String nacinSortiranja = parametri[1].toUpperCase();
 
+        System.out.println("Naziv komande: " + parametri[0] + " " + parametri[1]);
+
         switch (nacinSortiranja) {
             case "N" -> {
                 KonfiguracijaIspisa.dohvatiInstancu().postaviNacinSortiranja("N");
