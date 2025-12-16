@@ -41,3 +41,9 @@ DZ_1_aranzmani.csv
 DZ_1_rezervacije.csv
 DZ_1_rezervacije_1.csv
 test_komande
+test_ispravne_komande.sh
+test_neispravne_komande.sh
+README.md
+test_paljenje.sh
+izvrsi.sh
+logika.txt
