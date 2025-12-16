@@ -49,8 +49,6 @@ public class KomandaUP implements Komanda {
                 System.out.println("Aranžmani su uspješno učitani iz datoteke '" + datoteka + "'.");
                 break;
             case "R":
-                UcitaniPodaciFacade.ucitajRezervacije(datoteka);
-                List<Map<String, Object>> rezervacije = UcitaniPodaciFacade.dohvatiRezervacije();
                 UcitavacPodataka.ucitajRezervacije(datoteka);
                 System.out.println("Rezervacije su uspješno učitane iz datoteke '" + datoteka + "'.");
                 break;
