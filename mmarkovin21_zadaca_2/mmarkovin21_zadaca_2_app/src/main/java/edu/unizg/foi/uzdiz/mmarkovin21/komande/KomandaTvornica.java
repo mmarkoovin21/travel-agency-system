@@ -24,6 +24,7 @@ public abstract class KomandaTvornica {
             case "ITAS" -> new ITASTvornica(agencija);
             case "IRTA" -> new IRTATvornica(agencija);
             case "IRO" -> new IROTvornica(agencija);
+            case "IROS" -> new IROSTvornica(agencija);
             case "ORTA" -> new ORTATvornica(agencija, mediator);
             case "DRTA" -> new DRTATvornica(agencija, mediator, validator);
             case "OTA" -> new OTATvornica(agencija, mediator);
