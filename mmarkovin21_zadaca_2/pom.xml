@@ -33,7 +33,6 @@
     </dependencies>
 
     <build>
-        <finalName>mmarkovin21_zadaca_1</finalName>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

@@ -4,10 +4,6 @@ import edu.unizg.foi.uzdiz.mmarkovin21.modeli.Aranzman;
 import edu.unizg.foi.uzdiz.mmarkovin21.pomocnici.FormaterBrojeva;
 import edu.unizg.foi.uzdiz.mmarkovin21.pomocnici.PretvaracTipovaPodataka;
 
-/**
- * Konkretna implementacija formatera za listu aranžmana (komanda ITAK).
- * Prikazuje osnovne informacije o aranžmanima u sumarnom obliku.
- */
 public class FormaterListeAranzmana implements TablicniFormater {
 
     @Override

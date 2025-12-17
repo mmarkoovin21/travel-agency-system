@@ -6,7 +6,7 @@ import java.util.Map;
 
 public class ValidatorRezervacija extends Validator {
 
-    public Map<String, Object> validiraj(String[] atributi) {
+    public Map<String, Object> validiraj(String[] atributi, SkupljacGresaka skupljacGresaka, int brojRetka) {
         try {
             String ime = validirajString(atributi[0], "Ime", true);
             String prezime = validirajString(atributi[1], "Prezime", true);
@@ -22,7 +22,7 @@ public class ValidatorRezervacija extends Validator {
             return rezervacija;
 
         } catch (IllegalArgumentException e) {
-            System.err.println("Greška: " + e.getMessage());
+            skupljacGresaka.dodajGresku(brojRetka, e.getMessage());
             return null;
         }
     }

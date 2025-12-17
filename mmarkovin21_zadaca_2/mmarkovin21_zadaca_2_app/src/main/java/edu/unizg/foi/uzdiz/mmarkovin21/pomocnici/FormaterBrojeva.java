@@ -23,8 +23,4 @@ public class FormaterBrojeva {
     public static String formatirajCijeliBroj(int broj) {
         return FORMAT_CIJELI.format(broj);
     }
-    public static String formatirajDecimalniBroj(double broj) {
-        return FORMAT_DECIMALNI.format(broj);
-    }
-
 }

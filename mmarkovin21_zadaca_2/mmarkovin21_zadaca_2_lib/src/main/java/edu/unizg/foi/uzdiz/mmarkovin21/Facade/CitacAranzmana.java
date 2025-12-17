@@ -12,6 +12,7 @@ public class CitacAranzmana {
     final int OCEKIVANI_BROJ_ATRIBUTA = 16;
 
     protected List<Map<String, Object>> ucitaj(String nazivDatoteke) {
+        SkupljacGresaka skupljacGresaka = new SkupljacGresaka();
 
         try (BufferedReader citac = new BufferedReader(new FileReader(nazivDatoteke))) {
             String linija;
@@ -38,19 +39,25 @@ public class CitacAranzmana {
                     }
 
                     if (atributi.length != OCEKIVANI_BROJ_ATRIBUTA) {
-                        CSVPomagac.ispisiGreskaBrojaAtributa(brojRetka, nazivDatoteke, OCEKIVANI_BROJ_ATRIBUTA, atributi.length);
+                        String opisGreske = "Neispravan broj atributa. Očekivano: " + OCEKIVANI_BROJ_ATRIBUTA + ", pronađeno: " + atributi.length;
+                        skupljacGresaka.dodajGresku(brojRetka, opisGreske);
                         continue;
                     }
 
-                    Map<String, Object>  podaci = this.validator.validiraj(atributi);
-                    aranzmani.add(podaci);
+                    Map<String, Object>  podaci = this.validator.validiraj(atributi, skupljacGresaka, brojRetka);
+                    if (podaci != null) {
+                        aranzmani.add(podaci);
+                    }
                 } catch (Exception e) {
-                    System.err.println("Greška pri obradi retka " + brojRetka + ": " + e.getMessage());
+                    skupljacGresaka.dodajGresku(brojRetka, e.getMessage());
                 }
             }
         } catch (Exception e) {
             System.err.println("Greška pri čitanju datoteke: " + e.getMessage());
         }
+
+        skupljacGresaka.ispisiGreske();
+
         return aranzmani;
     }
 

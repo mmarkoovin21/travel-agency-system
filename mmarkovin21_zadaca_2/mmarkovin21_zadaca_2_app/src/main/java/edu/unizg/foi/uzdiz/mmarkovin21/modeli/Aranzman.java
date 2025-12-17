@@ -12,7 +12,6 @@ import java.util.Collections;
 import java.util.List;
 
 public class Aranzman extends TuristickaKomponenta implements AranzmanColleauege {
-    // nužni
     private int oznaka;
     private String naziv;
     private String program;
@@ -22,7 +21,6 @@ public class Aranzman extends TuristickaKomponenta implements AranzmanColleauege
     private int maxBrojPutnika;
     private Long cijenaPoOsobi;
 
-    // opcionalni
     private LocalTime vrijemeKretanja;
     private LocalTime vrijemePovratka;
     private int brojNocenja;
@@ -33,7 +31,6 @@ public class Aranzman extends TuristickaKomponenta implements AranzmanColleauege
     private int brojVecera;
     private StanjeAranzmana status;
 
-    // Mediator
     private UpraviteljMediator mediator;
 
     private final List<TuristickaKomponenta> djeca = new ArrayList<>();
@@ -112,7 +109,6 @@ public class Aranzman extends TuristickaKomponenta implements AranzmanColleauege
         this.status = novoStanje;
     }
     
-    // neobavezni getteri i setteri
     public LocalTime dohvatiVrijemeKretanja() {
         return vrijemeKretanja;
     }
@@ -179,7 +175,6 @@ public class Aranzman extends TuristickaKomponenta implements AranzmanColleauege
 
     @Override
     public double izracunajUkupnuCijenu() {
-        // Osnovna cijena aranžmana + zbroj cijena sve djece
         double ukupno = 0;
 
         for (TuristickaKomponenta dijete : djeca) {
@@ -192,7 +187,6 @@ public class Aranzman extends TuristickaKomponenta implements AranzmanColleauege
     public void dodajDijete(TuristickaKomponenta koponenta) {
         djeca.add(koponenta);
 
-        // Ako je dijete Rezervacija, postavi referencu
         if (koponenta instanceof Rezervacija) {
             ((Rezervacija) koponenta).postaviAranzman(this);
         }

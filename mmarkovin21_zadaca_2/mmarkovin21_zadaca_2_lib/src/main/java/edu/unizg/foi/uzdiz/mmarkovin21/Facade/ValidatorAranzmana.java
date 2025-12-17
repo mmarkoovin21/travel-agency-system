@@ -5,7 +5,7 @@ import java.time.LocalTime;
 import java.util.*;
 
 public class ValidatorAranzmana extends Validator {
-    public Map<String, Object> validiraj(String[] atributi) {
+    public Map<String, Object> validiraj(String[] atributi, SkupljacGresaka skupljacGresaka, int brojRetka) {
         try {
             int oznaka = validirajInt(atributi[0], "Oznaka", true);
             String naziv = validirajString(atributi[1], "Naziv", true);
@@ -46,7 +46,7 @@ public class ValidatorAranzmana extends Validator {
 
             return aranzmani;
         } catch (Exception e) {
-            System.err.println("Greška pri validaciji: " + e.getMessage());
+            skupljacGresaka.dodajGresku(brojRetka, e.getMessage());
             return null;
         }
     }

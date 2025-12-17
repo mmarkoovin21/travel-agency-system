@@ -31,7 +31,6 @@
     </dependencies>
 
     <build>
-        <finalName>mmarkovin21_zadaca_1</finalName>
         <plugins>
         </plugins>
     </build>

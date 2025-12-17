@@ -35,18 +35,21 @@ public abstract class TablicniIspisivac {
 
         boolean[] brojcanaPolja = formater.definirajBrojcanaPolja();
         List<String[]> redovi = new ArrayList<>();
+        List<Object> originalnoPodaci = new ArrayList<>();
 
         redovi.add(formater.kreirajZaglavlje());
+        originalnoPodaci.add(null);
 
         for (Object podatak : podaci) {
             String[] red = formater.formatirajRed(podatak);
             redovi.add(red);
+            originalnoPodaci.add(podatak);
         }
 
-        System.out.println(formatirajTablicu(sirineKolona, brojcanaPolja, redovi));
+        System.out.println(formatirajTablicu(sirineKolona, brojcanaPolja, redovi, originalnoPodaci));
     }
 
-    private String formatirajTablicu(int[] sirineKolona, boolean[] brojcanaPolja, List<String[]> redovi) {
+    private String formatirajTablicu(int[] sirineKolona, boolean[] brojcanaPolja, List<String[]> redovi, List<Object> originalnoPodaci) {
         StringBuilder sb = new StringBuilder();
 
         for (int i = 0; i < redovi.size(); i++) {
@@ -59,7 +62,8 @@ public abstract class TablicniIspisivac {
             }
             sb.append(ispisiLiniju(sirineKolona)).append("\n");
             boolean jeZaglavlje = (i == 0);
-            sb.append(ispisiRed(red, sirineKolona, brojcanaPolja, jeZaglavlje)).append("\n");
+            Object originalniPodatak = originalnoPodaci.get(i);
+            sb.append(ispisiRed(red, sirineKolona, brojcanaPolja, jeZaglavlje, originalniPodatak)).append("\n");
         }
         sb.append(ispisiLiniju(sirineKolona)).append("\n");
 
@@ -74,7 +78,7 @@ public abstract class TablicniIspisivac {
         return sb.toString();
     }
 
-    private String ispisiRed(String[] vrijednosti, int[] sirineKolona, boolean[] brojcanaPolja, boolean jeZaglavlje) {
+    private String ispisiRed(String[] vrijednosti, int[] sirineKolona, boolean[] brojcanaPolja, boolean jeZaglavlje, Object originalniPodatak) {
         StringBuilder sb = new StringBuilder();
         String[][] omotaneVrijednosti = new String[vrijednosti.length][];
         int maxLinija = 1;
@@ -92,7 +96,14 @@ public abstract class TablicniIspisivac {
                         : "";
 
                 String formatiraniTekst;
-                if (jeZaglavlje || !brojcanaPolja[i]) {
+                boolean jeBrojcano = brojcanaPolja[i];
+
+                // Za DetaljiRed objekte, koristi informaciju o poravnanju iz reda
+                if (originalniPodatak instanceof DetaljiRed && i == 1) {
+                    jeBrojcano = ((DetaljiRed) originalniPodatak).jeVrijednostBrojcana();
+                }
+
+                if (jeZaglavlje || !jeBrojcano) {
                     formatiraniTekst = String.format("%-" + sirineKolona[i] + "s", tekst);
                 } else {
                     formatiraniTekst = String.format("%" + sirineKolona[i] + "s", tekst);

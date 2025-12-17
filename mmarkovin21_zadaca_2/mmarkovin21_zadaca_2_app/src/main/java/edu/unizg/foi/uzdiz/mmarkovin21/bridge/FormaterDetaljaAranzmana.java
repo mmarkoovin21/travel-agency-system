@@ -37,34 +37,34 @@ public class FormaterDetaljaAranzmana implements TablicniFormater {
     public static List<DetaljiRed> pretvoriAranzmanURedove(Aranzman aranzman) {
         List<DetaljiRed> redovi = new ArrayList<>();
 
-        redovi.add(new DetaljiRed("Oznaka", FormaterBrojeva.formatirajCijeliBroj(aranzman.dohvatiOznaka())));
-        redovi.add(new DetaljiRed("Naziv", aranzman.dohvatiNaziv()));
-        redovi.add(new DetaljiRed("Program", aranzman.dohvatiProgram()));
-        redovi.add(new DetaljiRed("Početni datum", PretvaracTipovaPodataka.formatirajDatum(aranzman.dohvatiPocetniDatum())));
-        redovi.add(new DetaljiRed("Završni datum", PretvaracTipovaPodataka.formatirajDatum(aranzman.dohvatiZavrsniDatum())));
+        redovi.add(new DetaljiRed("Oznaka", FormaterBrojeva.formatirajCijeliBroj(aranzman.dohvatiOznaka()), true));
+        redovi.add(new DetaljiRed("Naziv", aranzman.dohvatiNaziv(), false));
+        redovi.add(new DetaljiRed("Program", aranzman.dohvatiProgram(), false));
+        redovi.add(new DetaljiRed("Početni datum", PretvaracTipovaPodataka.formatirajDatum(aranzman.dohvatiPocetniDatum()), false));
+        redovi.add(new DetaljiRed("Završni datum", PretvaracTipovaPodataka.formatirajDatum(aranzman.dohvatiZavrsniDatum()), false));
 
         if (aranzman.dohvatiVrijemeKretanja() != null) {
-            redovi.add(new DetaljiRed("Vrijeme kretanja", PretvaracTipovaPodataka.formatirajVrijeme(aranzman.dohvatiVrijemeKretanja())));
+            redovi.add(new DetaljiRed("Vrijeme kretanja", PretvaracTipovaPodataka.formatirajVrijeme(aranzman.dohvatiVrijemeKretanja()), false));
         }
 
         if (aranzman.dohvatiVrijemePovratka() != null) {
-            redovi.add(new DetaljiRed("Vrijeme povratka", PretvaracTipovaPodataka.formatirajVrijeme(aranzman.dohvatiVrijemePovratka())));
+            redovi.add(new DetaljiRed("Vrijeme povratka", PretvaracTipovaPodataka.formatirajVrijeme(aranzman.dohvatiVrijemePovratka()), false));
         }
 
-        redovi.add(new DetaljiRed("Cijena po osobi", FormaterBrojeva.formatirajCijeliBroj(aranzman.dohvatiCijenaPoOsobi())));
-        redovi.add(new DetaljiRed("Min broj putnika", FormaterBrojeva.formatirajCijeliBroj(aranzman.dohvatiMinBrojPutnika())));
-        redovi.add(new DetaljiRed("Maks broj putnika", FormaterBrojeva.formatirajCijeliBroj(aranzman.dohvatiMaxBrojPutnika())));
-        redovi.add(new DetaljiRed("Broj noćenja", FormaterBrojeva.formatirajCijeliBroj(aranzman.dohvatiBrojNocenja())));
-        redovi.add(new DetaljiRed("Doplata za jednokrevetnu sobu", FormaterBrojeva.formatirajCijeliBroj(aranzman.dohvatiDoplataZaJednokrevetnuSobu())));
+        redovi.add(new DetaljiRed("Cijena po osobi", FormaterBrojeva.formatirajCijeliBroj(aranzman.dohvatiCijenaPoOsobi()), true));
+        redovi.add(new DetaljiRed("Min broj putnika", FormaterBrojeva.formatirajCijeliBroj(aranzman.dohvatiMinBrojPutnika()), true));
+        redovi.add(new DetaljiRed("Maks broj putnika", FormaterBrojeva.formatirajCijeliBroj(aranzman.dohvatiMaxBrojPutnika()), true));
+        redovi.add(new DetaljiRed("Broj noćenja", FormaterBrojeva.formatirajCijeliBroj(aranzman.dohvatiBrojNocenja()), true));
+        redovi.add(new DetaljiRed("Doplata za jednokrevetnu sobu", FormaterBrojeva.formatirajCijeliBroj(aranzman.dohvatiDoplataZaJednokrevetnuSobu()), true));
 
         if (aranzman.dohvatiPrijevoz() != null && !aranzman.dohvatiPrijevoz().isEmpty()) {
-            redovi.add(new DetaljiRed("Prijevoz", String.join(", ", aranzman.dohvatiPrijevoz())));
+            redovi.add(new DetaljiRed("Prijevoz", String.join(", ", aranzman.dohvatiPrijevoz()), false));
         }
 
-        redovi.add(new DetaljiRed("Broj doručaka", FormaterBrojeva.formatirajCijeliBroj(aranzman.dohvatiBrojDorucaka())));
-        redovi.add(new DetaljiRed("Broj ručkova", FormaterBrojeva.formatirajCijeliBroj(aranzman.dohvatiBrojRuckova())));
-        redovi.add(new DetaljiRed("Broj večera", FormaterBrojeva.formatirajCijeliBroj(aranzman.dohvatiBrojVecera())));
-        redovi.add(new DetaljiRed("Status", aranzman.dohvatiStatusString()));
+        redovi.add(new DetaljiRed("Broj doručaka", FormaterBrojeva.formatirajCijeliBroj(aranzman.dohvatiBrojDorucaka()), true));
+        redovi.add(new DetaljiRed("Broj ručkova", FormaterBrojeva.formatirajCijeliBroj(aranzman.dohvatiBrojRuckova()), true));
+        redovi.add(new DetaljiRed("Broj večera", FormaterBrojeva.formatirajCijeliBroj(aranzman.dohvatiBrojVecera()), true));
+        redovi.add(new DetaljiRed("Status", aranzman.dohvatiStatusString(), false));
 
         return redovi;
     }
