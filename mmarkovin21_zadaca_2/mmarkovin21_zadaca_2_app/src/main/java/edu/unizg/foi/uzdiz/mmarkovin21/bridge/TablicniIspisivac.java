@@ -1,5 +1,7 @@
 package edu.unizg.foi.uzdiz.mmarkovin21.bridge;
 
+import edu.unizg.foi.uzdiz.mmarkovin21.pomocnici.DetaljiRed;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -98,7 +100,7 @@ public abstract class TablicniIspisivac {
                 String formatiraniTekst;
                 boolean jeBrojcano = brojcanaPolja[i];
 
-                // Za DetaljiRed objekte, koristi informaciju o poravnanju iz reda
+                
                 if (originalniPodatak instanceof DetaljiRed && i == 1) {
                     jeBrojcano = ((DetaljiRed) originalniPodatak).jeVrijednostBrojcana();
                 }

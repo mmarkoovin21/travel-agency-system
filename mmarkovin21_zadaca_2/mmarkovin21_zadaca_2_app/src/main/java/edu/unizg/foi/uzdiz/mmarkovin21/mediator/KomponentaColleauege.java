@@ -1,5 +1,5 @@
 package edu.unizg.foi.uzdiz.mmarkovin21.mediator;
 
-public interface AranzmanColleauege {
+public interface KomponentaColleauege {
     void postaviMediator(UpraviteljMediator mediator);
 }

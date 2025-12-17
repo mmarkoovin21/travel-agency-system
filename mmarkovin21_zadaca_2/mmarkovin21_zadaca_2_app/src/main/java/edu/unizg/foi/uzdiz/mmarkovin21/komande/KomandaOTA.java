@@ -32,29 +32,29 @@ public class KomandaOTA implements Komanda {
 
         System.out.println("Naziv komande: " + parametri[0] + " " + parametri[1]);
 
-        // Pronađi aranžman po oznaci
+        
         Aranzman aranzman = pronadjiAranzmanPoOznaci(oznakaAranzmana);
         if (aranzman == null) {
             System.out.println("Greška: Aranžman s oznakom " + oznakaAranzmana + " nije pronađen.");
             return;
         }
 
-        // Provjerim je li aranžman već otkazan
+        
         if (aranzman.dohvatiStatusString().equalsIgnoreCase("OTKAZAN")) {
             System.out.println("Greška: Aranžman s oznakom " + oznakaAranzmana + " je već otkazan.");
             return;
         }
 
-        // Dohvati sve rezervacije aranžmana (Composite uzorak - djeca)
+        
         List<TuristickaKomponenta> djeca = aranzman.dohvatiDjecu();
         int brojOtkazanih = 0;
 
-        // Otkaži sve neotkazane rezervacije
+        
         for (TuristickaKomponenta dijete : djeca) {
             if (dijete instanceof Rezervacija) {
                 Rezervacija rezervacija = (Rezervacija) dijete;
                 if (!rezervacija.dohvatiStanjeString().equalsIgnoreCase("OTKAZANA")) {
-                    // Otkaži rezervaciju koristeći mediator
+                    
                     boolean otkazana = mediator.otkaziRezervaciju(
                             rezervacija.dohvatiIme(),
                             rezervacija.dohvatiPrezime(),
@@ -67,7 +67,7 @@ public class KomandaOTA implements Komanda {
             }
         }
 
-        // Otkaži aranžman
+        
         aranzman.otkazi();
 
         System.out.println("Uspješno otkazan turistički aranžman s oznakom " + oznakaAranzmana + ".");

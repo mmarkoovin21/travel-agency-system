@@ -61,7 +61,7 @@ public class CitacRezervacija {
             System.err.println("Greška pri čitanju datoteke: " + e.getMessage());
         }
 
-        // Ispiši sve prikupljene greške na kraju
+        
         skupljacGresaka.ispisiGreske();
 
         return rezervacije;

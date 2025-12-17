@@ -1,6 +1,7 @@
 package edu.unizg.foi.uzdiz.mmarkovin21.komande;
 
 import edu.unizg.foi.uzdiz.mmarkovin21.TuristickaAgencija;
+import edu.unizg.foi.uzdiz.mmarkovin21.decorator.DecoratorKomandaIROS;
 
 public class IROSTvornica extends KomandaTvornica {
     private final TuristickaAgencija agencija;

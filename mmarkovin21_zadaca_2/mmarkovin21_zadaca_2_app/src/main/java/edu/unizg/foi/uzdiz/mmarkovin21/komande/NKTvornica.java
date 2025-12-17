@@ -1,4 +1,4 @@
-// NepoznataKomandaTvornica.java
+
 package edu.unizg.foi.uzdiz.mmarkovin21.komande;
 
 public class NKTvornica extends KomandaTvornica {

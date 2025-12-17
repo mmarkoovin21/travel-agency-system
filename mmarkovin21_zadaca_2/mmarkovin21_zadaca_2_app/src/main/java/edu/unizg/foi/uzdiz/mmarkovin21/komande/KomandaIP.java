@@ -3,11 +3,7 @@ package edu.unizg.foi.uzdiz.mmarkovin21.komande;
 import edu.unizg.foi.uzdiz.mmarkovin21.TuristickaAgencija;
 import edu.unizg.foi.uzdiz.mmarkovin21.pomocnici.KonfiguracijaIspisa;
 
-/**
- * Komanda za postavljanje načina sređivanja podataka kod ispisa u obliku tablica.
- * IP N - kronološki redoslijed (prvo stari, zatim novi)
- * IP S - obrnuti kronološki redoslijed (prvo novi, zatim stari)
- */
+
 public class KomandaIP implements Komanda {
     public KomandaIP() {
     }

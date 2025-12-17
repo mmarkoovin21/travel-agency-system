@@ -1,4 +1,4 @@
-package edu.unizg.foi.uzdiz.mmarkovin21.bridge;
+package edu.unizg.foi.uzdiz.mmarkovin21.pomocnici;
 
 public class DetaljiRed {
     private final String atribut;

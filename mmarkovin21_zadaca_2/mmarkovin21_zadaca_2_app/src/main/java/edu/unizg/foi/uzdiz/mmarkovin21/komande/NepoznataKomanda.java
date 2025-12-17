@@ -1,4 +1,4 @@
-// Nova klasa - NepoznataKomanda.java
+
 package edu.unizg.foi.uzdiz.mmarkovin21.komande;
 
 public class NepoznataKomanda implements Komanda {

@@ -5,10 +5,7 @@ import edu.unizg.foi.uzdiz.mmarkovin21.modeli.Aranzman;
 import edu.unizg.foi.uzdiz.mmarkovin21.modeli.Rezervacija;
 import edu.unizg.foi.uzdiz.mmarkovin21.pomocnici.FormaterBrojeva;
 
-/**
- * Konkretna implementacija formatera za statistike aranžmana (komanda ITAS).
- * Prikazuje statističke podatke o rezervacijama i prihodima aranžmana.
- */
+
 public class FormaterStatistikeAranzmana implements TablicniFormater {
 
     @Override

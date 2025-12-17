@@ -1,9 +1,6 @@
 package edu.unizg.foi.uzdiz.mmarkovin21.pomocnici;
 
-/**
- * Singleton klasa koja čuva globalnu konfiguraciju ispisa tablica.
- * Koristi se za spremanje načina sortiranja podataka (kronološki ili obrnuto).
- */
+
 public class KonfiguracijaIspisa {
     private static KonfiguracijaIspisa instanca;
     private String nacinSortiranja = "N";

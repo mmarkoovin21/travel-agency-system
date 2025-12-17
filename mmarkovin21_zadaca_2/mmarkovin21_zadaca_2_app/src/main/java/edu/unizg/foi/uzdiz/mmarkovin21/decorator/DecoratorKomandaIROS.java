@@ -1,6 +1,8 @@
-package edu.unizg.foi.uzdiz.mmarkovin21.komande;
+package edu.unizg.foi.uzdiz.mmarkovin21.decorator;
 
 import edu.unizg.foi.uzdiz.mmarkovin21.TuristickaAgencija;
+import edu.unizg.foi.uzdiz.mmarkovin21.komande.Komanda;
+import edu.unizg.foi.uzdiz.mmarkovin21.komande.KomandaIRO;
 import edu.unizg.foi.uzdiz.mmarkovin21.modeli.Aranzman;
 import edu.unizg.foi.uzdiz.mmarkovin21.modeli.Rezervacija;
 import edu.unizg.foi.uzdiz.mmarkovin21.pomocnici.ValidatorKomandi;

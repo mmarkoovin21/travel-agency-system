@@ -1,6 +1,7 @@
 package edu.unizg.foi.uzdiz.mmarkovin21.bridge;
 
 import edu.unizg.foi.uzdiz.mmarkovin21.modeli.Aranzman;
+import edu.unizg.foi.uzdiz.mmarkovin21.pomocnici.DetaljiRed;
 import edu.unizg.foi.uzdiz.mmarkovin21.pomocnici.FormaterBrojeva;
 import edu.unizg.foi.uzdiz.mmarkovin21.pomocnici.PretvaracTipovaPodataka;
 

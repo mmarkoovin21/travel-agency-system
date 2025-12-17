@@ -33,12 +33,12 @@ public class Main {
 
         if (datotekaAranzmani != null && provjeriPostojanjeDatoteke(datotekaAranzmani)) {
             System.out.println("Upozorenje: Datoteka s aranžmanima ne postoji ili nije dostupna: " + datotekaAranzmani);
-            datotekaAranzmani = null; // Postavi na null kako se ne bi pokušalo učitati
+            datotekaAranzmani = null; 
         }
 
         if (datotekaRezervacije != null && provjeriPostojanjeDatoteke(datotekaRezervacije)) {
             System.out.println("Upozorenje: Datoteka s rezervacijama ne postoji ili nije dostupna: " + datotekaRezervacije);
-            datotekaRezervacije = null; // Postavi na null kako se ne bi pokušalo učitati
+            datotekaRezervacije = null; 
         }
 
         TuristickaAgencija agencija = TuristickaAgencija.dohvatiInstancu();

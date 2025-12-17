@@ -1,7 +1,7 @@
 package edu.unizg.foi.uzdiz.mmarkovin21.modeli;
 
 import edu.unizg.foi.uzdiz.mmarkovin21.composite.TuristickaKomponenta;
-import edu.unizg.foi.uzdiz.mmarkovin21.mediator.AranzmanColleauege;
+import edu.unizg.foi.uzdiz.mmarkovin21.mediator.KomponentaColleauege;
 import edu.unizg.foi.uzdiz.mmarkovin21.mediator.UpraviteljMediator;
 import edu.unizg.foi.uzdiz.mmarkovin21.state.*;
 
@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class Aranzman extends TuristickaKomponenta implements AranzmanColleauege {
+public class Aranzman extends TuristickaKomponenta implements KomponentaColleauege {
     private int oznaka;
     private String naziv;
     private String program;
