@@ -56,7 +56,10 @@ public class FormaterDetaljaAranzmana implements TablicniFormater {
         redovi.add(new DetaljiRed("Min broj putnika", FormaterBrojeva.formatirajCijeliBroj(aranzman.dohvatiMinBrojPutnika()), true));
         redovi.add(new DetaljiRed("Maks broj putnika", FormaterBrojeva.formatirajCijeliBroj(aranzman.dohvatiMaxBrojPutnika()), true));
         redovi.add(new DetaljiRed("Broj noćenja", FormaterBrojeva.formatirajCijeliBroj(aranzman.dohvatiBrojNocenja()), true));
-        redovi.add(new DetaljiRed("Doplata za jednokrevetnu sobu", FormaterBrojeva.formatirajCijeliBroj(aranzman.dohvatiDoplataZaJednokrevetnuSobu()), true));
+
+        if (aranzman.dohvatiDoplataZaJednokrevetnuSobu() != null) {
+            redovi.add(new DetaljiRed("Doplata za jednokrevetnu sobu", FormaterBrojeva.formatirajCijeliBroj(aranzman.dohvatiDoplataZaJednokrevetnuSobu()), true));
+        }
 
         if (aranzman.dohvatiPrijevoz() != null && !aranzman.dohvatiPrijevoz().isEmpty()) {
             redovi.add(new DetaljiRed("Prijevoz", String.join(", ", aranzman.dohvatiPrijevoz()), false));
