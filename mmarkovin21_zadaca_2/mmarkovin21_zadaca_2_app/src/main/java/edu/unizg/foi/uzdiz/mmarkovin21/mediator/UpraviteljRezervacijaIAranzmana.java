@@ -43,20 +43,39 @@ public class UpraviteljRezervacijaIAranzmana implements UpraviteljMediator {
             return false;
         }
 
-        if (imaRezervacijuNaIstomAranzmanu(aranzman, novaRez)) {
-            novaRez.odgodi();
-            aranzman.dodajDijete(novaRez);
-            sveRezervacije.add(novaRez);
-            System.out.println("Rezervacija odgođena: korisnik " + novaRez.dohvatiIme() + " " + novaRez.dohvatiPrezime() + " već ima rezervaciju na ovom aranžmanu.");
-            return true;
+        Rezervacija postojecaRez = pronadjiPostojecuRezervaciju(aranzman, novaRez);
+        if (postojecaRez != null) {
+            if (novaRez.dohvatiDatumVrijemePrijema().isAfter(postojecaRez.dohvatiDatumVrijemePrijema())) {
+                novaRez.odgodi();
+                aranzman.dodajDijete(novaRez);
+                sveRezervacije.add(novaRez);
+                System.out.println("Rezervacija odgođena: korisnik " + novaRez.dohvatiIme() + " " + novaRez.dohvatiPrezime() + " već ima raniju rezervaciju na ovom aranžmanu.");
+                return true;
+            } else {
+                postojecaRez.odgodi();
+                System.out.println("Postojeća rezervacija odgođena: korisnik " + postojecaRez.dohvatiIme() + " " + postojecaRez.dohvatiPrezime() + " ima raniju rezervaciju.");
+                azurirajStanjeAranzmana(aranzman);
+                azurirajStanjaRezervacija(aranzman);
+            }
         }
 
-        if (imaAktivnuNaPreklapajucemAranzmanu(aranzman, novaRez)) {
-            novaRez.odgodi();
-            aranzman.dodajDijete(novaRez);
-            sveRezervacije.add(novaRez);
-            System.out.println("Rezervacija odgođena: korisnik " + novaRez.dohvatiIme() + " " + novaRez.dohvatiPrezime() + " ima aktivnu rezervaciju na preklapajućem aranžmanu.");
-            return true;
+        Rezervacija rezNaPreklapajucem = pronadjiRezervacijuNaPreklapajucemAranzmanu(aranzman, novaRez);
+        if (rezNaPreklapajucem != null) {
+            if (novaRez.dohvatiDatumVrijemePrijema().isAfter(rezNaPreklapajucem.dohvatiDatumVrijemePrijema())) {
+                novaRez.odgodi();
+                aranzman.dodajDijete(novaRez);
+                sveRezervacije.add(novaRez);
+                System.out.println("Rezervacija odgođena: korisnik " + novaRez.dohvatiIme() + " " + novaRez.dohvatiPrezime() + " ima raniju rezervaciju na preklapajućem aranžmanu.");
+                return true;
+            } else {
+                rezNaPreklapajucem.odgodi();
+                System.out.println("Postojeća rezervacija na preklapajućem aranžmanu odgođena: korisnik " + rezNaPreklapajucem.dohvatiIme() + " " + rezNaPreklapajucem.dohvatiPrezime() + " ima raniju rezervaciju.");
+                Aranzman aranzmanPreklapajuce = rezNaPreklapajucem.dohvatiAranzman();
+                if (aranzmanPreklapajuce != null) {
+                    azurirajStanjeAranzmana(aranzmanPreklapajuce);
+                    azurirajStanjaRezervacija(aranzmanPreklapajuce);
+                }
+            }
         }
 
         int brojBrojivih = izracunajBrojBrojivihRezervacija(aranzman) + 1;
@@ -154,6 +173,15 @@ public class UpraviteljRezervacijaIAranzmana implements UpraviteljMediator {
                         && rez.dohvatiPrezime().equals(novaRez.dohvatiPrezime()));
     }
 
+    private Rezervacija pronadjiPostojecuRezervaciju(Aranzman aranzman, Rezervacija novaRez) {
+        return dohvatiRezervacijeAranzmana(aranzman).stream()
+                .filter(rez -> !rez.dohvatiStanjeString().equals("OTKAZANA"))
+                .filter(rez -> rez.dohvatiIme().equals(novaRez.dohvatiIme())
+                        && rez.dohvatiPrezime().equals(novaRez.dohvatiPrezime()))
+                .findFirst()
+                .orElse(null);
+    }
+
     private boolean imaAktivnuNaPreklapajucemAranzmanu(Aranzman trenutniAranzman, Rezervacija novaRez) {
         for (Aranzman aranzman : sviAranzmani) {
             if (aranzman.dohvatiOznaka() == trenutniAranzman.dohvatiOznaka()) {
@@ -174,6 +202,31 @@ public class UpraviteljRezervacijaIAranzmana implements UpraviteljMediator {
             }
         }
         return false;
+    }
+
+    private Rezervacija pronadjiRezervacijuNaPreklapajucemAranzmanu(Aranzman trenutniAranzman, Rezervacija novaRez) {
+        for (Aranzman aranzman : sviAranzmani) {
+            if (aranzman.dohvatiOznaka() == trenutniAranzman.dohvatiOznaka()) {
+                continue;
+            }
+
+            if (!aranzmaniSePreklapaju(trenutniAranzman, aranzman)) {
+                continue;
+            }
+
+            Rezervacija postojeca = dohvatiRezervacijeAranzmana(aranzman).stream()
+                    .filter(rez -> rez.dohvatiIme().equals(novaRez.dohvatiIme())
+                            && rez.dohvatiPrezime().equals(novaRez.dohvatiPrezime()))
+                    .filter(rez -> !rez.dohvatiStanjeString().equals("OTKAZANA")
+                            && !rez.dohvatiStanjeString().equals("ODGOĐENA"))
+                    .findFirst()
+                    .orElse(null);
+
+            if (postojeca != null) {
+                return postojeca;
+            }
+        }
+        return null;
     }
 
     private boolean aranzmaniSePreklapaju(Aranzman a1, Aranzman a2) {
