@@ -58,32 +58,21 @@ public class KomandaIRTA implements Komanda {
             usporedjivac = usporedjivac.reversed();
         }
 
-        return switch (stanje) {
-            case "PA" -> rezervacije.stream()
-                    .filter(RezervacijaFilter.zaAranzman(oznakaAranzmana))
-                    .filter(RezervacijaFilter.primljenIliAktivna())
-                    .sorted(usporedjivac)
-                    .toList();
-            case "Č" -> rezervacije.stream()
-                    .filter(RezervacijaFilter.zaAranzman(oznakaAranzmana))
-                    .filter(RezervacijaFilter.naCekanju())
-                    .sorted(usporedjivac)
-                    .toList();
-            case "O" -> rezervacije.stream()
-                    .filter(RezervacijaFilter.zaAranzman(oznakaAranzmana))
-                    .filter(RezervacijaFilter.otkazana())
-                    .sorted(usporedjivac)
-                    .toList();
-            case "PAČO" -> rezervacije.stream()
-                    .filter(RezervacijaFilter.zaAranzman(oznakaAranzmana))
-                    .sorted(usporedjivac)
-                    .toList();
-            case "ODO" -> rezervacije.stream()
-                    .filter(RezervacijaFilter.zaAranzman(oznakaAranzmana))
-                    .filter(RezervacijaFilter.odgodjena())
-                    .sorted(usporedjivac)
-                    .toList();
-            default -> List.of();
-        };
+        boolean ukljuciPA = stanje.contains("PA");
+        boolean ukljuciC = stanje.contains("Č");
+        boolean ukljuciO = stanje.replaceAll("OD", "").contains("O");
+        boolean ukljuciOD = stanje.contains("OD");
+
+        return rezervacije.stream()
+                .filter(RezervacijaFilter.zaAranzman(oznakaAranzmana))
+                .filter(rez -> {
+                    if (ukljuciPA && RezervacijaFilter.primljenIliAktivna().test(rez)) return true;
+                    if (ukljuciC && RezervacijaFilter.naCekanju().test(rez)) return true;
+                    if (ukljuciO && RezervacijaFilter.otkazana().test(rez)) return true;
+                    if (ukljuciOD && RezervacijaFilter.odgodjena().test(rez)) return true;
+                    return false;
+                })
+                .sorted(usporedjivac)
+                .toList();
     }
 }
