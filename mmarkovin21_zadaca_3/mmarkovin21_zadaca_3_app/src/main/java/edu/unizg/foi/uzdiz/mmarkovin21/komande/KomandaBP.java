@@ -1,7 +1,7 @@
 package edu.unizg.foi.uzdiz.mmarkovin21.komande;
 
 import edu.unizg.foi.uzdiz.mmarkovin21.TuristickaAgencija;
-import edu.unizg.foi.uzdiz.mmarkovin21.mediator.UpraviteljRezervacijaIAranzmana;
+import edu.unizg.foi.uzdiz.mmarkovin21.UpraviteljRezervacijaIAranzmana;
 
 public class KomandaBP implements Komanda {
     private final TuristickaAgencija agencija;

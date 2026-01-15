@@ -1,22 +1,17 @@
 package edu.unizg.foi.uzdiz.mmarkovin21.modeli;
 
 import edu.unizg.foi.uzdiz.mmarkovin21.composite.TuristickaKomponenta;
-import edu.unizg.foi.uzdiz.mmarkovin21.mediator.KomponentaColleauege;
-import edu.unizg.foi.uzdiz.mmarkovin21.mediator.UpraviteljMediator;
 import edu.unizg.foi.uzdiz.mmarkovin21.state.*;
 
 import java.time.LocalDateTime;
 
-public class Rezervacija extends TuristickaKomponenta implements KomponentaColleauege {
+public class Rezervacija extends TuristickaKomponenta{
     private String ime;
     private String prezime;
     private int oznakaAranzmana;
     private LocalDateTime datumVrijemePrijema;
     private StanjeRezervacije stanje;
     private LocalDateTime datumVrijemeOtkazivanja;
-
-    
-    private UpraviteljMediator mediator;
 
     private Aranzman aranzman;
 
@@ -80,11 +75,6 @@ public class Rezervacija extends TuristickaKomponenta implements KomponentaColle
 
     public Aranzman dohvatiAranzman() {
         return aranzman;
-    }
-
-    @Override
-    public void postaviMediator(UpraviteljMediator mediator) {
-        this.mediator = mediator;
     }
 
     private StanjeRezervacije odredPOcetnoStanjePremaNazivu(String naziv) {

@@ -1,4 +1,4 @@
-package edu.unizg.foi.uzdiz.mmarkovin21.mediator;
+package edu.unizg.foi.uzdiz.mmarkovin21;
 
 import edu.unizg.foi.uzdiz.mmarkovin21.composite.TuristickaKomponenta;
 import edu.unizg.foi.uzdiz.mmarkovin21.modeli.Aranzman;
@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
-public class UpraviteljRezervacijaIAranzmana implements UpraviteljMediator {
+public class UpraviteljRezervacijaIAranzmana {
     private static UpraviteljRezervacijaIAranzmana instanca;
     private List<Aranzman> sviAranzmani;
     private final List<Rezervacija> sveRezervacije;
@@ -28,14 +28,9 @@ public class UpraviteljRezervacijaIAranzmana implements UpraviteljMediator {
 
     public void postaviAranzmane(List<Aranzman> aranzmani) {
         this.sviAranzmani = aranzmani;
-        for (Aranzman aranzman : aranzmani) {
-            aranzman.postaviMediator(this);
-        }
     }
 
-    @Override
     public boolean dodajRezervaciju(Rezervacija novaRez) {
-        novaRez.postaviMediator(this);
 
         Aranzman aranzman = pronadjiAranzmanPoOznaci(novaRez.dohvatiOznakaAranzmana());
         if (aranzman == null) {
@@ -97,7 +92,6 @@ public class UpraviteljRezervacijaIAranzmana implements UpraviteljMediator {
         return true;
     }
 
-    @Override
     public boolean otkaziRezervaciju(String ime, String prezime, int oznakaAranzmana) {
         Rezervacija rezervacija = pronadjiRezervaciju(ime, prezime, oznakaAranzmana);
         if (rezervacija == null) {
@@ -122,7 +116,6 @@ public class UpraviteljRezervacijaIAranzmana implements UpraviteljMediator {
         return true;
     }
 
-    @Override
     public void azurirajStanjeAranzmana(Aranzman aranzman) {
         int brojBrojivih = izracunajBrojBrojivihRezervacija(aranzman);
 
@@ -135,7 +128,6 @@ public class UpraviteljRezervacijaIAranzmana implements UpraviteljMediator {
         }
     }
 
-    @Override
     public void azurirajStanjaRezervacija(Aranzman aranzman) {
         List<Rezervacija> brojiveRezervacije = dohvatiRezervacijeAranzmana(aranzman).stream()
                 .filter(this::jeBrojiva)

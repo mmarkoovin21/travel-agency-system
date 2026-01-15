@@ -4,7 +4,7 @@ import edu.unizg.foi.uzdiz.mmarkovin21.Facade.UcitaniPodaciFacade;
 import edu.unizg.foi.uzdiz.mmarkovin21.TuristickaAgencija;
 import edu.unizg.foi.uzdiz.mmarkovin21.graditelji.AranzmanDirektor;
 import edu.unizg.foi.uzdiz.mmarkovin21.graditelji.AranzmanGraditelj;
-import edu.unizg.foi.uzdiz.mmarkovin21.mediator.UpraviteljRezervacijaIAranzmana;
+import edu.unizg.foi.uzdiz.mmarkovin21.UpraviteljRezervacijaIAranzmana;
 import edu.unizg.foi.uzdiz.mmarkovin21.modeli.Aranzman;
 import edu.unizg.foi.uzdiz.mmarkovin21.modeli.Rezervacija;
 

@@ -2,7 +2,7 @@ package edu.unizg.foi.uzdiz.mmarkovin21.komande;
 
 import edu.unizg.foi.uzdiz.mmarkovin21.TuristickaAgencija;
 import edu.unizg.foi.uzdiz.mmarkovin21.composite.TuristickaKomponenta;
-import edu.unizg.foi.uzdiz.mmarkovin21.mediator.UpraviteljRezervacijaIAranzmana;
+import edu.unizg.foi.uzdiz.mmarkovin21.UpraviteljRezervacijaIAranzmana;
 import edu.unizg.foi.uzdiz.mmarkovin21.modeli.Aranzman;
 import edu.unizg.foi.uzdiz.mmarkovin21.modeli.Rezervacija;
 import edu.unizg.foi.uzdiz.mmarkovin21.pomocnici.ValidatorKomandi;
