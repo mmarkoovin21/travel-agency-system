@@ -1,9 +1,12 @@
 package edu.unizg.foi.uzdiz.mmarkovin21.state;
 
+import edu.unizg.foi.uzdiz.mmarkovin21.TuristickaAgencija;
 import edu.unizg.foi.uzdiz.mmarkovin21.modeli.Aranzman;
-import edu.unizg.foi.uzdiz.mmarkovin21.modeli.Rezervacija;
+
+import java.util.List;
 
 public class AktivanStatusAranzmana implements StanjeAranzmana {
+    List<Aranzman> aranzmani = TuristickaAgencija.dohvatiInstancu().dohvatiPodatke();
 
     @Override
     public void pripremi(Aranzman aranzman) {
@@ -28,4 +31,6 @@ public class AktivanStatusAranzmana implements StanjeAranzmana {
     public String dohvatiNazivStanja() {
         return "AKTIVAN";
     }
+
+
 }

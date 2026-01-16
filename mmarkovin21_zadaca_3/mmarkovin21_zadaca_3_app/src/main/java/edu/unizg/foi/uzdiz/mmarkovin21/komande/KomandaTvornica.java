@@ -6,15 +6,13 @@ import edu.unizg.foi.uzdiz.mmarkovin21.pomocnici.ValidatorNovihRezervacija;
 
 public abstract class KomandaTvornica {
     private static TuristickaAgencija agencija;
-    private static UpraviteljRezervacijaIAranzmana mediator;
     private static ValidatorNovihRezervacija validator;
 
     public abstract Komanda kreirajKomandu();
 
-    public static KomandaTvornica dohvatiFactory(String naziv) {
+    public static KomandaTvornica dohvatiFactory(String naziv, UpraviteljRezervacijaIAranzmana upravitelj) {
         if (agencija == null) {
             agencija = TuristickaAgencija.dohvatiInstancu();
-            mediator = UpraviteljRezervacijaIAranzmana.dohvatiInstancu();
             validator = new ValidatorNovihRezervacija();
         }
 
@@ -25,10 +23,10 @@ public abstract class KomandaTvornica {
             case "IRTA" -> new IRTATvornica(agencija);
             case "IRO" -> new IROTvornica(agencija);
             case "IROS" -> new IROSTvornica(agencija);
-            case "ORTA" -> new ORTATvornica(agencija, mediator);
-            case "DRTA" -> new DRTATvornica(agencija, mediator, validator);
-            case "OTA" -> new OTATvornica(agencija, mediator);
-            case "BP" -> new BPTvornica(agencija, mediator);
+            case "ORTA" -> new ORTATvornica(agencija, upravitelj);
+            case "DRTA" -> new DRTATvornica(agencija, upravitelj, validator);
+            case "OTA" -> new OTATvornica(agencija, upravitelj);
+            case "BP" -> new BPTvornica(agencija, upravitelj);
             case "IP" -> new IPTvornica();
             case "UP" -> new UPTvornica();
             case "Q" -> new QTvornica();

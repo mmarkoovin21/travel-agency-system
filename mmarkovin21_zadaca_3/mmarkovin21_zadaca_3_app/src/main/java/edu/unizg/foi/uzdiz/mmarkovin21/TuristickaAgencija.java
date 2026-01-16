@@ -13,7 +13,7 @@ import java.util.Scanner;
 public class TuristickaAgencija {
     private static TuristickaAgencija instanca;
     private final List<TuristickaKomponenta> podaci = new ArrayList<>();
-
+    private UpraviteljRezervacijaIAranzmana upravitelj;
     private TuristickaAgencija() {}
 
     public static TuristickaAgencija dohvatiInstancu() {
@@ -24,6 +24,8 @@ public class TuristickaAgencija {
     }
 
     public void inicijaliziraj(String datotekaAranzmani, String datotekaRezervacije) {
+        UcitavacPodataka.postaviUpravitelja("--jdr");
+        upravitelj = UcitavacPodataka.dohvatiUpravitelja();
         UcitavacPodataka.ucitajAranzmane(datotekaAranzmani);
         UcitavacPodataka.ucitajRezervacije(datotekaRezervacije);
     }
@@ -39,7 +41,7 @@ public class TuristickaAgencija {
             String[] dijelovi = unos.split("\\s+");
             String nazivKomande = dijelovi[0];
 
-            KomandaTvornica factory = KomandaTvornica.dohvatiFactory(nazivKomande);
+            KomandaTvornica factory = KomandaTvornica.dohvatiFactory(nazivKomande, upravitelj);
             Komanda komanda = factory.kreirajKomandu();
             komanda.izvrsi(dijelovi);
 

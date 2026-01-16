@@ -7,6 +7,9 @@ import edu.unizg.foi.uzdiz.mmarkovin21.graditelji.AranzmanGraditelj;
 import edu.unizg.foi.uzdiz.mmarkovin21.UpraviteljRezervacijaIAranzmana;
 import edu.unizg.foi.uzdiz.mmarkovin21.modeli.Aranzman;
 import edu.unizg.foi.uzdiz.mmarkovin21.modeli.Rezervacija;
+import edu.unizg.foi.uzdiz.mmarkovin21.strategy.JednaDozvoljenaRezervacija;
+import edu.unizg.foi.uzdiz.mmarkovin21.strategy.NullAlgoritam;
+import edu.unizg.foi.uzdiz.mmarkovin21.strategy.ViseDozvoljenihRezervacija;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -15,7 +18,22 @@ import java.util.Map;
 public class UcitavacPodataka {
     private static final TuristickaAgencija agencija = TuristickaAgencija.dohvatiInstancu();
     private static final AranzmanDirektor aranzmanDirektor = new AranzmanDirektor(new AranzmanGraditelj());
-    private static final UpraviteljRezervacijaIAranzmana mediator = UpraviteljRezervacijaIAranzmana.dohvatiInstancu();
+    private static UpraviteljRezervacijaIAranzmana upravitelj;
+
+    public static void postaviUpravitelja(String arg) {
+        upravitelj = switch (arg) {
+            case "--jdr" ->
+                    new JednaDozvoljenaRezervacija();
+            case "--vdr" ->
+                    new ViseDozvoljenihRezervacija();
+            default -> new NullAlgoritam();
+        };
+    }
+    
+    public static UpraviteljRezervacijaIAranzmana dohvatiUpravitelja() {
+        return upravitelj;
+    }
+
     public static void ucitajAranzmane(String datotekaAranzmani) {
         if (datotekaAranzmani == null || datotekaAranzmani.isEmpty()) {
             return;
@@ -39,7 +57,7 @@ public class UcitavacPodataka {
         }
 
         List<Aranzman> ucitaniAranzmani = agencija.dohvatiPodatke();
-        mediator.postaviAranzmane(ucitaniAranzmani);
+        upravitelj.postaviAranzmane(ucitaniAranzmani);
     }
 
     public static void ucitajRezervacije(String datotekaRezervacije) {
@@ -68,7 +86,7 @@ public class UcitavacPodataka {
                 Aranzman nadredeniAranzman = pronadjiAranzmanPoOznaci((Integer) rezervacija.get("oznaka"));
 
                 if (nadredeniAranzman != null) {
-                    mediator.dodajRezervaciju(rez);
+                    upravitelj.dodajRezervaciju(rez);
                 } else {
                     System.err.println("Greška: Aranžman s oznakom " + rezervacija.get("oznaka")
                             + " nije pronađen za rezervaciju " + rez.dohvatiIme() + " " + rez.dohvatiPrezime());
