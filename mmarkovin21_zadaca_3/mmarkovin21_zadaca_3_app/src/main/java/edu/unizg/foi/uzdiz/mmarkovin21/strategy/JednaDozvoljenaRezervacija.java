@@ -4,6 +4,7 @@ import edu.unizg.foi.uzdiz.mmarkovin21.UpraviteljRezervacijaIAranzmana;
 import edu.unizg.foi.uzdiz.mmarkovin21.modeli.Aranzman;
 import edu.unizg.foi.uzdiz.mmarkovin21.modeli.Rezervacija;
 
+import java.time.LocalDate;
 import java.util.Comparator;
 import java.util.List;
 
@@ -70,42 +71,7 @@ public class JednaDozvoljenaRezervacija extends UpraviteljRezervacijaIAranzmana 
 
         return true;
     }
-    @Override
-    public boolean otkaziRezervaciju(String ime, String prezime, int oznakaAranzmana) {
-        Rezervacija rezervacija = pronadjiRezervaciju(ime, prezime, oznakaAranzmana);
-        if (rezervacija == null) {
-            return false;
-        }
 
-        String prethodnoStanje = rezervacija.dohvatiStanjeString();
-        rezervacija.otkazi();
-
-        Aranzman aranzman = rezervacija.dohvatiAranzman();
-        if (aranzman == null) {
-            return true;
-        }
-
-        azurirajStanjeAranzmana(aranzman);
-        azurirajStanjaRezervacija(aranzman);
-
-        if (prethodnoStanje.equals("ODGOĐENA")) {
-            pokusajAktiviratiOdgodjenuRezervaciju(aranzman, rezervacija);
-        }
-
-        return true;
-    }
-    @Override
-    public void azurirajStanjeAranzmana(Aranzman aranzman) {
-        int brojBrojivih = izracunajBrojBrojivihRezervacija(aranzman);
-
-        if (brojBrojivih < aranzman.dohvatiMinBrojPutnika()) {
-            aranzman.pripremi();
-        } else if (brojBrojivih <= aranzman.dohvatiMaxBrojPutnika()) {
-            aranzman.aktiviraj();
-        } else {
-            aranzman.popuni();
-        }
-    }
     @Override
     public void azurirajStanjaRezervacija(Aranzman aranzman) {
         List<Rezervacija> brojiveRezervacije = dohvatiRezervacijeAranzmana(aranzman).stream()
@@ -213,5 +179,12 @@ public class JednaDozvoljenaRezervacija extends UpraviteljRezervacijaIAranzmana 
         return false;
     }
 
+    private boolean aranzmaniSePreklapaju(Aranzman a1, Aranzman a2) {
+        LocalDate pocetak1 = a1.dohvatiPocetniDatum();
+        LocalDate kraj1 = a1.dohvatiZavrsniDatum();
+        LocalDate pocetak2 = a2.dohvatiPocetniDatum();
+        LocalDate kraj2 = a2.dohvatiZavrsniDatum();
 
+        return pocetak1.isAfter(kraj2) || kraj1.isBefore(pocetak2);
+    }
 }

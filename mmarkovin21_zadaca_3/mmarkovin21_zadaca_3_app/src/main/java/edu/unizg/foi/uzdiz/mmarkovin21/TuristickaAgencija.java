@@ -23,8 +23,8 @@ public class TuristickaAgencija {
         return instanca;
     }
 
-    public void inicijaliziraj(String datotekaAranzmani, String datotekaRezervacije) {
-        UcitavacPodataka.postaviUpravitelja("--jdr");
+    public void inicijaliziraj(String arg,String datotekaAranzmani, String datotekaRezervacije) {
+        UcitavacPodataka.postaviUpravitelja(arg);
         upravitelj = UcitavacPodataka.dohvatiUpravitelja();
         UcitavacPodataka.ucitajAranzmane(datotekaAranzmani);
         UcitavacPodataka.ucitajRezervacije(datotekaRezervacije);

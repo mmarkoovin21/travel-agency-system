@@ -6,6 +6,7 @@ public class Main {
     public static void main(String[] args) {
         String datotekaAranzmani = null;
         String datotekaRezervacije = null;
+        String dopusteneRezervacije = null;
 
         for (int i = 0; i < args.length; i++) {
             if (args[i].equals("--ta")) {
@@ -24,6 +25,12 @@ public class Main {
                     System.out.println("Nedostaje putanja datoteke nakon --rta");
                     return;
                 }
+            } else if (args[i].equals("--jdr")) {
+                dopusteneRezervacije = args[i];
+                i++;
+            } else if (args[i].equals("--vdr")) {
+                dopusteneRezervacije = args[i];
+                i++;
             } else {
                 System.out.println("Nepoznata opcija: " + args[i]);
                 System.out.println("Dozvoljene opcije: --ta <datoteka_aranzmani> --rta <datoteka_rezervacije>");
@@ -42,7 +49,7 @@ public class Main {
         }
 
         TuristickaAgencija agencija = TuristickaAgencija.dohvatiInstancu();
-        agencija.inicijaliziraj(datotekaAranzmani, datotekaRezervacije);
+        agencija.inicijaliziraj(dopusteneRezervacije, datotekaAranzmani, datotekaRezervacije);
         agencija.pokreniInteraktivniNacin();
     }
 

@@ -4,7 +4,6 @@ import edu.unizg.foi.uzdiz.mmarkovin21.composite.TuristickaKomponenta;
 import edu.unizg.foi.uzdiz.mmarkovin21.modeli.Aranzman;
 import edu.unizg.foi.uzdiz.mmarkovin21.modeli.Rezervacija;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,10 +20,45 @@ public abstract class UpraviteljRezervacijaIAranzmana {
     }
 
     public abstract boolean dodajRezervaciju(Rezervacija novaRez);
-    public abstract boolean otkaziRezervaciju(String ime, String prezime, int oznakaAranzmana);
-    public abstract void azurirajStanjeAranzmana(Aranzman aranzman);
     public abstract void azurirajStanjaRezervacija(Aranzman aranzman);
     protected abstract void pokusajAktiviratiOdgodjenuRezervaciju(Aranzman aranzman, Rezervacija otkazanaRez);
+
+
+    public void azurirajStanjeAranzmana(Aranzman aranzman) {
+        int brojBrojivih = izracunajBrojBrojivihRezervacija(aranzman);
+
+        if (brojBrojivih < aranzman.dohvatiMinBrojPutnika()) {
+            aranzman.pripremi();
+        } else if (brojBrojivih <= aranzman.dohvatiMaxBrojPutnika()) {
+            aranzman.aktiviraj();
+        } else {
+            aranzman.popuni();
+        }
+    }
+
+    public boolean otkaziRezervaciju(String ime, String prezime, int oznakaAranzmana) {
+        Rezervacija rezervacija = pronadjiRezervaciju(ime, prezime, oznakaAranzmana);
+        if (rezervacija == null) {
+            return false;
+        }
+
+        String prethodnoStanje = rezervacija.dohvatiStanjeString();
+        rezervacija.otkazi();
+
+        Aranzman aranzman = rezervacija.dohvatiAranzman();
+        if (aranzman == null) {
+            return true;
+        }
+
+        azurirajStanjeAranzmana(aranzman);
+        azurirajStanjaRezervacija(aranzman);
+
+        if (prethodnoStanje.equals("ODGOĐENA")) {
+            pokusajAktiviratiOdgodjenuRezervaciju(aranzman, rezervacija);
+        }
+
+        return true;
+    }
 
     protected Rezervacija pronadjiPostojecuRezervaciju(Aranzman aranzman, Rezervacija novaRez) {
         return dohvatiRezervacijeAranzmana(aranzman).stream()
@@ -35,14 +69,7 @@ public abstract class UpraviteljRezervacijaIAranzmana {
                 .orElse(null);
     }
 
-    protected boolean aranzmaniSePreklapaju(Aranzman a1, Aranzman a2) {
-        LocalDate pocetak1 = a1.dohvatiPocetniDatum();
-        LocalDate kraj1 = a1.dohvatiZavrsniDatum();
-        LocalDate pocetak2 = a2.dohvatiPocetniDatum();
-        LocalDate kraj2 = a2.dohvatiZavrsniDatum();
 
-        return pocetak1.isAfter(kraj2) || kraj1.isBefore(pocetak2);
-    }
 
     protected int izracunajBrojBrojivihRezervacija(Aranzman aranzman) {
         return (int) dohvatiRezervacijeAranzmana(aranzman).stream()
