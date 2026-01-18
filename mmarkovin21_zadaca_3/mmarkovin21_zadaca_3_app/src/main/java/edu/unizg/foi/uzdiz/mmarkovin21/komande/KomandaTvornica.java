@@ -29,6 +29,8 @@ public abstract class KomandaTvornica {
             case "BP" -> new BPTvornica(agencija, upravitelj);
             case "IP" -> new IPTvornica();
             case "UP" -> new UPTvornica();
+            case "PPTAR" -> new PPTARTvornica(agencija);
+            case "PSTAR" -> new PSTARTvornica(agencija);
             case "Q" -> new QTvornica();
             default -> new NKTvornica(naziv);
         };

@@ -2,6 +2,7 @@ package edu.unizg.foi.uzdiz.mmarkovin21.modeli;
 
 import edu.unizg.foi.uzdiz.mmarkovin21.composite.TuristickaKomponenta;
 import edu.unizg.foi.uzdiz.mmarkovin21.state.*;
+import edu.unizg.foi.uzdiz.mmarkovin21.visitor.Visitor;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -226,5 +227,9 @@ public class Aranzman extends TuristickaKomponenta {
 
     public void otkazi() {
         status.otkazi(this);
+    }
+
+    public boolean prihvatiVisitora(Visitor visitor) {
+        return visitor.posjetiAranzman(this);
     }
 }

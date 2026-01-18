@@ -6,11 +6,11 @@ import edu.unizg.foi.uzdiz.mmarkovin21.pomocnici.ValidatorKomandi;
 
 public class KomandaORTA implements Komanda {
     private final TuristickaAgencija agencija;
-    private final UpraviteljRezervacijaIAranzmana mediator;
+    private final UpraviteljRezervacijaIAranzmana upravitelj;
 
-    public KomandaORTA(TuristickaAgencija agencija, UpraviteljRezervacijaIAranzmana mediator) {
+    public KomandaORTA(TuristickaAgencija agencija, UpraviteljRezervacijaIAranzmana upravitelj) {
         this.agencija = agencija;
-        this.mediator = mediator;
+        this.upravitelj = upravitelj;
     }
 
     @Override
@@ -30,7 +30,7 @@ public class KomandaORTA implements Komanda {
 
         System.out.println("Naziv komande: " + parametri[0] + " " + parametri[1] + " " + parametri[2] + " " + parametri[3]);
 
-        boolean jeOtkazana = mediator.otkaziRezervaciju(ime, prezime, oznakaAranzmana);
+        boolean jeOtkazana = upravitelj.otkaziRezervaciju(ime, prezime, oznakaAranzmana);
 
         if (jeOtkazana) {
             System.out.println("Otkazana rezervacija " + ime + " " + prezime + " za turistički aranžman " + oznakaAranzmana + ".");

@@ -11,13 +11,13 @@ import java.time.LocalDateTime;
 
 public class KomandaDRTA implements Komanda {
     private final TuristickaAgencija agencija;
-    private final UpraviteljRezervacijaIAranzmana mediator;
+    private final UpraviteljRezervacijaIAranzmana upravitelj;
     private final ValidatorNovihRezervacija validator;
 
-    public KomandaDRTA(TuristickaAgencija agencija, UpraviteljRezervacijaIAranzmana mediator,
+    public KomandaDRTA(TuristickaAgencija agencija, UpraviteljRezervacijaIAranzmana upravitelj,
                        ValidatorNovihRezervacija validator) {
         this.agencija = agencija;
-        this.mediator = mediator;
+        this.upravitelj = upravitelj;
         this.validator = validator;
     }
 
@@ -57,7 +57,7 @@ public class KomandaDRTA implements Komanda {
             return;
         }
 
-        boolean jeDodana = mediator.dodajRezervaciju(novaRezervacija);
+        boolean jeDodana = upravitelj.dodajRezervaciju(novaRezervacija);
         if (jeDodana) {
             System.out.println("Dodana rezervacija " + ime + " " + prezime + " za turistički aranžman s oznakom " +
                     oznakaAranzmana + " u " + datumVrijemeString + ".");

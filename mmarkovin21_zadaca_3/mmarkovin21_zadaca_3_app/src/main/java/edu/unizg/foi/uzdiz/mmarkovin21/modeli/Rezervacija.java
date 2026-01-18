@@ -2,6 +2,7 @@ package edu.unizg.foi.uzdiz.mmarkovin21.modeli;
 
 import edu.unizg.foi.uzdiz.mmarkovin21.composite.TuristickaKomponenta;
 import edu.unizg.foi.uzdiz.mmarkovin21.state.*;
+import edu.unizg.foi.uzdiz.mmarkovin21.visitor.Visitor;
 
 import java.time.LocalDateTime;
 
@@ -108,4 +109,7 @@ public class Rezervacija extends TuristickaKomponenta{
         stanje.odgodi(this);
     }
 
+    public boolean prihvatiVisitora(Visitor visitor) {
+        return visitor.posjetiRezervaciju(this);
+    }
 }

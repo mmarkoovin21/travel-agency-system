@@ -11,11 +11,11 @@ import java.util.List;
 
 public class KomandaOTA implements Komanda {
     private final TuristickaAgencija agencija;
-    private final UpraviteljRezervacijaIAranzmana mediator;
+    private final UpraviteljRezervacijaIAranzmana upravitelj;
 
-    public KomandaOTA(TuristickaAgencija agencija, UpraviteljRezervacijaIAranzmana mediator) {
+    public KomandaOTA(TuristickaAgencija agencija, UpraviteljRezervacijaIAranzmana upravitelj) {
         this.agencija = agencija;
-        this.mediator = mediator;
+        this.upravitelj = upravitelj;
     }
 
     @Override
@@ -55,7 +55,7 @@ public class KomandaOTA implements Komanda {
                 Rezervacija rezervacija = (Rezervacija) dijete;
                 if (!rezervacija.dohvatiStanjeString().equalsIgnoreCase("OTKAZANA")) {
                     
-                    boolean otkazana = mediator.otkaziRezervaciju(
+                    boolean otkazana = upravitelj.otkaziRezervaciju(
                             rezervacija.dohvatiIme(),
                             rezervacija.dohvatiPrezime(),
                             oznakaAranzmana

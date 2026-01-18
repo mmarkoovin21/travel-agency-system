@@ -5,15 +5,15 @@ import edu.unizg.foi.uzdiz.mmarkovin21.UpraviteljRezervacijaIAranzmana;
 
 public class OTATvornica extends KomandaTvornica {
     private final TuristickaAgencija agencija;
-    private final UpraviteljRezervacijaIAranzmana mediator;
+    private final UpraviteljRezervacijaIAranzmana upravitelj;
 
-    public OTATvornica(TuristickaAgencija agencija, UpraviteljRezervacijaIAranzmana mediator) {
+    public OTATvornica(TuristickaAgencija agencija, UpraviteljRezervacijaIAranzmana upravitelj) {
         this.agencija = agencija;
-        this.mediator = mediator;
+        this.upravitelj = upravitelj;
     }
 
     @Override
     public Komanda kreirajKomandu() {
-        return new KomandaOTA(agencija, mediator);
+        return new KomandaOTA(agencija, upravitelj);
     }
 }

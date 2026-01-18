@@ -5,6 +5,7 @@ import edu.unizg.foi.uzdiz.mmarkovin21.modeli.Aranzman;
 import edu.unizg.foi.uzdiz.mmarkovin21.modeli.Rezervacija;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 public abstract class UpraviteljRezervacijaIAranzmana {
@@ -107,7 +108,7 @@ public abstract class UpraviteljRezervacijaIAranzmana {
                         && rez.dohvatiPrezime().equals(prezime)
                         && rez.dohvatiOznakaAranzmana() == oznakaAranzmana
                         && !rez.dohvatiStanjeString().equals("OTKAZANA"))
-                .findFirst()
+                .min(Comparator.comparing(Rezervacija::dohvatiDatumVrijemePrijema).reversed())
                 .orElse(null);
     }
 

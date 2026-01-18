@@ -5,11 +5,11 @@ import edu.unizg.foi.uzdiz.mmarkovin21.UpraviteljRezervacijaIAranzmana;
 
 public class KomandaBP implements Komanda {
     private final TuristickaAgencija agencija;
-    private final UpraviteljRezervacijaIAranzmana mediator;
+    private final UpraviteljRezervacijaIAranzmana upravitelj;
 
-    public KomandaBP(TuristickaAgencija agencija, UpraviteljRezervacijaIAranzmana mediator) {
+    public KomandaBP(TuristickaAgencija agencija, UpraviteljRezervacijaIAranzmana upravitelj) {
         this.agencija = agencija;
-        this.mediator = mediator;
+        this.upravitelj = upravitelj;
     }
 
     @Override
@@ -34,7 +34,7 @@ public class KomandaBP implements Komanda {
         int brojAranzmana = agencija.dohvatiPodatke().size();
 
         agencija.obrisiSveAranzmane();
-        mediator.obrisiSveAranzmane();
+        upravitelj.obrisiSveAranzmane();
 
         System.out.println("Uspješno obrisano " + brojAranzmana + " aranžmana (i sve njihove rezervacije).");
     }
@@ -46,7 +46,7 @@ public class KomandaBP implements Komanda {
         }
 
         agencija.obrisiSveRezervacije();
-        mediator.obrisiSveRezervacije();
+        upravitelj.obrisiSveRezervacije();
 
         System.out.println("Uspješno obrisano " + brojRezervacija + " rezervacija.");
     }

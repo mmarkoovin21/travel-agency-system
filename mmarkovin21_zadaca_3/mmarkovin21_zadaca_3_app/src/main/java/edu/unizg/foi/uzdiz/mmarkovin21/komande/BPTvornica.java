@@ -5,15 +5,15 @@ import edu.unizg.foi.uzdiz.mmarkovin21.UpraviteljRezervacijaIAranzmana;
 
 public class BPTvornica extends KomandaTvornica {
     private final TuristickaAgencija agencija;
-    private final UpraviteljRezervacijaIAranzmana mediator;
+    private final UpraviteljRezervacijaIAranzmana upravitelj;
 
-    public BPTvornica(TuristickaAgencija agencija, UpraviteljRezervacijaIAranzmana mediator) {
+    public BPTvornica(TuristickaAgencija agencija, UpraviteljRezervacijaIAranzmana upravitelj) {
         this.agencija = agencija;
-        this.mediator = mediator;
+        this.upravitelj = upravitelj;
     }
 
     @Override
     public Komanda kreirajKomandu() {
-        return new KomandaBP(agencija, mediator);
+        return new KomandaBP(agencija, upravitelj);
     }
 }
