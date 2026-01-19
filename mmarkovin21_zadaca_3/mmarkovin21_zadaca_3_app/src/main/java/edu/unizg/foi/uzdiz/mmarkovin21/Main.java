@@ -26,11 +26,17 @@ public class Main {
                     return;
                 }
             } else if (args[i].equals("--jdr")) {
+                if (dopusteneRezervacije != null && dopusteneRezervacije.equals("--vdr")) {
+                    System.out.println("Greška: Opcije --jdr i --vdr se međusobno isključuju. Koristite samo jednu.");
+                    return;
+                }
                 dopusteneRezervacije = args[i];
-                i++;
             } else if (args[i].equals("--vdr")) {
+                if (dopusteneRezervacije != null && dopusteneRezervacije.equals("--jdr")) {
+                    System.out.println("Greška: Opcije --jdr i --vdr se međusobno isključuju. Koristite samo jednu.");
+                    return;
+                }
                 dopusteneRezervacije = args[i];
-                i++;
             } else {
                 System.out.println("Nepoznata opcija: " + args[i]);
                 System.out.println("Dozvoljene opcije: --ta <datoteka_aranzmani> --rta <datoteka_rezervacije>");
