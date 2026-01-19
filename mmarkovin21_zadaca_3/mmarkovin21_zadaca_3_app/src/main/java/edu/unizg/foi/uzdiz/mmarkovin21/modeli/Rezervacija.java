@@ -96,6 +96,15 @@ public class Rezervacija extends TuristickaKomponenta{
     public void otkazi() {
         stanje.otkazi(this);
         this.datumVrijemeOtkazivanja = LocalDateTime.now();
+        if (aranzman != null) {
+            aranzman.obavijestiObservere("Rezervacija otkazana za: " + dohvatiInicijale());
+        }
+    }
+
+    private String dohvatiInicijale() {
+        String inicijalImena = ime != null && !ime.isEmpty() ? ime.substring(0, 1).toUpperCase() + "." : "";
+        String inicijalPrezimena = prezime != null && !prezime.isEmpty() ? prezime.substring(0, 1).toUpperCase() + "." : "";
+        return inicijalImena + " " + inicijalPrezimena;
     }
 
     public void odgodi() {

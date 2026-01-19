@@ -3,6 +3,7 @@ package edu.unizg.foi.uzdiz.mmarkovin21.modeli;
 import edu.unizg.foi.uzdiz.mmarkovin21.composite.TuristickaKomponenta;
 import edu.unizg.foi.uzdiz.mmarkovin21.memento.AranzmanMemento;
 import edu.unizg.foi.uzdiz.mmarkovin21.memento.RezervacijaMemento;
+import edu.unizg.foi.uzdiz.mmarkovin21.observer.Observer;
 import edu.unizg.foi.uzdiz.mmarkovin21.state.*;
 import edu.unizg.foi.uzdiz.mmarkovin21.visitor.Visitor;
 
@@ -32,8 +33,10 @@ public class Aranzman extends TuristickaKomponenta {
     private int brojVecera;
     private StanjeAranzmana status;
 
+    String prethodniStatus;
 
     private final List<TuristickaKomponenta> djeca = new ArrayList<>();
+    private final List<Observer> observeri = new ArrayList<>();
 
     public Aranzman() {
     }
@@ -176,16 +179,17 @@ public class Aranzman extends TuristickaKomponenta {
     }
 
     @Override
-    public void dodajDijete(TuristickaKomponenta koponenta) {
-        djeca.add(koponenta);
+    public void dodajDijete(TuristickaKomponenta komponenta) {
+        djeca.add(komponenta);
 
-        if (koponenta instanceof Rezervacija) {
-            ((Rezervacija) koponenta).postaviAranzman(this);
+        if (komponenta instanceof Rezervacija rez) {
+            rez.postaviAranzman(this);
+            obavijestiObservere("Nova rezervacija dodana za: " + rez.dohvatiIme() + " " + rez.dohvatiPrezime());
         }
     }
     @Override
-    public void ukloniDijete(TuristickaKomponenta koponenta) {
-        djeca.remove(koponenta);
+    public void ukloniDijete(TuristickaKomponenta komponenta) {
+        djeca.remove(komponenta);
     }
 
     public List<TuristickaKomponenta> dohvatiDjecu() {
@@ -208,19 +212,31 @@ public class Aranzman extends TuristickaKomponenta {
     }
 
     public void pripremi() {
+        prethodniStatus = status.dohvatiNazivStanja();
         status.pripremi(this);
+        if (!prethodniStatus.equals(status.dohvatiNazivStanja()))
+            obavijestiObservere("Status aranžmana promijenjen: " + prethodniStatus + " → " + status.dohvatiNazivStanja());
     }
 
     public void aktiviraj() {
+        prethodniStatus = status.dohvatiNazivStanja();
         status.aktiviraj(this);
+        if (!prethodniStatus.equals(status.dohvatiNazivStanja()))
+            obavijestiObservere("Status aranžmana promijenjen: " + prethodniStatus + " → " + status.dohvatiNazivStanja());
     }
 
     public void popuni() {
+        prethodniStatus = status.dohvatiNazivStanja();
         status.popuni(this);
+        if (!prethodniStatus.equals(status.dohvatiNazivStanja()))
+            obavijestiObservere("Status aranžmana promijenjen: " + prethodniStatus + " → " + status.dohvatiNazivStanja());
     }
 
     public void otkazi() {
+        prethodniStatus = status.dohvatiNazivStanja();
         status.otkazi(this);
+        if (!prethodniStatus.equals(status.dohvatiNazivStanja()))
+            obavijestiObservere("Status aranžmana promijenjen: " + prethodniStatus + " → " + status.dohvatiNazivStanja());
     }
 
     public boolean prihvatiVisitora(Visitor visitor) {
@@ -255,5 +271,60 @@ public class Aranzman extends TuristickaKomponenta {
             Rezervacija rez = Rezervacija.izMementa(rezMemento);
             this.dodajDijete(rez);
         }
+
+        this.observeri.clear();
+        this.observeri.addAll(memento.dohvatiObservere());
+    }
+
+    public void registrirajObservera(Observer observer) {
+        observeri.add(observer);
+    }
+
+    public void ukloniObservera(Observer observer) {
+        observeri.remove(observer);
+    }
+
+    public void ukloniSveObservere() {
+        observeri.clear();
+    }
+
+    public List<Observer> dohvatiObservere() {
+        return observeri;
+    }
+
+    public void obavijestiObservere(String poruka) {
+        for (Observer observer : observeri) {
+            observer.azuriraj(poruka);
+        }
+    }
+
+    public static Aranzman izMementa(AranzmanMemento memento) {
+        Aranzman aranzman = new Aranzman();
+        aranzman.oznaka = memento.dohvatiOznaka();
+        aranzman.naziv = memento.dohvatiNaziv();
+        aranzman.program = memento.dohvatiProgram();
+        aranzman.pocetniDatum = memento.dohvatiPocetniDatum();
+        aranzman.zavrsniDatum = memento.dohvatiZavrsniDatum();
+        aranzman.minBrojPutnika = memento.dohvatiMinBrojPutnika();
+        aranzman.maxBrojPutnika = memento.dohvatiMaxBrojPutnika();
+        aranzman.cijenaPoOsobi = memento.dohvatiCijenaPoOsobi();
+        aranzman.vrijemeKretanja = memento.dohvatiVrijemeKretanja();
+        aranzman.vrijemePovratka = memento.dohvatiVrijemePovratka();
+        aranzman.brojNocenja = memento.dohvatiBrojNocenja();
+        aranzman.doplataZaJednokrevetnuSobu = memento.dohvatiDoplataZaJednokrevetnuSobu();
+        aranzman.prijevoz = new ArrayList<>(memento.dohvatiPrijevoz());
+        aranzman.brojDorucaka = memento.dohvatiBrojDorucaka();
+        aranzman.brojRucakova = memento.dohvatiBrojRuckova();
+        aranzman.brojVecera = memento.dohvatiBrojVecera();
+        aranzman.status = aranzman.odrediPocetniStatusPremaNazivu(memento.dohvatiStatusString());
+
+        for (RezervacijaMemento rezMemento : memento.dohvatiRezervacije()) {
+            Rezervacija rez = Rezervacija.izMementa(rezMemento);
+            aranzman.dodajDijete(rez);
+        }
+
+        aranzman.observeri.addAll(memento.dohvatiObservere());
+
+        return aranzman;
     }
 }

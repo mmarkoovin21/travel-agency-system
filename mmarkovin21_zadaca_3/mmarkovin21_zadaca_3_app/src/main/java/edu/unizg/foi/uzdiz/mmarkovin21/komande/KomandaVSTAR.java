@@ -23,17 +23,8 @@ public class KomandaVSTAR implements  Komanda {
 
         try {
             int oznaka = Integer.parseInt(parametri[1]);
-            Aranzman aranzman = agencija.dohvatiPodatke().stream()
-                    .filter(a -> a.dohvatiOznaka() == oznaka)
-                    .findFirst()
-                    .orElse(null);
 
-            if (aranzman == null) {
-                System.out.println("Aranžman s oznakom " + oznaka + " nije pronađen.");
-                return;
-            }
-
-            Command command = new IzvrsiDohvacanje(caretaker, aranzman);
+            Command command = new IzvrsiDohvacanje(caretaker, oznaka, agencija);
             command.izvrsi();
 
         } catch (NumberFormatException e) {

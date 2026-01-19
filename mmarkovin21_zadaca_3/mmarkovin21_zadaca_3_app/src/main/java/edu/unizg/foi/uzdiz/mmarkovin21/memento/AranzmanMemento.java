@@ -1,6 +1,7 @@
 package edu.unizg.foi.uzdiz.mmarkovin21.memento;
 
 import edu.unizg.foi.uzdiz.mmarkovin21.modeli.Aranzman;
+import edu.unizg.foi.uzdiz.mmarkovin21.observer.Observer;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -28,6 +29,7 @@ public class AranzmanMemento {
     private final String status;
 
     private final List<RezervacijaMemento> djeca = new ArrayList<>();
+    private final List<Observer> observeri = new ArrayList<>();
 
     public AranzmanMemento(Aranzman aranzman) {
         this.oznaka = aranzman.dohvatiOznaka();
@@ -53,6 +55,8 @@ public class AranzmanMemento {
                 this.djeca.add(new RezervacijaMemento((edu.unizg.foi.uzdiz.mmarkovin21.modeli.Rezervacija) dijete));
             }
         }
+
+        this.observeri.addAll(aranzman.dohvatiObservere());
     }
 
     public int dohvatiOznaka() {
@@ -108,5 +112,8 @@ public class AranzmanMemento {
     }
     public List<RezervacijaMemento> dohvatiRezervacije(){
         return djeca;
+    }
+    public List<Observer> dohvatiObservere() {
+        return observeri;
     }
 }
