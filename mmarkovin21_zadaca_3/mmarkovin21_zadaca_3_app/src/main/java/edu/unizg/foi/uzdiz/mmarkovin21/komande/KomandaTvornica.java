@@ -2,11 +2,13 @@ package edu.unizg.foi.uzdiz.mmarkovin21.komande;
 
 import edu.unizg.foi.uzdiz.mmarkovin21.TuristickaAgencija;
 import edu.unizg.foi.uzdiz.mmarkovin21.UpraviteljRezervacijaIAranzmana;
+import edu.unizg.foi.uzdiz.mmarkovin21.memento.AranzmanCaretaker;
 import edu.unizg.foi.uzdiz.mmarkovin21.pomocnici.ValidatorNovihRezervacija;
 
 public abstract class KomandaTvornica {
     private static TuristickaAgencija agencija;
     private static ValidatorNovihRezervacija validator;
+    private static AranzmanCaretaker caretaker;
 
     public abstract Komanda kreirajKomandu();
 
@@ -14,6 +16,7 @@ public abstract class KomandaTvornica {
         if (agencija == null) {
             agencija = TuristickaAgencija.dohvatiInstancu();
             validator = new ValidatorNovihRezervacija();
+            caretaker = new AranzmanCaretaker();
         }
 
         return switch (naziv) {
@@ -30,7 +33,8 @@ public abstract class KomandaTvornica {
             case "IP" -> new IPTvornica();
             case "UP" -> new UPTvornica();
             case "PPTAR" -> new PPTARTvornica(agencija);
-            case "PSTAR" -> new PSTARTvornica(agencija);
+            case "PSTAR" -> new PSTARTvornica(agencija, caretaker);
+            case "VSTAR" -> new VSTARTvornica(agencija, caretaker);
             case "Q" -> new QTvornica();
             default -> new NKTvornica(naziv);
         };

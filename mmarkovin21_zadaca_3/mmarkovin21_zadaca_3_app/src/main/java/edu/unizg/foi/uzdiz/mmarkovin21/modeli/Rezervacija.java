@@ -1,6 +1,7 @@
 package edu.unizg.foi.uzdiz.mmarkovin21.modeli;
 
 import edu.unizg.foi.uzdiz.mmarkovin21.composite.TuristickaKomponenta;
+import edu.unizg.foi.uzdiz.mmarkovin21.memento.RezervacijaMemento;
 import edu.unizg.foi.uzdiz.mmarkovin21.state.*;
 import edu.unizg.foi.uzdiz.mmarkovin21.visitor.Visitor;
 
@@ -41,10 +42,6 @@ public class Rezervacija extends TuristickaKomponenta{
         return oznakaAranzmana;
     }
 
-    public StanjeRezervacije dohvatiStanje() {
-        return stanje;
-    }
-
     public String dohvatiStanjeString() {
         return stanje.dohvatiNazivStanja();
     }
@@ -55,10 +52,6 @@ public class Rezervacija extends TuristickaKomponenta{
 
     public LocalDateTime dohvatiDatumVrijemeOtkazivanja() {
         return datumVrijemeOtkazivanja;
-    }
-
-    public void postaviDatumVrijemeOtkazivanja(LocalDateTime datumVrijemeOtkazivanja) {
-        this.datumVrijemeOtkazivanja = datumVrijemeOtkazivanja;
     }
 
     @Override
@@ -111,5 +104,15 @@ public class Rezervacija extends TuristickaKomponenta{
 
     public boolean prihvatiVisitora(Visitor visitor) {
         return visitor.posjetiRezervaciju(this);
+    }
+
+    public static Rezervacija izMementa(RezervacijaMemento memento) {
+        return new Rezervacija(
+                memento.dohvatiIme(),
+                memento.dohvatiPrezime(),
+                memento.dohvatiOznakaAranzmana(),
+                memento.dohvatiDatumVrijemePrijema(),
+                memento.dohvatiStanjeString()
+        );
     }
 }

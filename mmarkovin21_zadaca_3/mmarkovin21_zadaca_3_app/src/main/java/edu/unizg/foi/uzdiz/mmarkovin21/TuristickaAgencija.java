@@ -3,7 +3,10 @@ package edu.unizg.foi.uzdiz.mmarkovin21;
 import edu.unizg.foi.uzdiz.mmarkovin21.composite.TuristickaKomponenta;
 import edu.unizg.foi.uzdiz.mmarkovin21.komande.Komanda;
 import edu.unizg.foi.uzdiz.mmarkovin21.komande.KomandaTvornica;
+import edu.unizg.foi.uzdiz.mmarkovin21.memento.AranzmanMemento;
+import edu.unizg.foi.uzdiz.mmarkovin21.memento.RezervacijaMemento;
 import edu.unizg.foi.uzdiz.mmarkovin21.modeli.Aranzman;
+import edu.unizg.foi.uzdiz.mmarkovin21.modeli.Rezervacija;
 import edu.unizg.foi.uzdiz.mmarkovin21.pomocnici.UcitavacPodataka;
 
 import java.util.ArrayList;

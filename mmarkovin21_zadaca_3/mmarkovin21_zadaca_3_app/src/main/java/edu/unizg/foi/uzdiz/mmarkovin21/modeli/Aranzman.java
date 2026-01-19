@@ -1,6 +1,8 @@
 package edu.unizg.foi.uzdiz.mmarkovin21.modeli;
 
 import edu.unizg.foi.uzdiz.mmarkovin21.composite.TuristickaKomponenta;
+import edu.unizg.foi.uzdiz.mmarkovin21.memento.AranzmanMemento;
+import edu.unizg.foi.uzdiz.mmarkovin21.memento.RezervacijaMemento;
 import edu.unizg.foi.uzdiz.mmarkovin21.state.*;
 import edu.unizg.foi.uzdiz.mmarkovin21.visitor.Visitor;
 
@@ -81,16 +83,8 @@ public class Aranzman extends TuristickaKomponenta {
         return minBrojPutnika;
     }
 
-    public void postaviMinBrojPutnika(int minBrojPutnika) {
-        this.minBrojPutnika = minBrojPutnika;
-    }
-
     public int dohvatiMaxBrojPutnika() {
         return maxBrojPutnika;
-    }
-
-    public void postaviMaxBrojPutnika(int maxBrojPutnika) {
-        this.maxBrojPutnika = maxBrojPutnika;
     }
 
     public Long dohvatiCijenaPoOsobi() {
@@ -231,5 +225,35 @@ public class Aranzman extends TuristickaKomponenta {
 
     public boolean prihvatiVisitora(Visitor visitor) {
         return visitor.posjetiAranzman(this);
+    }
+
+    public AranzmanMemento kreirajMemento() {
+        return new AranzmanMemento(this);
+    }
+
+    public void vratiIzMementa(AranzmanMemento memento) {
+        this.oznaka = memento.dohvatiOznaka();
+        this.naziv = memento.dohvatiNaziv();
+        this.program = memento.dohvatiProgram();
+        this.pocetniDatum = memento.dohvatiPocetniDatum();
+        this.zavrsniDatum = memento.dohvatiZavrsniDatum();
+        this.minBrojPutnika = memento.dohvatiMinBrojPutnika();
+        this.maxBrojPutnika = memento.dohvatiMaxBrojPutnika();
+        this.cijenaPoOsobi = memento.dohvatiCijenaPoOsobi();
+        this.vrijemeKretanja = memento.dohvatiVrijemeKretanja();
+        this.vrijemePovratka = memento.dohvatiVrijemePovratka();
+        this.brojNocenja = memento.dohvatiBrojNocenja();
+        this.doplataZaJednokrevetnuSobu = memento.dohvatiDoplataZaJednokrevetnuSobu();
+        this.prijevoz = new ArrayList<>(memento.dohvatiPrijevoz());
+        this.brojDorucaka = memento.dohvatiBrojDorucaka();
+        this.brojRucakova = memento.dohvatiBrojRuckova();
+        this.brojVecera = memento.dohvatiBrojVecera();
+        this.status = odrediPocetniStatusPremaNazivu(memento.dohvatiStatusString());
+
+        this.djeca.clear();
+        for (RezervacijaMemento rezMemento : memento.dohvatiRezervacije()) {
+            Rezervacija rez = Rezervacija.izMementa(rezMemento);
+            this.dodajDijete(rez);
+        }
     }
 }
