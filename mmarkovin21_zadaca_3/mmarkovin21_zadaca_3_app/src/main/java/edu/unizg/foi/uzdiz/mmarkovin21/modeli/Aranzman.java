@@ -184,9 +184,15 @@ public class Aranzman extends TuristickaKomponenta {
 
         if (komponenta instanceof Rezervacija rez) {
             rez.postaviAranzman(this);
-            obavijestiObservere("Nova rezervacija dodana za: " + rez.dohvatiIme() + " " + rez.dohvatiPrezime());
+            obavijestiObservere("Nova rezervacija dodana za: " + dohvatiInicijale(rez));
         }
     }
+    private String dohvatiInicijale(Rezervacija rez) {
+        String inicijalImena = rez.dohvatiIme() != null && !rez.dohvatiIme().isEmpty() ? rez.dohvatiIme().substring(0, 1).toUpperCase() + "." : "";
+        String inicijalPrezimena = rez.dohvatiPrezime() != null && !rez.dohvatiPrezime().isEmpty() ? rez.dohvatiPrezime().substring(0, 1).toUpperCase() + "." : "";
+        return inicijalImena + " " + inicijalPrezimena;
+    }
+
     @Override
     public void ukloniDijete(TuristickaKomponenta komponenta) {
         djeca.remove(komponenta);
