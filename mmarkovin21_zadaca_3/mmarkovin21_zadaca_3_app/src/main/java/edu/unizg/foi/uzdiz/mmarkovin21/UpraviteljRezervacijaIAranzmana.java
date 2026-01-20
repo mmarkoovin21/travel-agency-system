@@ -20,9 +20,64 @@ public abstract class UpraviteljRezervacijaIAranzmana {
         this.sviAranzmani = aranzmani;
     }
 
-    public abstract boolean dodajRezervaciju(Rezervacija novaRez);
-    public abstract void azurirajStanjaRezervacija(Aranzman aranzman);
-    protected abstract void pokusajAktiviratiOdgodjenuRezervaciju(Aranzman aranzman, Rezervacija otkazanaRez);
+    public boolean dodajRezervaciju(Rezervacija novaRez) {
+        Aranzman aranzman = pronadjiAranzmanPoOznaci(novaRez.dohvatiOznakaAranzmana());
+        if (aranzman == null) {
+            System.out.println("Greška: Aranžman s oznakom " + novaRez.dohvatiOznakaAranzmana() + " ne postoji.");
+            return false;
+        }
+
+        int brojBrojivih = izracunajBrojBrojivihRezervacija(aranzman) + 1;
+
+        if (brojBrojivih < aranzman.dohvatiMinBrojPutnika()) {
+            novaRez.primi();
+        } else if (brojBrojivih <= aranzman.dohvatiMaxBrojPutnika()) {
+            novaRez.aktiviraj();
+        } else {
+            novaRez.staviNaCekanje();
+        }
+
+        aranzman.dodajDijete(novaRez);
+        sveRezervacije.add(novaRez);
+
+        azurirajStanjeAranzmana(aranzman);
+        azurirajStanjaRezervacija(aranzman);
+
+        return true;
+    }
+
+    public void azurirajStanjaRezervacija(Aranzman aranzman) {
+        List<Rezervacija> brojiveRezervacije = dohvatiRezervacijeAranzmana(aranzman).stream()
+                .filter(this::jeBrojiva)
+                .sorted(Comparator.comparing(Rezervacija::dohvatiDatumVrijemePrijema))
+                .toList();
+
+        int brojBrojivih = brojiveRezervacije.size();
+        int minBrojPutnika = aranzman.dohvatiMinBrojPutnika();
+        int maxBrojPutnika = aranzman.dohvatiMaxBrojPutnika();
+
+        if (brojBrojivih < minBrojPutnika) {
+            for (Rezervacija rez : brojiveRezervacije) {
+                rez.primi();
+            }
+        } else if (brojBrojivih <= maxBrojPutnika) {
+            for (Rezervacija rez : brojiveRezervacije) {
+                rez.aktiviraj();
+            }
+        } else {
+            for (int i = 0; i < brojiveRezervacije.size(); i++) {
+                Rezervacija rez = brojiveRezervacije.get(i);
+                if (i < maxBrojPutnika) {
+                    rez.aktiviraj();
+                } else {
+                    rez.staviNaCekanje();
+                }
+            }
+        }
+    }
+
+    protected void pokusajAktiviratiOdgodjenuRezervaciju(Aranzman aranzman, Rezervacija otkazanaRez) {
+    }
 
 
     public void azurirajStanjeAranzmana(Aranzman aranzman) {
