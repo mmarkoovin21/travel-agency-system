@@ -9,7 +9,7 @@
         <version>2.0.0.</version>
     </parent>
 
-    <artifactId>mmarkovin21_zadaca__app</artifactId>
+    <artifactId>mmarkovin21_zadaca_3_app</artifactId>
     <packaging>jar</packaging>
 
     <properties>

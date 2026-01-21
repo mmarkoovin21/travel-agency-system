@@ -4,6 +4,7 @@ import edu.unizg.foi.uzdiz.mmarkovin21.composite.TuristickaKomponenta;
 import edu.unizg.foi.uzdiz.mmarkovin21.memento.AranzmanMemento;
 import edu.unizg.foi.uzdiz.mmarkovin21.memento.RezervacijaMemento;
 import edu.unizg.foi.uzdiz.mmarkovin21.observer.Observer;
+import edu.unizg.foi.uzdiz.mmarkovin21.observer.Subject;
 import edu.unizg.foi.uzdiz.mmarkovin21.state.*;
 import edu.unizg.foi.uzdiz.mmarkovin21.visitor.Visitor;
 
@@ -13,7 +14,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class Aranzman extends TuristickaKomponenta {
+public class Aranzman extends TuristickaKomponenta implements Subject {
     private int oznaka;
     private String naziv;
     private String program;
